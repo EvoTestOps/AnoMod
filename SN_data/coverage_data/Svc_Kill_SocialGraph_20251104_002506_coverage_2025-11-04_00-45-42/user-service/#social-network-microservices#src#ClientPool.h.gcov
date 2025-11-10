@@ -1,0 +1,456 @@
+        -:    0:Source:/social-network-microservices/src/ClientPool.h
+        -:    0:Graph:/social-network-microservices/build/src/UserService/CMakeFiles/UserService.dir/UserService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/UserService/CMakeFiles/UserService.dir/UserService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H
+        -:    3:
+        -:    4:#include <vector>
+        -:    5:#include <mutex>
+        -:    6:#include <condition_variable>
+        -:    7:#include <deque>
+        -:    8:#include <chrono>
+        -:    9:#include <string>
+        -:   10:#include <nlohmann/json.hpp>
+        -:   11:
+        -:   12:#include "logger.h"
+        -:   13:
+        -:   14:namespace social_network {
+        -:   15:using json = nlohmann::json;
+        -:   16:
+        -:   17:template<class TClient>
+        -:   18:class ClientPool {
+        -:   19: public:
+        -:   20:  ClientPool(const std::string &client_type, const std::string &addr,
+        -:   21:      int port, int min_size, int max_size, int timeout_ms, int keepalive_ms,
+        -:   22:      const json &config_json);
+        -:   23:  ~ClientPool();
+        -:   24:
+        -:   25:  ClientPool(const ClientPool&) = delete;
+        -:   26:  ClientPool& operator=(const ClientPool&) = delete;
+        -:   27:  ClientPool(ClientPool&&) = default;
+        -:   28:  ClientPool& operator=(ClientPool&&) = default;
+        -:   29:
+        -:   30:  TClient * Pop();
+        -:   31:  void Push(TClient *);
+        -:   32:  void Keepalive(TClient *);
+        -:   33:  void Remove(TClient *);
+        -:   34:
+        -:   35: private:
+        -:   36:  std::deque<TClient *> _pool;
+        -:   37:  std::string _addr;
+        -:   38:  std::string _client_type;
+        -:   39:  int _port;
+        -:   40:  int _min_pool_size{};
+        -:   41:  int _max_pool_size{};
+        -:   42:  int _curr_pool_size{};
+        -:   43:  int _timeout_ms;
+        -:   44:  int _keepalive_ms;
+        -:   45:  std::mutex _mtx;
+        -:   46:  std::condition_variable _cv;
+        -:   47:  const json *_config_json;
+        -:   48:
+        -:   49:};
+        -:   50:
+        -:   51:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+        1:   52:ClientPool<TClient>::ClientPool(const std::string &client_type,
+        -:   53:    const std::string &addr, int port, int min_pool_size,
+        -:   54:    int max_pool_size, int timeout_ms, int keepalive_ms,
+        1:   55:    const json &config_json) {
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+        1:   56:  _addr = addr;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        1:   57:  _port = port;
+        1:   58:  _min_pool_size = min_pool_size;
+        1:   59:  _max_pool_size = max_pool_size;
+        1:   60:  _timeout_ms = timeout_ms;
+        1:   61:  _client_type = client_type;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        1:   62:  _keepalive_ms = keepalive_ms;
+        1:   63:  _config_json = &config_json;
+        -:   64:
+        1:   65:  for (int i = 0; i < min_pool_size; ++i) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   66:    TClient *client = new TClient(addr, port, keepalive_ms, config_json);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+    #####:   67:    _pool.emplace_back(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   68:  }
+        1:   69:  _curr_pool_size = min_pool_size;
+        1:   70:}
+        -:   71:
+        -:   72:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+    #####:   73:ClientPool<TClient>::~ClientPool() {
+    #####:   74:  while (!_pool.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   75:    delete _pool.front();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+    #####:   76:    _pool.pop_front();
+call    0 never executed
+        -:   77:  }
+    #####:   78:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:   79:
+        -:   80:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEE3PopEv called 962 returned 100% blocks executed 16%
+      962:   81:TClient * ClientPool<TClient>::Pop() {
+      962:   82:  TClient * client = nullptr;
+        -:   83:  {
+     1924:   84:    std::unique_lock<std::mutex> cv_lock(_mtx);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 never executed
+call    4 never executed
+      962:   85:    while (_pool.size() == 0 && _curr_pool_size == _max_pool_size) {
+call    0 returned 100%
+branch  1 taken 5% (fallthrough)
+branch  2 taken 95%
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+branch  5 taken 0% (fallthrough)
+branch  6 taken 100%
+        -:   86:      // Create a new a client if current pool size is less than
+        -:   87:      // the max pool size.
+    #####:   88:      auto wait_time = std::chrono::system_clock::now() +
+call    0 never executed
+call    1 never executed
+    #####:   89:          std::chrono::milliseconds(_timeout_ms);
+call    0 never executed
+        -:   90:      bool wait_success = _cv.wait_until(cv_lock, wait_time,
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+    #####:   91:            [this] { return _pool.size() > 0 || _curr_pool_size < _max_pool_size; });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+    #####:   92:      if (!wait_success) {
+branch  0 never executed
+branch  1 never executed
+    #####:   93:        LOG(warning) << "ClientPool pop timeout";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:   94:        LOG(info) << _pool.size() << " " << _curr_pool_size;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+    #####:   95:        cv_lock.unlock();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   96:        return nullptr;
+        -:   97:      }
+        -:   98:    }
+      962:   99:    if (_pool.size() > 0) {
+call    0 returned 100%
+branch  1 taken 95% (fallthrough)
+branch  2 taken 5%
+      918:  100:      client = _pool.front();
+call    0 returned 100%
+      918:  101:      _pool.pop_front();
+call    0 returned 100%
+        -:  102:    } else {
+       44:  103:      client = new TClient(_addr, _port, _keepalive_ms, *_config_json);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 never executed
+       44:  104:      _curr_pool_size++;
+        -:  105:    }
+      962:  106:  cv_lock.unlock();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100%
+branch  5 taken 0%
+        -:  107:  } // cv_lock(_mtx)
+        -:  108:
+        -:  109:
+      962:  110:  if (client) {
+branch  0 taken 100%
+branch  1 taken 0%
+        -:  111:    try {
+      962:  112:      client->Connect();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+    =====:  113:    } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  114:      LOG(error) << "Failed to connect " + _client_type;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+call   53 never executed
+call   54 never executed
+    =====:  115:      Remove(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  116:      throw;
+call    0 never executed
+        -:  117:    }
+        -:  118:  }
+      962:  119:  return client;
+        -:  120:}
+        -:  121:
+        -:  122:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEE4PushEPS3_ called 962 returned 100% blocks executed 78%
+      962:  123:void ClientPool<TClient>::Push(TClient *client) {
+     1924:  124:  std::unique_lock<std::mutex> cv_lock(_mtx);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+      962:  125:  _pool.push_back(client);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      962:  126:  cv_lock.unlock();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      962:  127:  _cv.notify_one();
+call    0 returned 100%
+      962:  128:}
+        -:  129:
+        -:  130:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEE6RemoveEPS3_ called 0 returned 0% blocks executed 0%
+    #####:  131:void ClientPool<TClient>::Remove(TClient *client) {
+        -:  132:  // No need to delete it from _pool because the *client has been poped out
+    #####:  133:  delete client;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+    #####:  134:  std::unique_lock<std::mutex> cv_lock(_mtx);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  135:  _curr_pool_size--;
+    #####:  136:  cv_lock.unlock();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  137:  _cv.notify_one();
+call    0 never executed
+    #####:  138:}
+        -:  139:
+        -:  140:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24SocialGraphServiceClientEEEE9KeepaliveEPS3_ called 962 returned 100% blocks executed 88%
+      962:  141:void ClientPool<TClient>::Keepalive(TClient *client) {
+     1924:  142:  long curr_timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+call    0 returned 100%
+     2886:  143:          std::chrono::system_clock::now().time_since_epoch()).count();
+call    0 returned 100%
+call    1 returned 99%
+call    2 returned 99%
+      962:  144:  if (curr_timestamp - client->_connect_timestamp > client->_keepalive_ms) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  145:    Remove(client);
+call    0 never executed
+        -:  146:  } else {
+      962:  147:    Push(client);
+call    0 returned 100%
+        -:  148:  }
+      962:  149:}
+        -:  150:
+        -:  151:} // namespace social_network
+        -:  152:
+        -:  153:
+        -:  154:#endif //SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H

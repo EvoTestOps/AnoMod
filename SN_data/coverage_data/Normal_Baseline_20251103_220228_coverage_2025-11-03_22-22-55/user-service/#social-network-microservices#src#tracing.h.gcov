@@ -1,0 +1,241 @@
+        -:    0:Source:/social-network-microservices/src/tracing.h
+        -:    0:Graph:/social-network-microservices/build/src/UserService/CMakeFiles/UserService.dir/UserService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/UserService/CMakeFiles/UserService.dir/UserService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <utility>
+        -:    2:
+        -:    3:#ifndef SOCIAL_NETWORK_MICROSERVICES_TRACING_H
+        -:    4:#define SOCIAL_NETWORK_MICROSERVICES_TRACING_H
+        -:    5:
+        -:    6:#include <string>
+        -:    7:#include <yaml-cpp/yaml.h>
+        -:    8:#include <jaegertracing/Tracer.h>
+        -:    9:
+        -:   10:#include <opentracing/propagation.h>
+        -:   11:#include <string>
+        -:   12:#include <map>
+        -:   13:#include "logger.h"
+        -:   14:
+        -:   15:namespace social_network {
+        -:   16:
+        -:   17:using opentracing::expected;
+        -:   18:using opentracing::string_view;
+        -:   19:
+function _ZN14social_network13TextMapReaderD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network13TextMapReaderD2Ev called 76570 returned 99% blocks executed 75%
+    76570:   20:class TextMapReader : public opentracing::TextMapReader {
+call    0 never executed
+call    1 never executed
+call    2 returned 99%
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+call    5 never executed
+        -:   21: public:
+function _ZN14social_network13TextMapReaderC2ERKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEE called 76565 returned 99% blocks executed 100%
+    76565:   22:  explicit TextMapReader(const std::map<std::string, std::string> &text_map)
+    76565:   23:      : _text_map(text_map) {}
+call    0 returned 99%
+        -:   24:
+function _ZNK14social_network13TextMapReader10ForeachKeyESt8functionIFN11opentracing2v28expectedIvSt10error_codeEENS3_11string_viewES7_EE called 76605 returned 99% blocks executed 77%
+    76605:   25:  expected<void> ForeachKey(
+        -:   26:      std::function<expected<void>(string_view key, string_view value)> f)
+        -:   27:  const override {
+   153172:   28:    for (const auto& key_value : _text_map) {
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+branch  3 taken 50% (fallthrough)
+branch  4 taken 50%
+call    5 returned 99%
+call    6 returned 99%
+   153144:   29:      auto result = f(key_value.first, key_value.second);
+call    0 returned 99%
+call    1 returned 100%
+call    2 returned 99%
+branch  3 taken 99% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 99%
+call    6 returned 99%
+    76572:   30:      if (!result) return result;
+call    0 returned 99%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+call    4 returned 99%
+branch  5 taken 100%
+branch  6 taken 0%
+        -:   31:    }
+    76568:   32:    return {};
+call    0 returned 99%
+        -:   33:  }
+        -:   34:
+        -:   35: private:
+        -:   36:  const std::map<std::string, std::string>& _text_map;
+        -:   37:};
+        -:   38:
+function _ZN14social_network13TextMapWriterD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network13TextMapWriterD2Ev called 76594 returned 99% blocks executed 75%
+    76594:   39:class TextMapWriter : public opentracing::TextMapWriter {
+call    0 never executed
+call    1 never executed
+call    2 returned 99%
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+call    5 never executed
+        -:   40: public:
+function _ZN14social_network13TextMapWriterC2ERSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEE called 76590 returned 99% blocks executed 100%
+    76590:   41:  explicit TextMapWriter(std::map<std::string, std::string> &text_map)
+    76590:   42:    : _text_map(text_map) {}
+call    0 returned 99%
+        -:   43:
+function _ZNK14social_network13TextMapWriter3SetEN11opentracing2v211string_viewES3_ called 76536 returned 99% blocks executed 75%
+    76536:   44:  expected<void> Set(string_view key, string_view value) const override {
+    76536:   45:    _text_map[key] = value;
+call    0 returned 99%
+call    1 returned 99%
+branch  2 taken 99% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 99%
+branch  5 taken 99% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 99%
+branch  8 taken 99% (fallthrough)
+branch  9 taken 0% (throw)
+call   10 returned 99%
+call   11 returned 99%
+call   12 never executed
+call   13 never executed
+    76553:   46:    return {};
+call    0 returned 99%
+        -:   47:  }
+        -:   48:
+        -:   49: private:
+        -:   50:  std::map<std::string, std::string>& _text_map;
+        -:   51:};
+        -:   52:
+function _ZN14social_network11SetUpTracerERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ called 1 returned 100% blocks executed 30%
+        1:   53:void SetUpTracer(
+        -:   54:    const std::string &config_file_path,
+        -:   55:    const std::string &service) {
+        2:   56:  auto configYAML = YAML::LoadFile(config_file_path);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:   57:
+        -:   58:  // Enable local Jaeger agent, by prepending the service name to the default
+        -:   59:  // Jaeger agent's hostname
+        -:   60:  // configYAML["reporter"]["localAgentHostPort"] = service + "-" +
+        -:   61:  //     configYAML["reporter"]["localAgentHostPort"].as<std::string>();
+        -:   62:
+        2:   63:  auto config = jaegertracing::Config::parse(configYAML);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:   64:
+        1:   65:  bool r = false;
+        3:   66:  while (!r) {
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        -:   67:    try
+        -:   68:    {
+        -:   69:      auto tracer = jaegertracing::Tracer::make(
+        2:   70:        service, config, jaegertracing::logging::consoleLogger());
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 never executed
+        1:   71:      r = true;
+        -:   72:      opentracing::Tracer::InitGlobal(
+        1:   73:      std::static_pointer_cast<opentracing::Tracer>(tracer));
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+        -:   74:    }
+    =====:   75:    catch(...)
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+        -:   76:    {
+    =====:   77:      LOG(error) << "Failed to connect to jaeger, retrying ...";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:   78:      sleep(1);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   79:    }
+        -:   80:  }
+        -:   81:
+        -:   82:
+        1:   83:}
+call    0 never executed
+        -:   84:
+        -:   85:
+        -:   86:} //namespace social_network
+        -:   87:
+        -:   88:#endif //SOCIAL_NETWORK_MICROSERVICES_TRACING_H

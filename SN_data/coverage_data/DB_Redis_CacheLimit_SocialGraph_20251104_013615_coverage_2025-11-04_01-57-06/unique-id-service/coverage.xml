@@ -1,0 +1,614 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage
+  SYSTEM 'http://cobertura.sourceforge.net/xml/coverage-03.dtd'>
+<coverage branch-rate="0.318037974684" line-rate="0.806060606061" timestamp="1762221558" version="gcovr 3.2">
+<sources>
+<source>/social-network-microservices/src</source>
+</sources>
+<packages>
+<package branch-rate="0.190789473684" complexity="0.0" line-rate="0.741379310345" name="">
+<classes>
+<class branch-rate="0.5" complexity="0.0" filename="logger.h" line-rate="1.0" name="logger_h">
+<methods/>
+<lines>
+<line branch="false" hits="1" number="17"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="19">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="20"/>
+<line branch="false" hits="1" number="22"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="23">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="2" number="24">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="2" number="25"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="26">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="27"/>
+</lines>
+</class>
+<class branch-rate="0.265625" complexity="0.0" filename="tracing.h" line-rate="0.884615384615" name="tracing_h">
+<methods/>
+<lines>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="20">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="22"/>
+<line branch="false" hits="200" number="23"/>
+<line branch="false" hits="200" number="25"/>
+<line branch="true" condition-coverage="100% (2/2)" hits="400" number="28">
+<conditions>
+<condition coverage="100%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="400" number="29">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="200" number="30">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="32"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="39">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="41"/>
+<line branch="false" hits="200" number="42"/>
+<line branch="false" hits="200" number="44"/>
+<line branch="true" condition-coverage="50% (3/6)" hits="200" number="45">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="46"/>
+<line branch="false" hits="1" number="53"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="56">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="63">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="65"/>
+<line branch="true" condition-coverage="100% (2/2)" hits="3" number="66">
+<conditions>
+<condition coverage="100%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (3/6)" hits="2" number="70">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="71"/>
+<line branch="false" hits="1" number="73"/>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="75">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/30)" hits="0" number="77">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="78">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="83"/>
+</lines>
+</class>
+<class branch-rate="0.142857142857" complexity="0.0" filename="utils.h" line-rate="0.777777777778" name="utils_h">
+<methods/>
+<lines>
+<line branch="false" hits="1" number="14"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="15">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="16">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="1" number="17">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="18">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="19">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="20"/>
+<line branch="true" condition-coverage="0% (0/30)" hits="0" number="23">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="0" number="24"/>
+</lines>
+</class>
+<class branch-rate="0.0277777777778" complexity="0.0" filename="utils_thrift.h" line-rate="0.285714285714" name="utils_thrift_h">
+<methods/>
+<lines>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="33">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="35"/>
+<line branch="false" hits="1" number="16"/>
+<line branch="false" hits="1" number="17"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="18">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/6)" hits="0" number="19">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/6)" hits="0" number="20">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/6)" hits="0" number="21">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/6)" hits="0" number="22">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="0" number="24"/>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="25">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="26">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="27">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="28">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+</lines>
+</class>
+</classes>
+</package>
+<package branch-rate="0.358333333333" complexity="0.0" line-rate="0.841121495327" name="UniqueIdService">
+<classes>
+<class branch-rate="0.309392265193" complexity="0.0" filename="UniqueIdService/UniqueIdHandler.h" line-rate="0.8375" name="UniqueIdHandler_h">
+<methods/>
+<lines>
+<line branch="false" hits="2" number="129"/>
+<line branch="false" hits="1" number="132"/>
+<line branch="false" hits="2" number="133"/>
+<line branch="true" condition-coverage="50% (2/4)" hits="2" number="135">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="136">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="137">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="1" number="138">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/32)" hits="0" number="139">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="140">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="2" number="142"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="143">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="1" number="144">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/32)" hits="0" number="145">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="146">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="148">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="53% (17/32)" hits="2" number="150">
+<conditions>
+<condition coverage="53%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="152">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (3/6)" hits="1" number="153">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="1" number="154">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="28"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="29">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/30)" hits="0" number="30">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="0" number="31"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="33">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="0" number="34"/>
+<line branch="false" hits="200" number="36"/>
+<line branch="false" hits="200" number="37"/>
+<line branch="false" hits="200" number="38"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="156">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="44">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="157">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="158">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="55"/>
+<line branch="false" hits="1" number="56"/>
+<line branch="false" hits="1" number="57"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="58">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/6)" hits="0" number="159">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="61"/>
+<line branch="true" condition-coverage="52% (20/38)" hits="400" number="65">
+<conditions>
+<condition coverage="52%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="400" number="68"/>
+<line branch="false" hits="400" number="69"/>
+<line branch="false" hits="400" number="70"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="400" number="71">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="400" number="72"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="800" number="73">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="74">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="76">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="400" number="78"/>
+<line branch="false" hits="200" number="79"/>
+<line branch="false" hits="200" number="80"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="81">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="82"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="99">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="52% (22/42)" hits="400" number="85">
+<conditions>
+<condition coverage="52%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="400" number="87">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="200" number="88">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="400" number="89">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="91">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="92">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="93">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/6)" hits="0" number="94">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="98">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="59"/>
+<line branch="false" hits="1" number="161"/>
+<line branch="true" condition-coverage="50% (2/4)" hits="200" number="101">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="400" number="102">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="104">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="0" number="105">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="106">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (3/6)" hits="200" number="107">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="400" number="109">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="200" number="110">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="11% (4/36)" hits="200" number="111">
+<conditions>
+<condition coverage="11%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="200" number="113"/>
+<line branch="false" hits="400" number="114"/>
+<line branch="false" hits="1" number="123"/>
+<line branch="false" hits="1" number="124"/>
+<line branch="true" condition-coverage="50% (2/4)" hits="2" number="125">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="100% (2/2)" hits="19" number="126">
+<conditions>
+<condition coverage="100%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="18" number="127"/>
+</lines>
+</class>
+<class branch-rate="0.508474576271" complexity="0.0" filename="UniqueIdService/UniqueIdService.cpp" line-rate="0.851851851852" name="UniqueIdService_cpp">
+<methods/>
+<lines>
+<line branch="false" hits="0" number="32"/>
+<line branch="false" hits="1" number="34"/>
+<line branch="false" hits="1" number="35"/>
+<line branch="false" hits="0" number="36"/>
+<line branch="false" hits="1" number="38"/>
+<line branch="false" hits="1" number="39"/>
+<line branch="false" hits="1" number="40"/>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="41">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (3/6)" hits="1" number="42">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="44"/>
+<line branch="true" condition-coverage="50% (3/6)" hits="1" number="45">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="0" number="46"/>
+<line branch="true" condition-coverage="50% (3/6)" hits="1" number="49">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (3/6)" hits="1" number="50">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="1" number="52">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="1" number="53">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="0" number="54"/>
+<line branch="true" condition-coverage="53% (17/32)" hits="2" number="56">
+<conditions>
+<condition coverage="53%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="false" hits="1" number="58"/>
+<line branch="true" condition-coverage="50% (2/4)" hits="1" number="59">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="61">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="62">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (1/2)" hits="2" number="64">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (4/8)" hits="6" number="65">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="53% (16/30)" hits="2" number="67">
+<conditions>
+<condition coverage="53%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="0% (0/2)" hits="1" number="68">
+<conditions>
+<condition coverage="0%" number="0" type="jump"/>
+</conditions>
+</line>
+<line branch="true" condition-coverage="50% (2/4)" hits="3" number="69">
+<conditions>
+<condition coverage="50%" number="0" type="jump"/>
+</conditions>
+</line>
+</lines>
+</class>
+</classes>
+</package>
+</packages>
+</coverage>
+

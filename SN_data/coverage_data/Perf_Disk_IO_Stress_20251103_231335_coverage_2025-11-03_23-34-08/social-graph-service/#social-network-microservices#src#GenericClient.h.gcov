@@ -1,0 +1,41 @@
+        -:    0:Source:/social-network-microservices/src/GenericClient.h
+        -:    0:Graph:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_GENERICCLIENT_H
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_GENERICCLIENT_H
+        -:    3:
+        -:    4:#include <string>
+        -:    5:#include <chrono>
+        -:    6:
+        -:    7:namespace social_network {
+        -:    8:
+function _ZN14social_network13GenericClientC2Ev called 219 returned 100% blocks executed 100%
+      219:    9:class GenericClient{
+call    0 returned 100%
+        -:   10: public:
+function _ZN14social_network13GenericClientD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network13GenericClientD2Ev called 182 returned 100% blocks executed 75%
+      182:   11:  virtual ~GenericClient() = default;
+call    0 never executed
+call    1 never executed
+call    2 returned 100%
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+call    5 never executed
+        -:   12:  virtual void Connect() = 0;
+        -:   13:  virtual void Disconnect() = 0;
+        -:   14:  virtual bool IsConnected() = 0;
+        -:   15:
+        -:   16:  long _connect_timestamp;
+        -:   17:  long _keepalive_ms;
+        -:   18:
+        -:   19: protected:
+        -:   20:  std::string _addr;
+        -:   21:  int _port;
+        -:   22:};
+        -:   23:
+        -:   24:} // namespace social_network
+        -:   25:
+        -:   26:#endif //SOCIAL_NETWORK_MICROSERVICES_GENERICCLIENT_H

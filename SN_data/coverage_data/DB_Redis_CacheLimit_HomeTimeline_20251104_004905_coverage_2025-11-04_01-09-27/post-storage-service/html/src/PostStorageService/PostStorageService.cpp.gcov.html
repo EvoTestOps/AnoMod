@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/PostStorageService/PostStorageService.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/PostStorageService</a> - PostStorageService.cpp<span style="font-size: 80%;"> (source / <a href="PostStorageService.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">33</td>
+            <td class="headerCovTableEntry">46</td>
+            <td class="headerCovTableEntryLo">71.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-11-04 01:11:22</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryMed">80.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &lt;signal.h&gt;</a>
+<span class="lineNum">       2 </span>            : #include &lt;thrift/protocol/TBinaryProtocol.h&gt;
+<span class="lineNum">       3 </span>            : #include &lt;thrift/server/TThreadedServer.h&gt;
+<span class="lineNum">       4 </span>            : #include &lt;thrift/transport/TBufferTransports.h&gt;
+<span class="lineNum">       5 </span>            : #include &lt;thrift/transport/TServerSocket.h&gt;
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #include &quot;../utils.h&quot;
+<span class="lineNum">       8 </span>            : #include &quot;../utils_memcached.h&quot;
+<span class="lineNum">       9 </span>            : #include &quot;../utils_mongodb.h&quot;
+<span class="lineNum">      10 </span>            : #include &quot;../utils_thrift.h&quot;
+<span class="lineNum">      11 </span>            : #include &quot;PostStorageHandler.h&quot;
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : extern &quot;C&quot; void __gcov_flush();
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : using apache::thrift::protocol::TBinaryProtocolFactory;
+<span class="lineNum">      16 </span>            : using apache::thrift::server::TThreadedServer;
+<span class="lineNum">      17 </span>            : using apache::thrift::transport::TFramedTransportFactory;
+<span class="lineNum">      18 </span>            : using apache::thrift::transport::TServerSocket;
+<span class="lineNum">      19 </span>            : using namespace social_network;
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : static memcached_pool_st* memcached_client_pool;
+<a name="22"><span class="lineNum">      22 </span>            : static mongoc_client_pool_t* mongodb_client_pool;</a>
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span><span class="lineNoCov">          0 : void sigintHandler(int sig) {</span>
+<span class="lineNum">      25 </span><span class="lineNoCov">          0 :   if (memcached_client_pool != nullptr) {</span>
+<span class="lineNum">      26 </span><span class="lineNoCov">          0 :     memcached_pool_destroy(memcached_client_pool);</span>
+<span class="lineNum">      27 </span>            :   }
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :   if (mongodb_client_pool != nullptr) {</span>
+<span class="lineNum">      29 </span><span class="lineNoCov">          0 :     mongoc_client_pool_destroy(mongodb_client_pool);</span>
+<span class="lineNum">      30 </span>            :   }
+<span class="lineNum">      31 </span><span class="lineNoCov">          0 :   exit(EXIT_SUCCESS);</span>
+<a name="32"><span class="lineNum">      32 </span>            : }</a>
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span><span class="lineCov">          1 : void handle_sigusr1(int signum) {</span>
+<span class="lineNum">      35 </span><span class="lineCov">          1 :   __gcov_flush();</span>
+<a name="36"><span class="lineNum">      36 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">      37 </span>            :   
+<span class="lineNum">      38 </span><span class="lineCov">          1 : int main(int argc, char* argv[]) {</span>
+<span class="lineNum">      39 </span><span class="lineCov">          1 :   signal(SIGINT, sigintHandler);</span>
+<span class="lineNum">      40 </span><span class="lineCov">          1 :   signal(SIGUSR1, handle_sigusr1);</span>
+<span class="lineNum">      41 </span><span class="lineCov">          1 :   init_logger();</span>
+<span class="lineNum">      42 </span><span class="lineCov">          1 :   SetUpTracer(&quot;config/jaeger-config.yml&quot;, &quot;post-storage-service&quot;);</span>
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineCov">          1 :   json config_json;</span>
+<span class="lineNum">      45 </span><span class="lineCov">          1 :   if (load_config_file(&quot;config/service-config.json&quot;, &amp;config_json) != 0) {</span>
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :     exit(EXIT_FAILURE);</span>
+<span class="lineNum">      47 </span>            :   }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span><span class="lineCov">          1 :   int port = config_json[&quot;post-storage-service&quot;][&quot;port&quot;];</span>
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span><span class="lineCov">          1 :   int mongodb_conns = config_json[&quot;post-storage-mongodb&quot;][&quot;connections&quot;];</span>
+<span class="lineNum">      52 </span><span class="lineCov">          1 :   int mongodb_timeout = config_json[&quot;post-storage-mongodb&quot;][&quot;timeout_ms&quot;];</span>
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span><span class="lineCov">          1 :   int memcached_conns = config_json[&quot;post-storage-memcached&quot;][&quot;connections&quot;];</span>
+<span class="lineNum">      55 </span><span class="lineCov">          1 :   int memcached_timeout = config_json[&quot;post-storage-memcached&quot;][&quot;timeout_ms&quot;];</span>
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span><span class="lineCov">          2 :   memcached_client_pool = init_memcached_client_pool(</span>
+<span class="lineNum">      58 </span><span class="lineCov">          1 :       config_json, &quot;post-storage&quot;, 32, memcached_conns);</span>
+<span class="lineNum">      59 </span>            :   mongodb_client_pool =
+<span class="lineNum">      60 </span><span class="lineCov">          1 :       init_mongodb_client_pool(config_json, &quot;post-storage&quot;, mongodb_conns);</span>
+<span class="lineNum">      61 </span><span class="lineCov">          1 :   if (memcached_client_pool == nullptr || mongodb_client_pool == nullptr) {</span>
+<span class="lineNum">      62 </span><span class="lineNoCov">          0 :     return EXIT_FAILURE;</span>
+<span class="lineNum">      63 </span>            :   }
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span><span class="lineCov">          1 :   mongoc_client_t* mongodb_client = mongoc_client_pool_pop(mongodb_client_pool);</span>
+<span class="lineNum">      66 </span><span class="lineCov">          1 :   if (!mongodb_client) {</span>
+<span class="lineNum">      67 </span><span class="lineNoCov">          0 :     LOG(fatal) &lt;&lt; &quot;Failed to pop mongoc client&quot;;</span>
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :     return EXIT_FAILURE;</span>
+<span class="lineNum">      69 </span>            :   }
+<span class="lineNum">      70 </span><span class="lineCov">          1 :   bool r = false;</span>
+<span class="lineNum">      71 </span><span class="lineCov">          3 :   while (!r) {</span>
+<span class="lineNum">      72 </span><span class="lineCov">          1 :     r = CreateIndex(mongodb_client, &quot;post&quot;, &quot;post_id&quot;, true);</span>
+<span class="lineNum">      73 </span><span class="lineCov">          1 :     if (!r) {</span>
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 :       LOG(error) &lt;&lt; &quot;Failed to create mongodb index, try again&quot;;</span>
+<span class="lineNum">      75 </span><span class="lineNoCov">          0 :       sleep(1);</span>
+<span class="lineNum">      76 </span>            :     }
+<span class="lineNum">      77 </span>            :   }
+<span class="lineNum">      78 </span><span class="lineCov">          1 :   mongoc_client_pool_push(mongodb_client_pool, mongodb_client);</span>
+<span class="lineNum">      79 </span><span class="lineCov">          1 :   std::shared_ptr&lt;TServerSocket&gt; server_socket = get_server_socket(config_json, &quot;0.0.0.0&quot;, port);</span>
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span><span class="lineCov">          2 :   TThreadedServer server(std::make_shared&lt;PostStorageServiceProcessor&gt;(</span>
+<span class="lineNum">      82 </span><span class="lineCov">          2 :                              std::make_shared&lt;PostStorageHandler&gt;(</span>
+<span class="lineNum">      83 </span>            :                                  memcached_client_pool, mongodb_client_pool)),
+<span class="lineNum">      84 </span>            :                          server_socket,
+<span class="lineNum">      85 </span><span class="lineCov">          2 :                          std::make_shared&lt;TFramedTransportFactory&gt;(),</span>
+<span class="lineNum">      86 </span><span class="lineCov">          6 :                          std::make_shared&lt;TBinaryProtocolFactory&gt;());</span>
+<span class="lineNum">      87 </span>            : 
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          2 :   LOG(info) &lt;&lt; &quot;Starting the post-storage-service server...&quot;;</span></a>
+<span class="lineNum">      89 </span><span class="lineCov">          1 :   server.serve();</span>
+<span class="lineNum">      90 </span><span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

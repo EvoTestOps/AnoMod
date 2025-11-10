@@ -1,0 +1,532 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/ComposePostService/ComposePostHandler.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/ComposePostService</a> - ComposePostHandler.h<span style="font-size: 80%;"> (source / <a href="ComposePostHandler.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">167</td>
+            <td class="headerCovTableEntry">239</td>
+            <td class="headerCovTableEntryLo">69.9 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-11-04 00:23:26</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryMed">81.8 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_COMPOSEPOSTSERVICE_COMPOSEPOSTHANDLER_H_</a>
+<span class="lineNum">       2 </span>            : #define SOCIAL_NETWORK_MICROSERVICES_SRC_COMPOSEPOSTSERVICE_COMPOSEPOSTHANDLER_H_
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;chrono&gt;
+<span class="lineNum">       5 </span>            : #include &lt;future&gt;
+<span class="lineNum">       6 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">       7 </span>            : #include &lt;nlohmann/json.hpp&gt;
+<span class="lineNum">       8 </span>            : #include &lt;string&gt;
+<span class="lineNum">       9 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : #include &quot;../../gen-cpp/ComposePostService.h&quot;
+<span class="lineNum">      12 </span>            : #include &quot;../../gen-cpp/HomeTimelineService.h&quot;
+<span class="lineNum">      13 </span>            : #include &quot;../../gen-cpp/MediaService.h&quot;
+<span class="lineNum">      14 </span>            : #include &quot;../../gen-cpp/PostStorageService.h&quot;
+<span class="lineNum">      15 </span>            : #include &quot;../../gen-cpp/TextService.h&quot;
+<span class="lineNum">      16 </span>            : #include &quot;../../gen-cpp/UniqueIdService.h&quot;
+<span class="lineNum">      17 </span>            : #include &quot;../../gen-cpp/UserService.h&quot;
+<span class="lineNum">      18 </span>            : #include &quot;../../gen-cpp/UserTimelineService.h&quot;
+<span class="lineNum">      19 </span>            : #include &quot;../../gen-cpp/social_network_types.h&quot;
+<span class="lineNum">      20 </span>            : #include &quot;../ClientPool.h&quot;
+<span class="lineNum">      21 </span>            : #include &quot;../ThriftClient.h&quot;
+<span class="lineNum">      22 </span>            : #include &quot;../logger.h&quot;
+<span class="lineNum">      23 </span>            : #include &quot;../tracing.h&quot;
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : namespace social_network {
+<span class="lineNum">      26 </span>            : using json = nlohmann::json;
+<span class="lineNum">      27 </span>            : using std::chrono::duration_cast;
+<span class="lineNum">      28 </span>            : using std::chrono::milliseconds;
+<span class="lineNum">      29 </span>            : using std::chrono::system_clock;
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : class ComposePostHandler : public ComposePostServiceIf {
+<span class="lineNum">      32 </span>            :  public:
+<span class="lineNum">      33 </span>            :   ComposePostHandler(ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *,
+<span class="lineNum">      34 </span>            :                      ClientPool&lt;ThriftClient&lt;UserTimelineServiceClient&gt;&gt; *,
+<span class="lineNum">      35 </span>            :                      ClientPool&lt;ThriftClient&lt;UserServiceClient&gt;&gt; *,
+<span class="lineNum">      36 </span>            :                      ClientPool&lt;ThriftClient&lt;UniqueIdServiceClient&gt;&gt; *,
+<span class="lineNum">      37 </span>            :                      ClientPool&lt;ThriftClient&lt;MediaServiceClient&gt;&gt; *,
+<a name="38"><span class="lineNum">      38 </span>            :                      ClientPool&lt;ThriftClient&lt;TextServiceClient&gt;&gt; *,</a>
+<span class="lineNum">      39 </span>            :                      ClientPool&lt;ThriftClient&lt;HomeTimelineServiceClient&gt;&gt; *);
+<span class="lineNum">      40 </span><span class="lineNoCov">          0 :   ~ComposePostHandler() override = default;</span>
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            :   void ComposePost(int64_t req_id, const std::string &amp;username, int64_t user_id,
+<span class="lineNum">      43 </span>            :                    const std::string &amp;text,
+<span class="lineNum">      44 </span>            :                    const std::vector&lt;int64_t&gt; &amp;media_ids,
+<span class="lineNum">      45 </span>            :                    const std::vector&lt;std::string&gt; &amp;media_types,
+<span class="lineNum">      46 </span>            :                    PostType::type post_type,
+<span class="lineNum">      47 </span>            :                    const std::map&lt;std::string, std::string&gt; &amp;carrier) override;
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            :  private:
+<span class="lineNum">      50 </span>            :   ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *_post_storage_client_pool;
+<span class="lineNum">      51 </span>            :   ClientPool&lt;ThriftClient&lt;UserTimelineServiceClient&gt;&gt;
+<span class="lineNum">      52 </span>            :       *_user_timeline_client_pool;
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            :   ClientPool&lt;ThriftClient&lt;UserServiceClient&gt;&gt; *_user_service_client_pool;
+<span class="lineNum">      55 </span>            :   ClientPool&lt;ThriftClient&lt;UniqueIdServiceClient&gt;&gt;
+<span class="lineNum">      56 </span>            :       *_unique_id_service_client_pool;
+<span class="lineNum">      57 </span>            :   ClientPool&lt;ThriftClient&lt;MediaServiceClient&gt;&gt; *_media_service_client_pool;
+<span class="lineNum">      58 </span>            :   ClientPool&lt;ThriftClient&lt;TextServiceClient&gt;&gt; *_text_service_client_pool;
+<span class="lineNum">      59 </span>            :   ClientPool&lt;ThriftClient&lt;HomeTimelineServiceClient&gt;&gt;
+<span class="lineNum">      60 </span>            :       *_home_timeline_client_pool;
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            :   void _UploadUserTimelineHelper(
+<span class="lineNum">      63 </span>            :       int64_t req_id, int64_t post_id, int64_t user_id, int64_t timestamp,
+<span class="lineNum">      64 </span>            :       const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            :   void _UploadPostHelper(int64_t req_id, const Post &amp;post,
+<span class="lineNum">      67 </span>            :                          const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            :   void _UploadHomeTimelineHelper(
+<span class="lineNum">      70 </span>            :       int64_t req_id, int64_t post_id, int64_t user_id, int64_t timestamp,
+<span class="lineNum">      71 </span>            :       const std::vector&lt;int64_t&gt; &amp;user_mentions_id,
+<span class="lineNum">      72 </span>            :       const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span>            :   Creator _ComposeCreaterHelper(
+<span class="lineNum">      75 </span>            :       int64_t req_id, int64_t user_id, const std::string &amp;username,
+<span class="lineNum">      76 </span>            :       const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<span class="lineNum">      77 </span>            :   TextServiceReturn _ComposeTextHelper(
+<span class="lineNum">      78 </span>            :       int64_t req_id, const std::string &amp;text,
+<span class="lineNum">      79 </span>            :       const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<span class="lineNum">      80 </span>            :   std::vector&lt;Media&gt; _ComposeMediaHelper(
+<span class="lineNum">      81 </span>            :       int64_t req_id, const std::vector&lt;std::string&gt; &amp;media_types,
+<span class="lineNum">      82 </span>            :       const std::vector&lt;int64_t&gt; &amp;media_ids,
+<span class="lineNum">      83 </span>            :       const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<span class="lineNum">      84 </span>            :   int64_t _ComposeUniqueIdHelper(
+<span class="lineNum">      85 </span>            :       int64_t req_id, PostType::type post_type,
+<span class="lineNum">      86 </span>            :       const std::map&lt;std::string, std::string&gt; &amp;carrier);
+<a name="87"><span class="lineNum">      87 </span>            : };</a>
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span><span class="lineCov">          1 : ComposePostHandler::ComposePostHandler(</span>
+<span class="lineNum">      90 </span>            :     ClientPool&lt;social_network::ThriftClient&lt;PostStorageServiceClient&gt;&gt;
+<span class="lineNum">      91 </span>            :         *post_storage_client_pool,
+<span class="lineNum">      92 </span>            :     ClientPool&lt;social_network::ThriftClient&lt;UserTimelineServiceClient&gt;&gt;
+<span class="lineNum">      93 </span>            :         *user_timeline_client_pool,
+<span class="lineNum">      94 </span>            :     ClientPool&lt;ThriftClient&lt;UserServiceClient&gt;&gt; *user_service_client_pool,
+<span class="lineNum">      95 </span>            :     ClientPool&lt;ThriftClient&lt;UniqueIdServiceClient&gt;&gt;
+<span class="lineNum">      96 </span>            :         *unique_id_service_client_pool,
+<span class="lineNum">      97 </span>            :     ClientPool&lt;ThriftClient&lt;MediaServiceClient&gt;&gt; *media_service_client_pool,
+<span class="lineNum">      98 </span>            :     ClientPool&lt;ThriftClient&lt;TextServiceClient&gt;&gt; *text_service_client_pool,
+<span class="lineNum">      99 </span>            :     ClientPool&lt;ThriftClient&lt;HomeTimelineServiceClient&gt;&gt;
+<span class="lineNum">     100 </span><span class="lineCov">          1 :         *home_timeline_client_pool) {</span>
+<span class="lineNum">     101 </span><span class="lineCov">          1 :   _post_storage_client_pool = post_storage_client_pool;</span>
+<span class="lineNum">     102 </span><span class="lineCov">          1 :   _user_timeline_client_pool = user_timeline_client_pool;</span>
+<span class="lineNum">     103 </span><span class="lineCov">          1 :   _user_service_client_pool = user_service_client_pool;</span>
+<span class="lineNum">     104 </span><span class="lineCov">          1 :   _unique_id_service_client_pool = unique_id_service_client_pool;</span>
+<span class="lineNum">     105 </span><span class="lineCov">          1 :   _media_service_client_pool = media_service_client_pool;</span>
+<span class="lineNum">     106 </span><span class="lineCov">          1 :   _text_service_client_pool = text_service_client_pool;</span>
+<span class="lineNum">     107 </span><span class="lineCov">          1 :   _home_timeline_client_pool = home_timeline_client_pool;</span>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span><span class="lineCov">        200 : Creator ComposePostHandler::_ComposeCreaterHelper(</span>
+<span class="lineNum">     111 </span>            :     int64_t req_id, int64_t user_id, const std::string &amp;username,
+<span class="lineNum">     112 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     113 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     114 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     115 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     116 </span><span class="lineCov">        800 :       &quot;compose_creator_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     117 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     118 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     119 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span><span class="lineCov">        200 :   auto user_client_wrapper = _user_service_client_pool-&gt;Pop();</span>
+<span class="lineNum">     122 </span><span class="lineCov">        200 :   if (!user_client_wrapper) {</span>
+<span class="lineNum">     123 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     124 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     125 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to user-service&quot;;</span>
+<span class="lineNum">     126 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     127 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     128 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     129 </span>            :   }
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span><span class="lineCov">        200 :   auto user_client = user_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     132 </span><span class="lineCov">        200 :   Creator _return_creator;</span>
+<span class="lineNum">     133 </span>            :   try {
+<span class="lineNum">     134 </span>            :     user_client-&gt;ComposeCreatorWithUserId(_return_creator, req_id, user_id,
+<span class="lineNum">     135 </span><span class="lineCov">        200 :                                           username, writer_text_map);</span>
+<span class="lineNum">     136 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     137 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to send compose-creator to user-service&quot;;</span>
+<span class="lineNum">     138 </span><span class="lineNoCov">          0 :     _user_service_client_pool-&gt;Remove(user_client_wrapper);</span>
+<span class="lineNum">     139 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     140 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     141 </span>            :   }
+<span class="lineNum">     142 </span><span class="lineCov">        200 :   _user_service_client_pool-&gt;Keepalive(user_client_wrapper);</span>
+<span class="lineNum">     143 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     144 </span><span class="lineCov">        400 :   return _return_creator;</span>
+<a name="145"><span class="lineNum">     145 </span>            : }</a>
+<span class="lineNum">     146 </span>            : 
+<span class="lineNum">     147 </span><span class="lineCov">        200 : TextServiceReturn ComposePostHandler::_ComposeTextHelper(</span>
+<span class="lineNum">     148 </span>            :     int64_t req_id, const std::string &amp;text,
+<span class="lineNum">     149 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     150 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     151 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     152 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     153 </span><span class="lineCov">        800 :       &quot;compose_text_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     154 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     155 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     156 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span><span class="lineCov">        200 :   auto text_client_wrapper = _text_service_client_pool-&gt;Pop();</span>
+<span class="lineNum">     159 </span><span class="lineCov">        200 :   if (!text_client_wrapper) {</span>
+<span class="lineNum">     160 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     161 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     162 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to text-service&quot;;</span>
+<span class="lineNum">     163 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     164 </span>            :     ;
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     166 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     167 </span>            :   }
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span><span class="lineCov">        200 :   auto text_client = text_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     170 </span><span class="lineCov">        200 :   TextServiceReturn _return_text;</span>
+<span class="lineNum">     171 </span>            :   try {
+<span class="lineNum">     172 </span><span class="lineCov">        200 :     text_client-&gt;ComposeText(_return_text, req_id, text, writer_text_map);</span>
+<span class="lineNum">     173 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     174 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to send compose-text to text-service&quot;;</span>
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :     _text_service_client_pool-&gt;Remove(text_client_wrapper);</span>
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     177 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     178 </span>            :   }
+<span class="lineNum">     179 </span><span class="lineCov">        200 :   _text_service_client_pool-&gt;Keepalive(text_client_wrapper);</span>
+<span class="lineNum">     180 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     181 </span><span class="lineCov">        400 :   return _return_text;</span>
+<a name="182"><span class="lineNum">     182 </span>            : }</a>
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineCov">        200 : std::vector&lt;Media&gt; ComposePostHandler::_ComposeMediaHelper(</span>
+<span class="lineNum">     185 </span>            :     int64_t req_id, const std::vector&lt;std::string&gt; &amp;media_types,
+<span class="lineNum">     186 </span>            :     const std::vector&lt;int64_t&gt; &amp;media_ids,
+<span class="lineNum">     187 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     188 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     189 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     190 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     191 </span><span class="lineCov">        800 :       &quot;compose_media_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     192 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     193 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     194 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span><span class="lineCov">        200 :   auto media_client_wrapper = _media_service_client_pool-&gt;Pop();</span>
+<span class="lineNum">     197 </span><span class="lineCov">        200 :   if (!media_client_wrapper) {</span>
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to media-service&quot;;</span>
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     202 </span>            :     ;
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     205 </span>            :   }
+<span class="lineNum">     206 </span>            : 
+<span class="lineNum">     207 </span><span class="lineCov">        200 :   auto media_client = media_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     208 </span><span class="lineCov">        200 :   std::vector&lt;Media&gt; _return_media;</span>
+<span class="lineNum">     209 </span>            :   try {
+<span class="lineNum">     210 </span>            :     media_client-&gt;ComposeMedia(_return_media, req_id, media_types, media_ids,
+<span class="lineNum">     211 </span><span class="lineCov">        200 :                                writer_text_map);</span>
+<span class="lineNum">     212 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     213 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to send compose-media to media-service&quot;;</span>
+<span class="lineNum">     214 </span><span class="lineNoCov">          0 :     _media_service_client_pool-&gt;Remove(media_client_wrapper);</span>
+<span class="lineNum">     215 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     216 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     217 </span>            :   }
+<span class="lineNum">     218 </span><span class="lineCov">        200 :   _media_service_client_pool-&gt;Keepalive(media_client_wrapper);</span>
+<span class="lineNum">     219 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     220 </span><span class="lineCov">        400 :   return _return_media;</span>
+<a name="221"><span class="lineNum">     221 </span>            : }</a>
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span><span class="lineCov">        200 : int64_t ComposePostHandler::_ComposeUniqueIdHelper(</span>
+<span class="lineNum">     224 </span>            :     int64_t req_id, const PostType::type post_type,
+<span class="lineNum">     225 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     226 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     227 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     228 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     229 </span><span class="lineCov">        800 :       &quot;compose_unique_id_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     230 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     231 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     232 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span><span class="lineCov">        200 :   auto unique_id_client_wrapper = _unique_id_service_client_pool-&gt;Pop();</span>
+<span class="lineNum">     235 </span><span class="lineCov">        200 :   if (!unique_id_client_wrapper) {</span>
+<span class="lineNum">     236 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     237 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to unique_id-service&quot;;</span>
+<span class="lineNum">     239 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     241 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     242 </span>            :   }
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span><span class="lineCov">        200 :   auto unique_id_client = unique_id_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     245 </span>            :   int64_t _return_unique_id;
+<span class="lineNum">     246 </span>            :   try {
+<span class="lineNum">     247 </span>            :     _return_unique_id =
+<span class="lineNum">     248 </span><span class="lineCov">        200 :         unique_id_client-&gt;ComposeUniqueId(req_id, post_type, writer_text_map);</span>
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     250 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to send compose-unique_id to unique_id-service&quot;;</span>
+<span class="lineNum">     251 </span><span class="lineNoCov">          0 :     _unique_id_service_client_pool-&gt;Remove(unique_id_client_wrapper);</span>
+<span class="lineNum">     252 </span><span class="lineNoCov">          0 :     span-&gt;Finish();</span>
+<span class="lineNum">     253 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     254 </span>            :   }
+<span class="lineNum">     255 </span><span class="lineCov">        200 :   _unique_id_service_client_pool-&gt;Keepalive(unique_id_client_wrapper);</span>
+<span class="lineNum">     256 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     257 </span><span class="lineCov">        400 :   return _return_unique_id;</span>
+<a name="258"><span class="lineNum">     258 </span>            : }</a>
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span><span class="lineCov">        200 : void ComposePostHandler::_UploadPostHelper(</span>
+<span class="lineNum">     261 </span>            :     int64_t req_id, const Post &amp;post,
+<span class="lineNum">     262 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     263 </span>            :   
+<span class="lineNum">     264 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;start upload post to storage service [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post.post_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     265 </span>            :   
+<span class="lineNum">     266 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     267 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     268 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     269 </span><span class="lineCov">        800 :       &quot;store_post_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     270 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     271 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     272 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     273 </span>            : 
+<span class="lineNum">     274 </span><span class="lineCov">        200 :   auto post_storage_client_wrapper = _post_storage_client_pool-&gt;Pop();</span>
+<span class="lineNum">     275 </span><span class="lineCov">        200 :   if (!post_storage_client_wrapper) {</span>
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     277 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     278 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to post-storage-service&quot;;</span>
+<span class="lineNum">     279 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     280 </span>            :     ;
+<span class="lineNum">     281 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     282 </span>            :   }
+<span class="lineNum">     283 </span><span class="lineCov">        200 :   auto post_storage_client = post_storage_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     284 </span>            :   try {
+<span class="lineNum">     285 </span><span class="lineCov">        200 :     post_storage_client-&gt;StorePost(req_id, post, writer_text_map);</span>
+<span class="lineNum">     286 </span><span class="lineCov">        400 :     LOG(info) &lt;&lt; &quot;post storage completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post.post_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     287 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 :     _post_storage_client_pool-&gt;Remove(post_storage_client_wrapper);</span>
+<span class="lineNum">     289 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to store post to post-storage-service&quot;;</span>
+<span class="lineNum">     290 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     291 </span>            :   }
+<span class="lineNum">     292 </span><span class="lineCov">        200 :   _post_storage_client_pool-&gt;Keepalive(post_storage_client_wrapper);</span>
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     295 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;finish upload post to storage service [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<a name="296"><span class="lineNum">     296 </span><span class="lineCov">        200 : }</span></a>
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span><span class="lineCov">        200 : void ComposePostHandler::_UploadUserTimelineHelper(</span>
+<span class="lineNum">     299 </span>            :     int64_t req_id, int64_t post_id, int64_t user_id, int64_t timestamp,
+<span class="lineNum">     300 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     301 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     302 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     303 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     304 </span><span class="lineCov">        800 :       &quot;write_user_timeline_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     305 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     306 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     307 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span><span class="lineCov">        200 :   auto user_timeline_client_wrapper = _user_timeline_client_pool-&gt;Pop();</span>
+<span class="lineNum">     310 </span><span class="lineCov">        200 :   if (!user_timeline_client_wrapper) {</span>
+<span class="lineNum">     311 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     312 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to user-timeline-service&quot;;</span>
+<span class="lineNum">     314 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     315 </span>            :     ;
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     317 </span>            :   }
+<span class="lineNum">     318 </span><span class="lineCov">        200 :   auto user_timeline_client = user_timeline_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     319 </span>            :   try {
+<span class="lineNum">     320 </span>            :     user_timeline_client-&gt;WriteUserTimeline(req_id, post_id, user_id, timestamp,
+<span class="lineNum">     321 </span><span class="lineCov">        200 :                                             writer_text_map);</span>
+<span class="lineNum">     322 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 :     _user_timeline_client_pool-&gt;Remove(user_timeline_client_wrapper);</span>
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     325 </span>            :   }
+<span class="lineNum">     326 </span><span class="lineCov">        200 :   _user_timeline_client_pool-&gt;Keepalive(user_timeline_client_wrapper);</span>
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">        200 : }</span></a>
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span><span class="lineCov">        200 : void ComposePostHandler::_UploadHomeTimelineHelper(</span>
+<span class="lineNum">     332 </span>            :     int64_t req_id, int64_t post_id, int64_t user_id, int64_t timestamp,
+<span class="lineNum">     333 </span>            :     const std::vector&lt;int64_t&gt; &amp;user_mentions_id,
+<span class="lineNum">     334 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     335 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     336 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     337 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     338 </span><span class="lineCov">        800 :       &quot;write_home_timeline_client&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     339 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     340 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     341 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     342 </span>            : 
+<span class="lineNum">     343 </span><span class="lineCov">        200 :   auto home_timeline_client_wrapper = _home_timeline_client_pool-&gt;Pop();</span>
+<span class="lineNum">     344 </span><span class="lineCov">        200 :   if (!home_timeline_client_wrapper) {</span>
+<span class="lineNum">     345 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     347 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to home-timeline-service&quot;;</span>
+<span class="lineNum">     348 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; se.message;</span>
+<span class="lineNum">     349 </span>            :     ;
+<span class="lineNum">     350 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     351 </span>            :   }
+<span class="lineNum">     352 </span><span class="lineCov">        200 :   auto home_timeline_client = home_timeline_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     353 </span>            :   try {
+<span class="lineNum">     354 </span>            :     home_timeline_client-&gt;WriteHomeTimeline(req_id, post_id, user_id, timestamp,
+<span class="lineNum">     355 </span><span class="lineCov">        200 :                                             user_mentions_id, writer_text_map);</span>
+<span class="lineNum">     356 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 :     _home_timeline_client_pool-&gt;Remove(home_timeline_client_wrapper);</span>
+<span class="lineNum">     358 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to write home timeline to home-timeline-service&quot;;</span>
+<span class="lineNum">     359 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     360 </span>            :   }
+<span class="lineNum">     361 </span><span class="lineCov">        200 :   _home_timeline_client_pool-&gt;Keepalive(home_timeline_client_wrapper);</span>
+<span class="lineNum">     362 </span>            : 
+<span class="lineNum">     363 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">        200 : }</span></a>
+<span class="lineNum">     365 </span>            : 
+<span class="lineNum">     366 </span><span class="lineCov">        200 : void ComposePostHandler::ComposePost(</span>
+<span class="lineNum">     367 </span>            :     const int64_t req_id, const std::string &amp;username, int64_t user_id,
+<span class="lineNum">     368 </span>            :     const std::string &amp;text, const std::vector&lt;int64_t&gt; &amp;media_ids,
+<span class="lineNum">     369 </span>            :     const std::vector&lt;std::string&gt; &amp;media_types, const PostType::type post_type,
+<span class="lineNum">     370 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     371 </span>            :   
+<span class="lineNum">     372 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;start process compose post request [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, user=&quot; &lt;&lt; username &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     373 </span>            :   
+<span class="lineNum">     374 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     375 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     376 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     377 </span><span class="lineCov">        800 :       &quot;compose_post_server&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     378 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     379 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     380 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     381 </span>            : 
+<span class="lineNum">     382 </span>            :   auto text_future =
+<span class="lineNum">     383 </span>            :       std::async(std::launch::async, &amp;ComposePostHandler::_ComposeTextHelper,
+<span class="lineNum">     384 </span><span class="lineCov">        400 :                  this, req_id, text, writer_text_map);</span>
+<span class="lineNum">     385 </span>            :   auto creator_future =
+<span class="lineNum">     386 </span>            :       std::async(std::launch::async, &amp;ComposePostHandler::_ComposeCreaterHelper,
+<span class="lineNum">     387 </span><span class="lineCov">        400 :                  this, req_id, user_id, username, writer_text_map);</span>
+<span class="lineNum">     388 </span>            :   auto media_future =
+<span class="lineNum">     389 </span>            :       std::async(std::launch::async, &amp;ComposePostHandler::_ComposeMediaHelper,
+<span class="lineNum">     390 </span><span class="lineCov">        400 :                  this, req_id, media_types, media_ids, writer_text_map);</span>
+<span class="lineNum">     391 </span>            :   auto unique_id_future = std::async(
+<span class="lineNum">     392 </span>            :       std::launch::async, &amp;ComposePostHandler::_ComposeUniqueIdHelper, this,
+<span class="lineNum">     393 </span><span class="lineCov">        400 :       req_id, post_type, writer_text_map);</span>
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span><span class="lineCov">        400 :   Post post;</span>
+<span class="lineNum">     396 </span>            :   auto timestamp =
+<span class="lineNum">     397 </span><span class="lineCov">        400 :       duration_cast&lt;milliseconds&gt;(system_clock::now().time_since_epoch())</span>
+<span class="lineNum">     398 </span><span class="lineCov">        200 :           .count();</span>
+<span class="lineNum">     399 </span><span class="lineCov">        200 :   post.timestamp = timestamp;</span>
+<span class="lineNum">     400 </span>            : 
+<span class="lineNum">     401 </span><span class="lineCov">        200 :   post.post_id = unique_id_future.get();</span>
+<span class="lineNum">     402 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;get unique id: &quot; &lt;&lt; post.post_id &lt;&lt; &quot; [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     403 </span>            :   
+<span class="lineNum">     404 </span><span class="lineCov">        200 :   post.creator = creator_future.get();</span>
+<span class="lineNum">     405 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;get creator info [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     406 </span>            :   
+<span class="lineNum">     407 </span><span class="lineCov">        200 :   post.media = media_future.get();</span>
+<span class="lineNum">     408 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;get media info, media count: &quot; &lt;&lt; post.media.size() &lt;&lt; &quot; [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     409 </span>            :   
+<span class="lineNum">     410 </span><span class="lineCov">        400 :   auto text_return = text_future.get();</span>
+<span class="lineNum">     411 </span><span class="lineCov">        200 :   post.text = text_return.text;</span>
+<span class="lineNum">     412 </span><span class="lineCov">        200 :   post.urls = text_return.urls;</span>
+<span class="lineNum">     413 </span><span class="lineCov">        200 :   post.user_mentions = text_return.user_mentions;</span>
+<span class="lineNum">     414 </span><span class="lineCov">        800 :   LOG(info) &lt;&lt; &quot;get text info, text length: &quot; &lt;&lt; post.text.length() </span>
+<span class="lineNum">     415 </span><span class="lineCov">        400 :              &lt;&lt; &quot;, user mention count: &quot; &lt;&lt; post.user_mentions.size()</span>
+<span class="lineNum">     416 </span><span class="lineCov">        400 :              &lt;&lt; &quot; [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     417 </span>            :   
+<span class="lineNum">     418 </span><span class="lineCov">        200 :   post.req_id = req_id;</span>
+<span class="lineNum">     419 </span><span class="lineCov">        200 :   post.post_type = post_type;</span>
+<span class="lineNum">     420 </span>            : 
+<span class="lineNum">     421 </span><span class="lineCov">        400 :   std::vector&lt;int64_t&gt; user_mention_ids;</span>
+<span class="lineNum">     422 </span><span class="lineCov">        200 :   for (auto &amp;item : post.user_mentions) {</span>
+<span class="lineNum">     423 </span><span class="lineNoCov">          0 :     user_mention_ids.emplace_back(item.user_id);</span>
+<span class="lineNum">     424 </span>            :   }
+<span class="lineNum">     425 </span>            : 
+<span class="lineNum">     426 </span>            :   //In mixed workloed condition, need to make sure _UploadPostHelper execute
+<span class="lineNum">     427 </span>            :   //Before _UploadUserTimelineHelper and _UploadHomeTimelineHelper.
+<span class="lineNum">     428 </span>            :   //Change _UploadUserTimelineHelper and _UploadHomeTimelineHelper to deferred.
+<span class="lineNum">     429 </span>            :   //To let them start execute after post_future.get() return.
+<span class="lineNum">     430 </span>            :   auto post_future =
+<span class="lineNum">     431 </span>            :       std::async(std::launch::async, &amp;ComposePostHandler::_UploadPostHelper,
+<span class="lineNum">     432 </span><span class="lineCov">        400 :                  this, req_id, post, writer_text_map);</span>
+<span class="lineNum">     433 </span>            :   auto user_timeline_future = std::async(
+<span class="lineNum">     434 </span>            :       std::launch::deferred, &amp;ComposePostHandler::_UploadUserTimelineHelper, this,
+<span class="lineNum">     435 </span><span class="lineCov">        400 :       req_id, post.post_id, user_id, timestamp, writer_text_map);</span>
+<span class="lineNum">     436 </span>            :   auto home_timeline_future = std::async(
+<span class="lineNum">     437 </span>            :       std::launch::deferred, &amp;ComposePostHandler::_UploadHomeTimelineHelper, this,
+<span class="lineNum">     438 </span>            :       req_id, post.post_id, user_id, timestamp, user_mention_ids,
+<span class="lineNum">     439 </span><span class="lineCov">        400 :       writer_text_map);</span>
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span><span class="lineCov">        200 :   post_future.get();</span>
+<span class="lineNum">     442 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;post storage completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post.post_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     443 </span>            :   
+<span class="lineNum">     444 </span><span class="lineCov">        200 :   user_timeline_future.get();</span>
+<span class="lineNum">     445 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;user timeline update completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     446 </span>            :   
+<span class="lineNum">     447 </span><span class="lineCov">        200 :   home_timeline_future.get();</span>
+<span class="lineNum">     448 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;home timeline update completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     449 </span>            :   
+<span class="lineNum">     450 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     451 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;compose post request completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post.post_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     452 </span><span class="lineCov">        200 : }</span>
+<span class="lineNum">     453 </span>            : 
+<span class="lineNum">     454 </span>            : }  // namespace social_network
+<span class="lineNum">     455 </span>            : 
+<span class="lineNum">     456 </span>            : #endif  // SOCIAL_NETWORK_MICROSERVICES_SRC_COMPOSEPOSTSERVICE_COMPOSEPOSTHANDLER_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

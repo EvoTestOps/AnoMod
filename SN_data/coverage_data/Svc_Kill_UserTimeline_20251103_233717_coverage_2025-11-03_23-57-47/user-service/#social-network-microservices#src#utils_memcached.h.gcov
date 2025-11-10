@@ -1,0 +1,122 @@
+        -:    0:Source:/social-network-microservices/src/utils_memcached.h
+        -:    0:Graph:/social-network-microservices/build/src/UserService/CMakeFiles/UserService.dir/UserService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/UserService/CMakeFiles/UserService.dir/UserService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_MEMCACHED_H_
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_MEMCACHED_H_
+        -:    3:
+        -:    4:#include <libmemcached/memcached.h>
+        -:    5:#include <libmemcached/util.h>
+        -:    6:
+        -:    7:namespace social_network {
+        -:    8:
+function _ZN14social_network26init_memcached_client_poolERKN8nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerEEERKS9_jj called 1 returned 100% blocks executed 69%
+        1:    9:memcached_pool_st *init_memcached_client_pool(
+        -:   10:    const json &config_json,
+        -:   11:    const std::string &service_name,
+        -:   12:    uint32_t min_size,
+        -:   13:    uint32_t max_size
+        -:   14:) {
+        2:   15:  std::string addr = config_json[service_name + "-memcached"]["addr"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 returned 100%
+call   14 never executed
+        1:   16:  int port = config_json[service_name + "-memcached"]["port"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 never executed
+        1:   17:  int use_binary_protocol = config_json[service_name + "-memcached"]["binary_protocol"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 never executed
+call   14 never executed
+        2:   18:  std::string config_str = "--SERVER=" + addr + ":" + std::to_string(port);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+call   15 returned 100%
+call   16 never executed
+call   17 never executed
+call   18 never executed
+        1:   19:  auto memcached_client = memcached(config_str.c_str(), config_str.length());
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+        1:   20:  memcached_behavior_set(memcached_client, MEMCACHED_BEHAVIOR_NO_BLOCK, 1);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        1:   21:  memcached_behavior_set(memcached_client, MEMCACHED_BEHAVIOR_TCP_NODELAY, 1);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        1:   22:  if (use_binary_protocol == 1) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   23:    memcached_behavior_set(memcached_client, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, 1);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:   24:  }
+        -:   25:
+        -:   26:  auto memcached_client_pool =
+        1:   27:      memcached_pool_create(memcached_client, min_size, max_size);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        2:   28:  return memcached_client_pool;
+call    0 never executed
+        -:   29:}
+        -:   30:
+        -:   31:} // namespace social_network
+        -:   32:
+        -:   33:#endif //SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_MEMCACHED_H_

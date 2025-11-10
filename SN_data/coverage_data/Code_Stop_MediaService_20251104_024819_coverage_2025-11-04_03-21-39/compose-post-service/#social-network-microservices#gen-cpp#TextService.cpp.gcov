@@ -1,0 +1,1433 @@
+        -:    0:Source:/social-network-microservices/gen-cpp/TextService.cpp
+        -:    0:Graph:/social-network-microservices/build/src/ComposePostService/CMakeFiles/ComposePostService.dir/__/__/gen-cpp/TextService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/ComposePostService/CMakeFiles/ComposePostService.dir/__/__/gen-cpp/TextService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*EOF*/
+        -:    2:/*EOF*/
+        -:    3:/*EOF*/
+        -:    4:/*EOF*/
+        -:    5:/*EOF*/
+        -:    6:/*EOF*/
+        -:    7:/*EOF*/
+        -:    8:/*EOF*/
+        -:    9:/*EOF*/
+        -:   10:/*EOF*/
+        -:   11:/*EOF*/
+function _ZN14social_network28TextService_ComposeText_argsD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network28TextService_ComposeText_argsD2Ev called 0 returned 0% blocks executed 0%
+    #####:   12:/*EOF*/
+call    0 never executed
+call    1 never executed
+    #####:   13:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+        -:   14:/*EOF*/
+        -:   15:/*EOF*/
+function _ZN14social_network28TextService_ComposeText_args4readEPN6apache6thrift8protocol9TProtocolE called 0 returned 0% blocks executed 0%
+    #####:   16:/*EOF*/
+        -:   17:/*EOF*/
+    #####:   18:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:   19:/*EOF*/
+    #####:   20:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:   21:/*EOF*/
+        -:   22:/*EOF*/
+        -:   23:/*EOF*/
+    #####:   24:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   25:/*EOF*/
+        -:   26:/*EOF*/
+        -:   27:/*EOF*/
+        -:   28:/*EOF*/
+    #####:   29:/*EOF*/
+        -:   30:/*EOF*/
+    #####:   31:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   32:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:   33:/*EOF*/
+        -:   34:/*EOF*/
+    #####:   35:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   36:/*EOF*/
+        -:   37:/*EOF*/
+    #####:   38:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:   39:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   40:/*EOF*/
+        -:   41:/*EOF*/
+    #####:   42:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   43:/*EOF*/
+    #####:   44:/*EOF*/
+        -:   45:/*EOF*/
+    #####:   46:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:   47:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   48:/*EOF*/
+        -:   49:/*EOF*/
+    #####:   50:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   51:/*EOF*/
+    #####:   52:/*EOF*/
+        -:   53:/*EOF*/
+    #####:   54:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+        -:   55:/*EOF*/
+    #####:   56:/*EOF*/
+call    0 never executed
+        -:   57:/*EOF*/
+        -:   58:/*EOF*/
+        -:   59:/*EOF*/
+    #####:   60:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   61:/*EOF*/
+    #####:   62:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+        -:   63:/*EOF*/
+    #####:   64:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   65:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   66:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   67:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   68:/*EOF*/
+    #####:   69:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   70:/*EOF*/
+    #####:   71:/*EOF*/
+        -:   72:/*EOF*/
+    #####:   73:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   74:/*EOF*/
+    #####:   75:/*EOF*/
+        -:   76:/*EOF*/
+    #####:   77:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   78:/*EOF*/
+        -:   79:/*EOF*/
+    #####:   80:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   81:/*EOF*/
+        -:   82:/*EOF*/
+    #####:   83:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   84:/*EOF*/
+    #####:   85:/*EOF*/
+        -:   86:/*EOF*/
+        -:   87:/*EOF*/
+function _ZNK14social_network28TextService_ComposeText_args5writeEPN6apache6thrift8protocol9TProtocolE called 0 returned 0% blocks executed 0%
+    #####:   88:/*EOF*/
+    #####:   89:/*EOF*/
+    #####:   90:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:   91:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   92:/*EOF*/
+    #####:   93:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   94:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   95:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   96:/*EOF*/
+    #####:   97:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   98:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   99:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  100:/*EOF*/
+    #####:  101:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  102:/*EOF*/
+    #####:  103:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  104:/*EOF*/
+call    0 never executed
+    #####:  105:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+        -:  106:/*EOF*/
+    #####:  107:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  108:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  109:/*EOF*/
+    #####:  110:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  111:/*EOF*/
+    #####:  112:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  113:/*EOF*/
+    #####:  114:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  115:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  116:/*EOF*/
+        -:  117:/*EOF*/
+        -:  118:/*EOF*/
+        -:  119:/*EOF*/
+function _ZN14social_network29TextService_ComposeText_pargsD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network29TextService_ComposeText_pargsD2Ev called 200 returned 100% blocks executed 67%
+      200:  120:/*EOF*/
+      200:  121:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+call    4 never executed
+        -:  122:/*EOF*/
+        -:  123:/*EOF*/
+function _ZNK14social_network29TextService_ComposeText_pargs5writeEPN6apache6thrift8protocol9TProtocolE called 200 returned 100% blocks executed 91%
+      200:  124:/*EOF*/
+      200:  125:/*EOF*/
+      400:  126:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+      200:  127:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  128:/*EOF*/
+      200:  129:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  130:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  131:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  132:/*EOF*/
+      200:  133:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  134:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  135:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  136:/*EOF*/
+      200:  137:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  138:/*EOF*/
+      200:  139:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+      200:  140:/*EOF*/
+call    0 returned 100%
+      400:  141:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 50% (fallthrough)
+branch  4 taken 50%
+call    5 returned 100%
+        -:  142:/*EOF*/
+      200:  143:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+      200:  144:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+        -:  145:/*EOF*/
+      200:  146:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  147:/*EOF*/
+      200:  148:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  149:/*EOF*/
+      200:  150:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  151:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      400:  152:/*EOF*/
+        -:  153:/*EOF*/
+        -:  154:/*EOF*/
+        -:  155:/*EOF*/
+function _ZN14social_network30TextService_ComposeText_resultD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network30TextService_ComposeText_resultD2Ev called 0 returned 0% blocks executed 0%
+    #####:  156:/*EOF*/
+call    0 never executed
+call    1 never executed
+    #####:  157:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+        -:  158:/*EOF*/
+        -:  159:/*EOF*/
+function _ZN14social_network30TextService_ComposeText_result4readEPN6apache6thrift8protocol9TProtocolE called 0 returned 0% blocks executed 0%
+    #####:  160:/*EOF*/
+        -:  161:/*EOF*/
+    #####:  162:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  163:/*EOF*/
+    #####:  164:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  165:/*EOF*/
+        -:  166:/*EOF*/
+        -:  167:/*EOF*/
+    #####:  168:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  169:/*EOF*/
+        -:  170:/*EOF*/
+        -:  171:/*EOF*/
+        -:  172:/*EOF*/
+    #####:  173:/*EOF*/
+        -:  174:/*EOF*/
+    #####:  175:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  176:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  177:/*EOF*/
+        -:  178:/*EOF*/
+    #####:  179:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  180:/*EOF*/
+        -:  181:/*EOF*/
+    #####:  182:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  183:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  184:/*EOF*/
+        -:  185:/*EOF*/
+    #####:  186:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  187:/*EOF*/
+    #####:  188:/*EOF*/
+        -:  189:/*EOF*/
+    #####:  190:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  191:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  192:/*EOF*/
+        -:  193:/*EOF*/
+    #####:  194:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  195:/*EOF*/
+    #####:  196:/*EOF*/
+        -:  197:/*EOF*/
+    #####:  198:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  199:/*EOF*/
+        -:  200:/*EOF*/
+    #####:  201:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  202:/*EOF*/
+        -:  203:/*EOF*/
+    #####:  204:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  205:/*EOF*/
+    #####:  206:/*EOF*/
+        -:  207:/*EOF*/
+        -:  208:/*EOF*/
+function _ZNK14social_network30TextService_ComposeText_result5writeEPN6apache6thrift8protocol9TProtocolE called 0 returned 0% blocks executed 0%
+    #####:  209:/*EOF*/
+        -:  210:/*EOF*/
+    #####:  211:/*EOF*/
+        -:  212:/*EOF*/
+    #####:  213:/*EOF*/
+call    0 never executed
+        -:  214:/*EOF*/
+    #####:  215:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  216:/*EOF*/
+call    0 never executed
+    #####:  217:/*EOF*/
+call    0 never executed
+    #####:  218:/*EOF*/
+call    0 never executed
+    #####:  219:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  220:/*EOF*/
+call    0 never executed
+    #####:  221:/*EOF*/
+call    0 never executed
+    #####:  222:/*EOF*/
+call    0 never executed
+        -:  223:/*EOF*/
+    #####:  224:/*EOF*/
+call    0 never executed
+    #####:  225:/*EOF*/
+call    0 never executed
+    #####:  226:/*EOF*/
+        -:  227:/*EOF*/
+        -:  228:/*EOF*/
+        -:  229:/*EOF*/
+function _ZN14social_network31TextService_ComposeText_presultD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network31TextService_ComposeText_presultD2Ev called 200 returned 100% blocks executed 75%
+      200:  230:/*EOF*/
+call    0 returned 100%
+      200:  231:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+call    4 never executed
+        -:  232:/*EOF*/
+        -:  233:/*EOF*/
+function _ZN14social_network31TextService_ComposeText_presult4readEPN6apache6thrift8protocol9TProtocolE called 200 returned 100% blocks executed 59%
+      200:  234:/*EOF*/
+        -:  235:/*EOF*/
+      400:  236:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+      200:  237:/*EOF*/
+      400:  238:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+        -:  239:/*EOF*/
+        -:  240:/*EOF*/
+        -:  241:/*EOF*/
+      200:  242:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  243:/*EOF*/
+        -:  244:/*EOF*/
+        -:  245:/*EOF*/
+        -:  246:/*EOF*/
+      200:  247:/*EOF*/
+        -:  248:/*EOF*/
+      400:  249:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      400:  250:/*EOF*/
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+      200:  251:/*EOF*/
+        -:  252:/*EOF*/
+      200:  253:/*EOF*/
+branch  0 taken 100%
+branch  1 taken 0%
+branch  2 taken 0%
+        -:  254:/*EOF*/
+        -:  255:/*EOF*/
+      200:  256:/*EOF*/
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+      200:  257:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  258:/*EOF*/
+        -:  259:/*EOF*/
+    #####:  260:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  261:/*EOF*/
+      200:  262:/*EOF*/
+        -:  263:/*EOF*/
+    #####:  264:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  265:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  266:/*EOF*/
+        -:  267:/*EOF*/
+    #####:  268:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  269:/*EOF*/
+    #####:  270:/*EOF*/
+        -:  271:/*EOF*/
+    #####:  272:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  273:/*EOF*/
+        -:  274:/*EOF*/
+      200:  275:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  276:/*EOF*/
+        -:  277:/*EOF*/
+      200:  278:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  279:/*EOF*/
+      400:  280:/*EOF*/
+        -:  281:/*EOF*/
+        -:  282:/*EOF*/
+function _ZN14social_network17TextServiceClient11ComposeTextERNS_17TextServiceReturnElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS8_S8_St4lessIS8_ESaISt4pairIS9_S8_EEE called 200 returned 100% blocks executed 100%
+      200:  283:/*EOF*/
+        -:  284:/*EOF*/
+      200:  285:/*EOF*/
+call    0 returned 100%
+      200:  286:/*EOF*/
+call    0 returned 100%
+      200:  287:/*EOF*/
+        -:  288:/*EOF*/
+function _ZN14social_network17TextServiceClient16send_ComposeTextElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEE called 200 returned 100% blocks executed 66%
+      200:  289:/*EOF*/
+        -:  290:/*EOF*/
+      200:  291:/*EOF*/
+      200:  292:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+        -:  293:/*EOF*/
+      400:  294:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      200:  295:/*EOF*/
+      200:  296:/*EOF*/
+      200:  297:/*EOF*/
+      200:  298:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  299:/*EOF*/
+      200:  300:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  301:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 never executed
+      200:  302:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 never executed
+      200:  303:/*EOF*/
+        -:  304:/*EOF*/
+function _ZN14social_network17TextServiceClient16recv_ComposeTextERNS_17TextServiceReturnE called 200 returned 100% blocks executed 25%
+      200:  305:/*EOF*/
+        -:  306:/*EOF*/
+        -:  307:/*EOF*/
+      200:  308:/*EOF*/
+      400:  309:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+        -:  310:/*EOF*/
+        -:  311:/*EOF*/
+      200:  312:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  313:/*EOF*/
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  314:/*EOF*/
+call    0 never executed
+call    1 never executed
+    #####:  315:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  316:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  317:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  318:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  319:/*EOF*/
+      200:  320:/*EOF*/
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  321:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  322:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  323:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  324:/*EOF*/
+      200:  325:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+    #####:  326:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  327:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  328:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  329:/*EOF*/
+      400:  330:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      200:  331:/*EOF*/
+      200:  332:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  333:/*EOF*/
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  334:/*EOF*/
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 never executed
+        -:  335:/*EOF*/
+      200:  336:/*EOF*/
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:  337:/*EOF*/
+      400:  338:/*EOF*/
+        -:  339:/*EOF*/
+    #####:  340:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  341:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  342:/*EOF*/
+    #####:  343:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+        -:  344:/*EOF*/
+        -:  345:/*EOF*/
+function _ZN14social_network20TextServiceProcessor12dispatchCallEPN6apache6thrift8protocol9TProtocolES5_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiPv called 0 returned 0% blocks executed 0%
+    #####:  346:/*EOF*/
+    #####:  347:/*EOF*/
+call    0 never executed
+    #####:  348:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  349:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  350:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  351:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  352:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  353:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  354:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  355:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  356:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  357:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  358:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  359:/*EOF*/
+        -:  360:/*EOF*/
+    #####:  361:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  362:/*EOF*/
+        -:  363:/*EOF*/
+        -:  364:/*EOF*/
+function _ZN14social_network20TextServiceProcessor19process_ComposeTextEiPN6apache6thrift8protocol9TProtocolES5_Pv called 0 returned 0% blocks executed 0%
+    #####:  365:/*EOF*/
+        -:  366:/*EOF*/
+    #####:  367:/*EOF*/
+    #####:  368:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  369:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  370:/*EOF*/
+    #####:  371:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  372:/*EOF*/
+    #####:  373:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  374:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  375:/*EOF*/
+        -:  376:/*EOF*/
+    #####:  377:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+    #####:  378:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  379:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  380:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+        -:  381:/*EOF*/
+    #####:  382:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  383:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  384:/*EOF*/
+        -:  385:/*EOF*/
+    #####:  386:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+        -:  387:/*EOF*/
+    #####:  388:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  389:/*EOF*/
+    =====:  390:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    =====:  391:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  392:/*EOF*/
+    =====:  393:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    =====:  394:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  395:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  396:/*EOF*/
+        -:  397:/*EOF*/
+    =====:  398:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    =====:  399:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    =====:  400:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  401:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  402:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    =====:  403:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    =====:  404:/*EOF*/
+        -:  405:/*EOF*/
+        -:  406:/*EOF*/
+    #####:  407:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  408:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  409:/*EOF*/
+        -:  410:/*EOF*/
+    #####:  411:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  412:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  413:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  414:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  415:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  416:/*EOF*/
+    #####:  417:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  418:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+        -:  419:/*EOF*/
+        -:  420:/*EOF*/
+        -:  421:/*EOF*/
+function _ZN14social_network27TextServiceProcessorFactory12getProcessorERKN6apache6thrift15TConnectionInfoE called 0 returned 0% blocks executed 0%
+    #####:  422:/*EOF*/
+    #####:  423:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  424:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  425:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:  426:/*EOF*/
+call    0 never executed
+        -:  427:/*EOF*/
+        -:  428:/*EOF*/
+function _ZN14social_network27TextServiceConcurrentClient11ComposeTextERNS_17TextServiceReturnElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS8_S8_St4lessIS8_ESaISt4pairIS9_S8_EEE called 0 returned 0% blocks executed 0%
+    #####:  429:/*EOF*/
+        -:  430:/*EOF*/
+    #####:  431:/*EOF*/
+call    0 never executed
+    #####:  432:/*EOF*/
+call    0 never executed
+    #####:  433:/*EOF*/
+        -:  434:/*EOF*/
+function _ZN14social_network27TextServiceConcurrentClient16send_ComposeTextElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEE called 0 returned 0% blocks executed 0%
+    #####:  435:/*EOF*/
+        -:  436:/*EOF*/
+    #####:  437:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  438:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  439:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  440:/*EOF*/
+    #####:  441:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  442:/*EOF*/
+    #####:  443:/*EOF*/
+    #####:  444:/*EOF*/
+    #####:  445:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  446:/*EOF*/
+    #####:  447:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  448:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  449:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  450:/*EOF*/
+    #####:  451:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  452:/*EOF*/
+        -:  453:/*EOF*/
+        -:  454:/*EOF*/
+function _ZN14social_network27TextServiceConcurrentClient16recv_ComposeTextERNS_17TextServiceReturnEi called 0 returned 0% blocks executed 0%
+    #####:  455:/*EOF*/
+        -:  456:/*EOF*/
+        -:  457:/*EOF*/
+    #####:  458:/*EOF*/
+    #####:  459:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  460:/*EOF*/
+        -:  461:/*EOF*/
+        -:  462:/*EOF*/
+        -:  463:/*EOF*/
+    #####:  464:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  465:/*EOF*/
+    #####:  466:/*EOF*/
+    #####:  467:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  468:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  469:/*EOF*/
+    #####:  470:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  471:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  472:/*EOF*/
+call    0 never executed
+call    1 never executed
+    #####:  473:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  474:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  475:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  476:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  477:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  478:/*EOF*/
+    #####:  479:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  480:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  481:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  482:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  483:/*EOF*/
+    #####:  484:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  485:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  486:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  487:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  488:/*EOF*/
+        -:  489:/*EOF*/
+        -:  490:/*EOF*/
+    #####:  491:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  492:/*EOF*/
+    #####:  493:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  494:/*EOF*/
+    #####:  495:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  496:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  497:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+        -:  498:/*EOF*/
+    #####:  499:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+        -:  500:/*EOF*/
+    #####:  501:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  502:/*EOF*/
+        -:  503:/*EOF*/
+    #####:  504:/*EOF*/
+branch  0 never executed
+branch  1 never executed
+    #####:  505:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  506:/*EOF*/
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  507:/*EOF*/
+        -:  508:/*EOF*/
+    #####:  509:/*EOF*/
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+        -:  510:/*EOF*/
+        -:  511:/*EOF*/
+    #####:  512:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  513:/*EOF*/
+        -:  514:/*EOF*/
+    #####:  515:/*EOF*/
+call    0 never executed
+branch  1 never executed
+branch  2 never executed

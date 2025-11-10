@@ -1,0 +1,122 @@
+        -:    0:Source:/social-network-microservices/src/utils_thrift.h
+        -:    0:Graph:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_THRIFT_H_
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_THRIFT_H_
+        -:    3:
+        -:    4:#include <string>
+        -:    5:#include <nlohmann/json.hpp>
+        -:    6:#include <thrift/transport/TServerSocket.h>
+        -:    7:#include <thrift/transport/TSSLSocket.h>
+        -:    8:#include <thrift/transport/TSSLServerSocket.h>
+        -:    9:
+        -:   10:namespace social_network{
+        -:   11:using json = nlohmann::json;
+        -:   12:using apache::thrift::transport::TServerSocket;
+        -:   13:using apache::thrift::transport::TSSLServerSocket;
+        -:   14:using apache::thrift::transport::TSSLSocketFactory;
+        -:   15:
+function _ZN14social_network17get_server_socketERKN8nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerEEERKS9_i called 1 returned 100% blocks executed 14%
+        1:   16:std::shared_ptr<TServerSocket> get_server_socket(const json &config_json, const std::string &address, int port) {
+        1:   17:  bool ssl_enabled = config_json["ssl"]["enabled"];
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+        1:   18:  if (ssl_enabled) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   19:    std::string cert_path = config_json["ssl"]["serverCertPath"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:   20:    std::string key_path = config_json["ssl"]["serverKeyPath"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:   21:    std::string ca_path = config_json["ssl"]["caPath"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:   22:    std::string ciphers = config_json["ssl"]["ciphers"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+        -:   23:
+    #####:   24:    std::shared_ptr<TSSLSocketFactory> ssl_socket_factory;
+call    0 never executed
+call    1 never executed
+    #####:   25:    ssl_socket_factory = std::make_shared<TSSLSocketFactory>();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:   26:    ssl_socket_factory->loadCertificate(cert_path.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   27:    ssl_socket_factory->loadPrivateKey(key_path.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   28:    ssl_socket_factory->ciphers(ciphers);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   29:    // if (config_json["ssl"]["verifyClient"]) {
+        -:   30:    //   ssl_socket_factory->loadTrustedCertificates(ca_path.c_str());
+        -:   31:    //   ssl_socket_factory->authenticate(true);
+        -:   32:    // }
+    #####:   33:    return std::make_shared<TSSLServerSocket>(address, port, ssl_socket_factory);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:   34:  }
+        1:   35:  return std::make_shared<TServerSocket>(address, port);
+call    0 returned 100%
+        -:   36:};
+        -:   37:
+        -:   38:} //namespace social_network
+        -:   39:
+        -:   40:#endif //SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_THRIFT_H_

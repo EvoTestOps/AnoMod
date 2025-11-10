@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/UserMentionService/UserMentionHandler.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/UserMentionService</a> - UserMentionHandler.h<span style="font-size: 80%;"> (source / <a href="UserMentionHandler.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">21</td>
+            <td class="headerCovTableEntry">142</td>
+            <td class="headerCovTableEntryLo">14.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-11-04 02:23:25</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_USERMENTIONSERVICE_USERMENTIONHANDLER_H_</a>
+<span class="lineNum">       2 </span>            : #define SOCIAL_NETWORK_MICROSERVICES_SRC_USERMENTIONSERVICE_USERMENTIONHANDLER_H_
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;bson.h&gt;
+<span class="lineNum">       5 </span>            : #include &lt;libmemcached/memcached.h&gt;
+<span class="lineNum">       6 </span>            : #include &lt;libmemcached/util.h&gt;
+<span class="lineNum">       7 </span>            : #include &lt;mongoc.h&gt;
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #include &quot;../../gen-cpp/UserMentionService.h&quot;
+<span class="lineNum">      10 </span>            : #include &quot;../../gen-cpp/social_network_types.h&quot;
+<span class="lineNum">      11 </span>            : #include &quot;../ClientPool.h&quot;
+<span class="lineNum">      12 </span>            : #include &quot;../logger.h&quot;
+<span class="lineNum">      13 </span>            : #include &quot;../tracing.h&quot;
+<span class="lineNum">      14 </span>            : #include &quot;../utils.h&quot;
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : namespace social_network {
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : class UserMentionHandler : public UserMentionServiceIf {
+<a name="19"><span class="lineNum">      19 </span>            :  public:</a>
+<span class="lineNum">      20 </span>            :   UserMentionHandler(memcached_pool_st *, mongoc_client_pool_t *);
+<span class="lineNum">      21 </span><span class="lineNoCov">          0 :   ~UserMentionHandler() override = default;</span>
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            :   void ComposeUserMentions(std::vector&lt;UserMention&gt; &amp;_return, int64_t,
+<span class="lineNum">      24 </span>            :                            const std::vector&lt;std::string&gt; &amp;,
+<span class="lineNum">      25 </span>            :                            const std::map&lt;std::string, std::string&gt; &amp;) override;
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            :  private:
+<span class="lineNum">      28 </span>            :   memcached_pool_st *_memcached_client_pool;
+<span class="lineNum">      29 </span>            :   mongoc_client_pool_t *_mongodb_client_pool;
+<a name="30"><span class="lineNum">      30 </span>            : };</a>
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span><span class="lineCov">          1 : UserMentionHandler::UserMentionHandler(</span>
+<span class="lineNum">      33 </span>            :     memcached_pool_st *memcached_client_pool,
+<span class="lineNum">      34 </span><span class="lineCov">          1 :     mongoc_client_pool_t *mongodb_client_pool) {</span>
+<span class="lineNum">      35 </span><span class="lineCov">          1 :   _memcached_client_pool = memcached_client_pool;</span>
+<span class="lineNum">      36 </span><span class="lineCov">          1 :   _mongodb_client_pool = mongodb_client_pool;</span>
+<a name="37"><span class="lineNum">      37 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span><span class="lineCov">        200 : void UserMentionHandler::ComposeUserMentions(</span>
+<span class="lineNum">      40 </span>            :     std::vector&lt;UserMention&gt; &amp;_return, int64_t req_id,
+<span class="lineNum">      41 </span>            :     const std::vector&lt;std::string&gt; &amp;usernames,
+<span class="lineNum">      42 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">      43 </span>            :   // 记录收到请求
+<span class="lineNum">      44 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;Received ComposeUserMentions request [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, usernames count=&quot; &lt;&lt; usernames.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            :   // Initialize a span
+<span class="lineNum">      47 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">      48 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">      49 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">      50 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">      51 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">      52 </span>            :       &quot;compose_user_mentions_server&quot;,
+<span class="lineNum">      53 </span><span class="lineCov">        800 :       {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">      54 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span><span class="lineCov">        400 :   std::vector&lt;UserMention&gt; user_mentions;</span>
+<span class="lineNum">      57 </span><span class="lineCov">        200 :   if (!usernames.empty()) {</span>
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :     std::map&lt;std::string, bool&gt; usernames_not_cached;</span>
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :     for (auto &amp;username : usernames) {</span>
+<span class="lineNum">      61 </span><span class="lineNoCov">          0 :       usernames_not_cached.emplace(std::make_pair(username, false));</span>
+<span class="lineNum">      62 </span>            :     }
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            :     // Find in Memcached
+<span class="lineNum">      65 </span>            :     memcached_return_t rc;
+<span class="lineNum">      66 </span><span class="lineNoCov">          0 :     auto client = memcached_pool_pop(_memcached_client_pool, true, &amp;rc);</span>
+<span class="lineNum">      67 </span><span class="lineNoCov">          0 :     if (!client) {</span>
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :       ServiceException se;</span>
+<span class="lineNum">      69 </span><span class="lineNoCov">          0 :       se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;</span>
+<span class="lineNum">      70 </span><span class="lineNoCov">          0 :       se.message = &quot;Failed to pop a client from memcached pool&quot;;</span>
+<span class="lineNum">      71 </span><span class="lineNoCov">          0 :       throw se;</span>
+<span class="lineNum">      72 </span>            :     }
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span>            :     char **keys;
+<span class="lineNum">      75 </span>            :     size_t *key_sizes;
+<span class="lineNum">      76 </span><span class="lineNoCov">          0 :     keys = new char *[usernames.size()];</span>
+<span class="lineNum">      77 </span><span class="lineNoCov">          0 :     key_sizes = new size_t[usernames.size()];</span>
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :     int idx = 0;</span>
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 :     for (auto &amp;username : usernames) {</span>
+<span class="lineNum">      80 </span><span class="lineNoCov">          0 :       std::string key_str = username + &quot;:user_id&quot;;</span>
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :       keys[idx] = new char[key_str.length() + 1];</span>
+<span class="lineNum">      82 </span><span class="lineNoCov">          0 :       strcpy(keys[idx], key_str.c_str());</span>
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :       key_sizes[idx] = key_str.length();</span>
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 :       idx++;</span>
+<span class="lineNum">      85 </span>            :     }
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span><span class="lineNoCov">          0 :     auto get_span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">      88 </span>            :         &quot;compose_user_mentions_memcached_get_client&quot;,
+<span class="lineNum">      89 </span><span class="lineNoCov">          0 :         {opentracing::ChildOf(&amp;span-&gt;context())});</span>
+<span class="lineNum">      90 </span><span class="lineNoCov">          0 :     rc = memcached_mget(client, keys, key_sizes, usernames.size());</span>
+<span class="lineNum">      91 </span><span class="lineNoCov">          0 :     if (rc != MEMCACHED_SUCCESS) {</span>
+<span class="lineNum">      92 </span><span class="lineNoCov">          0 :       LOG(error) &lt;&lt; &quot;Cannot get usernames of request &quot; &lt;&lt; req_id &lt;&lt; &quot;: &quot;</span>
+<span class="lineNum">      93 </span><span class="lineNoCov">          0 :                  &lt;&lt; memcached_strerror(client, rc);</span>
+<span class="lineNum">      94 </span><span class="lineNoCov">          0 :       ServiceException se;</span>
+<span class="lineNum">      95 </span><span class="lineNoCov">          0 :       se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;</span>
+<span class="lineNum">      96 </span><span class="lineNoCov">          0 :       se.message = memcached_strerror(client, rc);</span>
+<span class="lineNum">      97 </span><span class="lineNoCov">          0 :       memcached_pool_push(_memcached_client_pool, client);</span>
+<span class="lineNum">      98 </span><span class="lineNoCov">          0 :       get_span-&gt;Finish();</span>
+<span class="lineNum">      99 </span><span class="lineNoCov">          0 :       throw se;</span>
+<span class="lineNum">     100 </span>            :     }
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span>            :     char return_key[MEMCACHED_MAX_KEY];
+<span class="lineNum">     103 </span>            :     size_t return_key_length;
+<span class="lineNum">     104 </span>            :     char *return_value;
+<span class="lineNum">     105 </span>            :     size_t return_value_length;
+<span class="lineNum">     106 </span>            :     uint32_t flags;
+<span class="lineNum">     107 </span>            : 
+<span class="lineNum">     108 </span><span class="lineNoCov">          0 :     while (true) {</span>
+<span class="lineNum">     109 </span>            :       return_value = memcached_fetch(client, return_key, &amp;return_key_length,
+<span class="lineNum">     110 </span><span class="lineNoCov">          0 :                                      &amp;return_value_length, &amp;flags, &amp;rc);</span>
+<span class="lineNum">     111 </span><span class="lineNoCov">          0 :       if (return_value == nullptr) {</span>
+<span class="lineNum">     112 </span><span class="lineNoCov">          0 :         LOG(debug) &lt;&lt; &quot;Memcached mget finished &quot;</span>
+<span class="lineNum">     113 </span><span class="lineNoCov">          0 :                    &lt;&lt; memcached_strerror(client, rc);</span>
+<span class="lineNum">     114 </span><span class="lineNoCov">          0 :         break;</span>
+<span class="lineNum">     115 </span>            :       }
+<span class="lineNum">     116 </span><span class="lineNoCov">          0 :       if (rc != MEMCACHED_SUCCESS) {</span>
+<span class="lineNum">     117 </span><span class="lineNoCov">          0 :         free(return_value);</span>
+<span class="lineNum">     118 </span><span class="lineNoCov">          0 :         memcached_quit(client);</span>
+<span class="lineNum">     119 </span><span class="lineNoCov">          0 :         memcached_pool_push(_memcached_client_pool, client);</span>
+<span class="lineNum">     120 </span><span class="lineNoCov">          0 :         LOG(error) &lt;&lt; &quot;Cannot get components of request &quot; &lt;&lt; req_id;</span>
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :         ServiceException se;</span>
+<span class="lineNum">     122 </span><span class="lineNoCov">          0 :         se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;</span>
+<span class="lineNum">     123 </span>            :         se.message =
+<span class="lineNum">     124 </span><span class="lineNoCov">          0 :             &quot;Cannot get usernames of request &quot; + std::to_string(req_id);</span>
+<span class="lineNum">     125 </span><span class="lineNoCov">          0 :         get_span-&gt;Finish();</span>
+<span class="lineNum">     126 </span><span class="lineNoCov">          0 :         throw se;</span>
+<span class="lineNum">     127 </span>            :       }
+<span class="lineNum">     128 </span><span class="lineNoCov">          0 :       UserMention new_user_mention;</span>
+<span class="lineNum">     129 </span><span class="lineNoCov">          0 :       std::string username(return_key, return_key + return_key_length);</span>
+<span class="lineNum">     130 </span>            :       username =
+<span class="lineNum">     131 </span><span class="lineNoCov">          0 :           username.substr(0, username.length() - std::strlen(&quot;:user_id&quot;));</span>
+<span class="lineNum">     132 </span><span class="lineNoCov">          0 :       new_user_mention.username = username;</span>
+<span class="lineNum">     133 </span><span class="lineNoCov">          0 :       new_user_mention.user_id = std::stoul(</span>
+<span class="lineNum">     134 </span><span class="lineNoCov">          0 :           std::string(return_value, return_value + return_value_length));</span>
+<span class="lineNum">     135 </span><span class="lineNoCov">          0 :       user_mentions.emplace_back(new_user_mention);</span>
+<span class="lineNum">     136 </span><span class="lineNoCov">          0 :       usernames_not_cached.erase(username);</span>
+<span class="lineNum">     137 </span><span class="lineNoCov">          0 :       free(return_value);</span>
+<span class="lineNum">     138 </span>            :     }
+<span class="lineNum">     139 </span><span class="lineNoCov">          0 :     memcached_quit(client);</span>
+<span class="lineNum">     140 </span><span class="lineNoCov">          0 :     memcached_pool_push(_memcached_client_pool, client);</span>
+<span class="lineNum">     141 </span><span class="lineNoCov">          0 :     get_span-&gt;Finish();</span>
+<span class="lineNum">     142 </span><span class="lineNoCov">          0 :     for (int i = 0; i &lt; usernames.size(); ++i) {</span>
+<span class="lineNum">     143 </span><span class="lineNoCov">          0 :       delete keys[i];</span>
+<span class="lineNum">     144 </span>            :     }
+<span class="lineNum">     145 </span><span class="lineNoCov">          0 :     delete[] keys;</span>
+<span class="lineNum">     146 </span><span class="lineNoCov">          0 :     delete[] key_sizes;</span>
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            :     // Memcached 查询后
+<span class="lineNum">     149 </span><span class="lineNoCov">          0 :     LOG(info) &lt;&lt; &quot;ComposeUserMentions Memcached hit [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, hit count=&quot; &lt;&lt; user_mentions.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :     // Find the rest in MongoDB
+<span class="lineNum">     152 </span><span class="lineNoCov">          0 :     if (!usernames_not_cached.empty()) {</span>
+<span class="lineNum">     153 </span>            :       mongoc_client_t *mongodb_client =
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :           mongoc_client_pool_pop(_mongodb_client_pool);</span>
+<span class="lineNum">     155 </span><span class="lineNoCov">          0 :       if (!mongodb_client) {</span>
+<span class="lineNum">     156 </span><span class="lineNoCov">          0 :         ServiceException se;</span>
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :         se.errorCode = ErrorCode::SE_MONGODB_ERROR;</span>
+<span class="lineNum">     158 </span><span class="lineNoCov">          0 :         se.message = &quot;Failed to pop a client from MongoDB pool&quot;;</span>
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :         throw se;</span>
+<span class="lineNum">     160 </span>            :       }
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span>            :       auto collection =
+<span class="lineNum">     163 </span><span class="lineNoCov">          0 :           mongoc_client_get_collection(mongodb_client, &quot;user&quot;, &quot;user&quot;);</span>
+<span class="lineNum">     164 </span><span class="lineNoCov">          0 :       if (!collection) {</span>
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :         ServiceException se;</span>
+<span class="lineNum">     166 </span><span class="lineNoCov">          0 :         se.errorCode = ErrorCode::SE_MONGODB_ERROR;</span>
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :         se.message = &quot;Failed to create collection user from DB user&quot;;</span>
+<span class="lineNum">     168 </span><span class="lineNoCov">          0 :         mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);</span>
+<span class="lineNum">     169 </span><span class="lineNoCov">          0 :         throw se;</span>
+<span class="lineNum">     170 </span>            :       }
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span><span class="lineNoCov">          0 :       bson_t *query = bson_new();</span>
+<span class="lineNum">     173 </span>            :       bson_t query_child_0;
+<span class="lineNum">     174 </span>            :       bson_t query_username_list;
+<span class="lineNum">     175 </span>            :       const char *key;
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :       idx = 0;</span>
+<span class="lineNum">     177 </span>            :       char buf[16];
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 :       BSON_APPEND_DOCUMENT_BEGIN(query, &quot;username&quot;, &amp;query_child_0);</span>
+<span class="lineNum">     180 </span><span class="lineNoCov">          0 :       BSON_APPEND_ARRAY_BEGIN(&amp;query_child_0, &quot;$in&quot;, &amp;query_username_list);</span>
+<span class="lineNum">     181 </span><span class="lineNoCov">          0 :       for (auto &amp;item : usernames_not_cached) {</span>
+<span class="lineNum">     182 </span><span class="lineNoCov">          0 :         bson_uint32_to_string(idx, &amp;key, buf, sizeof buf);</span>
+<span class="lineNum">     183 </span><span class="lineNoCov">          0 :         BSON_APPEND_UTF8(&amp;query_username_list, key, item.first.c_str());</span>
+<span class="lineNum">     184 </span><span class="lineNoCov">          0 :         idx++;</span>
+<span class="lineNum">     185 </span>            :       }
+<span class="lineNum">     186 </span><span class="lineNoCov">          0 :       bson_append_array_end(&amp;query_child_0, &amp;query_username_list);</span>
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :       bson_append_document_end(query, &amp;query_child_0);</span>
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span><span class="lineNoCov">          0 :       auto find_span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     190 </span>            :           &quot;compose_user_mentions_mongo_find_client&quot;,
+<span class="lineNum">     191 </span><span class="lineNoCov">          0 :           {opentracing::ChildOf(&amp;span-&gt;context())});</span>
+<span class="lineNum">     192 </span>            :       mongoc_cursor_t *cursor =
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :           mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);</span>
+<span class="lineNum">     194 </span>            :       const bson_t *doc;
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :       while (mongoc_cursor_next(cursor, &amp;doc)) {</span>
+<span class="lineNum">     197 </span>            :         bson_iter_t iter;
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :         UserMention new_user_mention;</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :         if (bson_iter_init_find(&amp;iter, doc, &quot;user_id&quot;)) {</span>
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :           new_user_mention.user_id = bson_iter_value(&amp;iter)-&gt;value.v_int64;</span>
+<span class="lineNum">     201 </span>            :         } else {
+<span class="lineNum">     202 </span><span class="lineNoCov">          0 :           ServiceException se;</span>
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 :           se.errorCode = ErrorCode::SE_MONGODB_ERROR;</span>
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :           se.message = &quot;Attribute of MongoDB item is not complete&quot;;</span>
+<span class="lineNum">     205 </span><span class="lineNoCov">          0 :           bson_destroy(query);</span>
+<span class="lineNum">     206 </span><span class="lineNoCov">          0 :           mongoc_cursor_destroy(cursor);</span>
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :           mongoc_collection_destroy(collection);</span>
+<span class="lineNum">     208 </span><span class="lineNoCov">          0 :           mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);</span>
+<span class="lineNum">     209 </span><span class="lineNoCov">          0 :           find_span-&gt;Finish();</span>
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :           throw se;</span>
+<span class="lineNum">     211 </span>            :         }
+<span class="lineNum">     212 </span><span class="lineNoCov">          0 :         if (bson_iter_init_find(&amp;iter, doc, &quot;username&quot;)) {</span>
+<span class="lineNum">     213 </span><span class="lineNoCov">          0 :           new_user_mention.username = bson_iter_value(&amp;iter)-&gt;value.v_utf8.str;</span>
+<span class="lineNum">     214 </span>            :         } else {
+<span class="lineNum">     215 </span><span class="lineNoCov">          0 :           ServiceException se;</span>
+<span class="lineNum">     216 </span><span class="lineNoCov">          0 :           se.errorCode = ErrorCode::SE_MONGODB_ERROR;</span>
+<span class="lineNum">     217 </span><span class="lineNoCov">          0 :           se.message = &quot;Attribute of MongoDB item is not complete&quot;;</span>
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :           bson_destroy(query);</span>
+<span class="lineNum">     219 </span><span class="lineNoCov">          0 :           mongoc_cursor_destroy(cursor);</span>
+<span class="lineNum">     220 </span><span class="lineNoCov">          0 :           mongoc_collection_destroy(collection);</span>
+<span class="lineNum">     221 </span><span class="lineNoCov">          0 :           mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);</span>
+<span class="lineNum">     222 </span><span class="lineNoCov">          0 :           find_span-&gt;Finish();</span>
+<span class="lineNum">     223 </span><span class="lineNoCov">          0 :           throw se;</span>
+<span class="lineNum">     224 </span>            :         }
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 :         user_mentions.emplace_back(new_user_mention);</span>
+<span class="lineNum">     226 </span>            :       }
+<span class="lineNum">     227 </span><span class="lineNoCov">          0 :       bson_destroy(query);</span>
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 :       mongoc_cursor_destroy(cursor);</span>
+<span class="lineNum">     229 </span><span class="lineNoCov">          0 :       mongoc_collection_destroy(collection);</span>
+<span class="lineNum">     230 </span><span class="lineNoCov">          0 :       mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);</span>
+<span class="lineNum">     231 </span><span class="lineNoCov">          0 :       find_span-&gt;Finish();</span>
+<span class="lineNum">     232 </span>            :     }
+<span class="lineNum">     233 </span>            :   }
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :   // MongoDB 查询后（只要 user_mentions 有新增就会体现到 size）
+<span class="lineNum">     236 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;ComposeUserMentions MongoDB hit [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, total user_mentions count=&quot; &lt;&lt; user_mentions.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span><span class="lineCov">        200 :   _return = user_mentions;</span>
+<span class="lineNum">     239 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span>            :   // 方法结束
+<span class="lineNum">     242 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;ComposeUserMentions completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, return count=&quot; &lt;&lt; user_mentions.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     243 </span><span class="lineCov">        200 : }</span>
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span>            : }  // namespace social_network
+<span class="lineNum">     246 </span>            : 
+<span class="lineNum">     247 </span>            : #endif  // SOCIAL_NETWORK_MICROSERVICES_SRC_USERMENTIONSERVICE_USERMENTIONHANDLER_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

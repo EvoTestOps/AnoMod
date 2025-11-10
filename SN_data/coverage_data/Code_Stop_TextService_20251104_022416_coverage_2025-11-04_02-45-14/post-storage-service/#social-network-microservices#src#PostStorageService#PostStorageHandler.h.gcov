@@ -1,0 +1,3684 @@
+        -:    0:Source:/social-network-microservices/src/PostStorageService/PostStorageHandler.h
+        -:    0:Graph:/social-network-microservices/build/src/PostStorageService/CMakeFiles/PostStorageService.dir/PostStorageService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/PostStorageService/CMakeFiles/PostStorageService.dir/PostStorageService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_POSTSTORAGEHANDLER_H
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_POSTSTORAGEHANDLER_H
+        -:    3:
+        -:    4:#include <bson/bson.h>
+        -:    5:#include <libmemcached/memcached.h>
+        -:    6:#include <libmemcached/util.h>
+        -:    7:#include <mongoc.h>
+        -:    8:
+        -:    9:#include <future>
+        -:   10:#include <iostream>
+        -:   11:#include <nlohmann/json.hpp>
+        -:   12:#include <string>
+        -:   13:
+        -:   14:#include "../../gen-cpp/PostStorageService.h"
+        -:   15:#include "../logger.h"
+        -:   16:#include "../tracing.h"
+        -:   17:
+        -:   18:namespace social_network {
+        -:   19:using json = nlohmann::json;
+        -:   20:
+        -:   21:class PostStorageHandler : public PostStorageServiceIf {
+        -:   22: public:
+        -:   23:  PostStorageHandler(memcached_pool_st *, mongoc_client_pool_t *);
+function _ZN14social_network18PostStorageHandlerD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network18PostStorageHandlerD2Ev called 0 returned 0% blocks executed 0%
+    #####:   24:  ~PostStorageHandler() override = default;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+        -:   25:
+        -:   26:  void StorePost(int64_t req_id, const Post &post,
+        -:   27:                 const std::map<std::string, std::string> &carrier) override;
+        -:   28:
+        -:   29:  void ReadPost(Post &_return, int64_t req_id, int64_t post_id,
+        -:   30:                const std::map<std::string, std::string> &carrier) override;
+        -:   31:
+        -:   32:  void ReadPosts(std::vector<Post> &_return, int64_t req_id,
+        -:   33:                 const std::vector<int64_t> &post_ids,
+        -:   34:                 const std::map<std::string, std::string> &carrier) override;
+        -:   35:
+        -:   36: private:
+        -:   37:  memcached_pool_st *_memcached_client_pool;
+        -:   38:  mongoc_client_pool_t *_mongodb_client_pool;
+        -:   39:};
+        -:   40:
+function _ZN14social_network18PostStorageHandlerC2EP17memcached_pool_stP21_mongoc_client_pool_t called 1 returned 100% blocks executed 100%
+        1:   41:PostStorageHandler::PostStorageHandler(
+        -:   42:    memcached_pool_st *memcached_client_pool,
+        1:   43:    mongoc_client_pool_t *mongodb_client_pool) {
+call    0 returned 100%
+        1:   44:  _memcached_client_pool = memcached_client_pool;
+        1:   45:  _mongodb_client_pool = mongodb_client_pool;
+        1:   46:}
+        -:   47:
+function _ZN14social_network18PostStorageHandler9StorePostElRKNS_4PostERKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EEE called 0 returned 0% blocks executed 0%
+    #####:   48:void PostStorageHandler::StorePost(
+        -:   49:    int64_t req_id, const social_network::Post &post,
+        -:   50:    const std::map<std::string, std::string> &carrier) {
+        -:   51:  // 新增：记录收到的存储请求
+    #####:   52:  LOG(info) << "Received StorePost request [req_id=" << req_id << ", post_id=" << post.post_id << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:   53:  // Initialize a span
+    #####:   54:  TextMapReader reader(carrier);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   55:  std::map<std::string, std::string> writer_text_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   56:  TextMapWriter writer(writer_text_map);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   57:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:   58:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:   59:      "store_post_server", {opentracing::ChildOf(parent_span->get())});
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:   60:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+        -:   61:
+        -:   62:  mongoc_client_t *mongodb_client =
+    #####:   63:      mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   64:  if (!mongodb_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:   65:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:   66:    se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:   67:    se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   68:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:   69:  }
+        -:   70:
+        -:   71:  auto collection =
+    #####:   72:      mongoc_client_get_collection(mongodb_client, "post", "post");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   73:  if (!collection) {
+branch  0 never executed
+branch  1 never executed
+    #####:   74:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:   75:    se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:   76:    se.message = "Failed to create collection user from DB user";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   77:    mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   78:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:   79:  }
+        -:   80:
+    #####:   81:  bson_t *new_doc = bson_new();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   82:  BSON_APPEND_INT64(new_doc, "post_id", post.post_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   83:  BSON_APPEND_INT64(new_doc, "timestamp", post.timestamp);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   84:  BSON_APPEND_UTF8(new_doc, "text", post.text.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   85:  BSON_APPEND_INT64(new_doc, "req_id", post.req_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   86:  BSON_APPEND_INT32(new_doc, "post_type", post.post_type);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   87:
+        -:   88:  bson_t creator_doc;
+    #####:   89:  BSON_APPEND_DOCUMENT_BEGIN(new_doc, "creator", &creator_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   90:  BSON_APPEND_INT64(&creator_doc, "user_id", post.creator.user_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   91:  BSON_APPEND_UTF8(&creator_doc, "username", post.creator.username.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   92:  bson_append_document_end(new_doc, &creator_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   93:
+        -:   94:  const char *key;
+    #####:   95:  int idx = 0;
+        -:   96:  char buf[16];
+        -:   97:
+        -:   98:  bson_t url_list;
+    #####:   99:  BSON_APPEND_ARRAY_BEGIN(new_doc, "urls", &url_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  100:  for (auto &url : post.urls) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  101:    bson_uint32_to_string(idx, &key, buf, sizeof buf);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  102:    bson_t url_doc;
+    #####:  103:    BSON_APPEND_DOCUMENT_BEGIN(&url_list, key, &url_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  104:    BSON_APPEND_UTF8(&url_doc, "shortened_url", url.shortened_url.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  105:    BSON_APPEND_UTF8(&url_doc, "expanded_url", url.expanded_url.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  106:    bson_append_document_end(&url_list, &url_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  107:    idx++;
+        -:  108:  }
+    #####:  109:  bson_append_array_end(new_doc, &url_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  110:
+        -:  111:  bson_t user_mention_list;
+    #####:  112:  idx = 0;
+    #####:  113:  BSON_APPEND_ARRAY_BEGIN(new_doc, "user_mentions", &user_mention_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  114:  for (auto &user_mention : post.user_mentions) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  115:    bson_uint32_to_string(idx, &key, buf, sizeof buf);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  116:    bson_t user_mention_doc;
+    #####:  117:    BSON_APPEND_DOCUMENT_BEGIN(&user_mention_list, key, &user_mention_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  118:    BSON_APPEND_INT64(&user_mention_doc, "user_id", user_mention.user_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  119:    BSON_APPEND_UTF8(&user_mention_doc, "username",
+call    0 never executed
+call    1 never executed
+    #####:  120:                     user_mention.username.c_str());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  121:    bson_append_document_end(&user_mention_list, &user_mention_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  122:    idx++;
+        -:  123:  }
+    #####:  124:  bson_append_array_end(new_doc, &user_mention_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  125:
+        -:  126:  bson_t media_list;
+    #####:  127:  idx = 0;
+    #####:  128:  BSON_APPEND_ARRAY_BEGIN(new_doc, "media", &media_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  129:  for (auto &media : post.media) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  130:    bson_uint32_to_string(idx, &key, buf, sizeof buf);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  131:    bson_t media_doc;
+    #####:  132:    BSON_APPEND_DOCUMENT_BEGIN(&media_list, key, &media_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  133:    BSON_APPEND_INT64(&media_doc, "media_id", media.media_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  134:    BSON_APPEND_UTF8(&media_doc, "media_type", media.media_type.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  135:    bson_append_document_end(&media_list, &media_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  136:    idx++;
+        -:  137:  }
+    #####:  138:  bson_append_array_end(new_doc, &media_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  139:
+        -:  140:  bson_error_t error;
+    #####:  141:  auto insert_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  142:      "post_storage_mongo_insert_client",
+    #####:  143:      {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  144:  bool inserted = mongoc_collection_insert_one(collection, new_doc, nullptr,
+    #####:  145:                                               nullptr, &error);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  146:  insert_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  147:
+    #####:  148:  if (!inserted) {
+branch  0 never executed
+branch  1 never executed
+    #####:  149:    LOG(error) << "Error: Failed to insert post to MongoDB: " << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  150:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  151:    se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  152:    se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  153:    bson_destroy(new_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  154:    mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  155:    mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  156:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  157:  }
+        -:  158:
+    #####:  159:  bson_destroy(new_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  160:  mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  161:  mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  162:
+        -:  163:  // 新增：成功插入MongoDB日志
+    #####:  164:  LOG(info) << "Post inserted into MongoDB successfully [req_id=" << req_id << ", post_id=" << post.post_id << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+call   60 never executed
+call   61 never executed
+        -:  165:
+    #####:  166:  span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  167:}
+        -:  168:
+function _ZN14social_network18PostStorageHandler8ReadPostERNS_4PostEllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_ESaISt4pairIKS9_S9_EEE called 0 returned 0% blocks executed 0%
+    #####:  169:void PostStorageHandler::ReadPost(
+        -:  170:    Post &_return, int64_t req_id, int64_t post_id,
+        -:  171:    const std::map<std::string, std::string> &carrier) {
+        -:  172:  // 新增：记录收到的读取请求
+    #####:  173:  LOG(info) << "Received ReadPost request [req_id=" << req_id << ", post_id=" << post_id << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  174:  // Initialize a span
+    #####:  175:  TextMapReader reader(carrier);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  176:  std::map<std::string, std::string> writer_text_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  177:  TextMapWriter writer(writer_text_map);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  178:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  179:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:  180:      "read_post_server", {opentracing::ChildOf(parent_span->get())});
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:  181:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+        -:  182:
+    #####:  183:  std::string post_id_str = std::to_string(post_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  184:
+        -:  185:  memcached_return_t memcached_rc;
+        -:  186:  memcached_st *memcached_client =
+    #####:  187:      memcached_pool_pop(_memcached_client_pool, true, &memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  188:  if (!memcached_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  189:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  190:    se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  191:    se.message = "Failed to pop a client from memcached pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  192:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  193:  }
+        -:  194:
+        -:  195:  size_t post_mmc_size;
+        -:  196:  uint32_t memcached_flags;
+    #####:  197:  auto get_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:  198:      "post_storage_mmc_get_client", {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  199:  char *post_mmc =
+    #####:  200:      memcached_get(memcached_client, post_id_str.c_str(), post_id_str.length(),
+call    0 never executed
+call    1 never executed
+    #####:  201:                    &post_mmc_size, &memcached_flags, &memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  202:  if (!post_mmc && memcached_rc != MEMCACHED_NOTFOUND) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  203:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  204:    se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  205:    se.message = memcached_strerror(memcached_client, memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  206:    memcached_pool_push(_memcached_client_pool, memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  207:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  208:  }
+    #####:  209:  memcached_pool_push(_memcached_client_pool, memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  210:  get_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  211:
+    #####:  212:  if (post_mmc) {
+branch  0 never executed
+branch  1 never executed
+    #####:  213:    LOG(debug) << "Get post " << post_id << " cache hit from Memcached";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+        -:  214:    json post_json =
+    #####:  215:        json::parse(std::string(post_mmc, post_mmc + post_mmc_size));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+    #####:  216:    _return.req_id = post_json["req_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  217:    _return.timestamp = post_json["timestamp"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  218:    _return.post_id = post_json["post_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  219:    _return.creator.user_id = post_json["creator"]["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:  220:    _return.creator.username = post_json["creator"]["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  221:    _return.post_type = post_json["post_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  222:    _return.text = post_json["text"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  223:    for (auto &item : post_json["media"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  224:      Media media;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  225:      media.media_id = item["media_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  226:      media.media_type = item["media_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  227:      _return.media.emplace_back(media);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  228:    }
+    #####:  229:    for (auto &item : post_json["user_mentions"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  230:      UserMention user_mention;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  231:      user_mention.username = item["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  232:      user_mention.user_id = item["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  233:      _return.user_mentions.emplace_back(user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  234:    }
+    #####:  235:    for (auto &item : post_json["urls"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  236:      Url url;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  237:      url.shortened_url = item["shortened_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  238:      url.expanded_url = item["expanded_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  239:      _return.urls.emplace_back(url);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  240:    }
+    #####:  241:    free(post_mmc);
+        -:  242:  } else {
+        -:  243:    // If not cached in memcached
+        -:  244:    mongoc_client_t *mongodb_client =
+    #####:  245:        mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  246:    if (!mongodb_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  247:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  248:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  249:      se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  250:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  251:    }
+        -:  252:
+        -:  253:    auto collection =
+    #####:  254:        mongoc_client_get_collection(mongodb_client, "post", "post");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  255:    if (!collection) {
+branch  0 never executed
+branch  1 never executed
+    #####:  256:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  257:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  258:      se.message = "Failed to create collection user from DB user";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  259:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  260:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  261:    }
+        -:  262:
+    #####:  263:    bson_t *query = bson_new();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  264:    BSON_APPEND_INT64(query, "post_id", post_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  265:    auto find_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  266:        "post_storage_mongo_find_client",
+    #####:  267:        {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  268:    mongoc_cursor_t *cursor =
+    #####:  269:        mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  270:    const bson_t *doc;
+    #####:  271:    bool found = mongoc_cursor_next(cursor, &doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  272:    find_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  273:    if (!found) {
+branch  0 never executed
+branch  1 never executed
+        -:  274:      bson_error_t error;
+    #####:  275:      if (mongoc_cursor_error(cursor, &error)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  276:        LOG(warning) << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  277:        bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  278:        mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  279:        mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  280:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  281:        ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  282:        se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  283:        se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  284:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  285:      } else {
+    #####:  286:        LOG(warning) << "Post_id: " << post_id << " doesn't exist in MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+    #####:  287:        bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  288:        mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  289:        mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  290:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  291:        ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  292:        se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
+        -:  293:        se.message =
+    #####:  294:            "Post_id: " + std::to_string(post_id) + " doesn't exist in MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+    #####:  295:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  296:      }
+        -:  297:    } else {
+    #####:  298:      LOG(debug) << "Post_id: " << post_id << " found in MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+    #####:  299:      auto post_json_char = bson_as_json(doc, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  300:      json post_json = json::parse(post_json_char);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+    #####:  301:      _return.req_id = post_json["req_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  302:      _return.timestamp = post_json["timestamp"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  303:      _return.post_id = post_json["post_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  304:      _return.creator.user_id = post_json["creator"]["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:  305:      _return.creator.username = post_json["creator"]["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  306:      _return.post_type = post_json["post_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  307:      _return.text = post_json["text"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  308:      for (auto &item : post_json["media"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  309:        Media media;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  310:        media.media_id = item["media_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  311:        media.media_type = item["media_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  312:        _return.media.emplace_back(media);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  313:      }
+    #####:  314:      for (auto &item : post_json["user_mentions"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  315:        UserMention user_mention;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  316:        user_mention.username = item["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  317:        user_mention.user_id = item["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  318:        _return.user_mentions.emplace_back(user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  319:      }
+    #####:  320:      for (auto &item : post_json["urls"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  321:        Url url;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  322:        url.shortened_url = item["shortened_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  323:        url.expanded_url = item["expanded_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  324:        _return.urls.emplace_back(url);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  325:      }
+    #####:  326:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  327:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  328:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  329:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  330:
+        -:  331:      // upload post to memcached
+        -:  332:      memcached_client =
+    #####:  333:          memcached_pool_pop(_memcached_client_pool, true, &memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  334:      if (!memcached_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  335:        ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  336:        se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  337:        se.message = "Failed to pop a client from memcached pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  338:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  339:      }
+    #####:  340:      auto set_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  341:          "post_storage_mmc_set_client",
+    #####:  342:          {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  343:
+    #####:  344:      memcached_rc = memcached_set(
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+        -:  345:          memcached_client, post_id_str.c_str(), post_id_str.length(),
+        -:  346:          post_json_char, std::strlen(post_json_char), static_cast<time_t>(0),
+    #####:  347:          static_cast<uint32_t>(0));
+    #####:  348:      if (memcached_rc != MEMCACHED_SUCCESS) {
+branch  0 never executed
+branch  1 never executed
+    #####:  349:        LOG(warning) << "Failed to set post to Memcached: "
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  350:                     << memcached_strerror(memcached_client, memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  351:      }
+    #####:  352:      set_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  353:      bson_free(post_json_char);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  354:      memcached_pool_push(_memcached_client_pool, memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  355:    }
+        -:  356:  }
+        -:  357:
+        -:  358:  // 新增：读取完成日志
+    #####:  359:  LOG(info) << "ReadPost completed [req_id=" << req_id << ", post_id=" << post_id << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+call   60 never executed
+call   61 never executed
+    #####:  360:  span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  361:}
+function _ZN14social_network18PostStorageHandler9ReadPostsERSt6vectorINS_4PostESaIS2_EElRKS1_IlSaIlEERKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESG_St4lessISG_ESaISt4pairIKSG_SG_EEE called 600 returned 100% blocks executed 8%
+      600:  362:void PostStorageHandler::ReadPosts(
+        -:  363:    std::vector<Post> &_return, int64_t req_id,
+        -:  364:    const std::vector<int64_t> &post_ids,
+        -:  365:    const std::map<std::string, std::string> &carrier) {
+        -:  366:  // 新增：记录收到的批量读取请求
+     1200:  367:  LOG(info) << "Received ReadPosts request [req_id=" << req_id << ", post_ids count=" << post_ids.size() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+branch 14 taken 100% (fallthrough)
+branch 15 taken 0%
+call   16 returned 100%
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+call   20 returned 100%
+call   21 returned 100%
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0% (throw)
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 returned 100%
+branch 28 taken 100% (fallthrough)
+branch 29 taken 0% (throw)
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+branch 34 taken 100% (fallthrough)
+branch 35 taken 0% (throw)
+call   36 returned 100%
+branch 37 taken 100% (fallthrough)
+branch 38 taken 0% (throw)
+call   39 returned 100%
+branch 40 taken 100% (fallthrough)
+branch 41 taken 0% (throw)
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0% (throw)
+call   45 returned 100%
+branch 46 taken 100% (fallthrough)
+branch 47 taken 0% (throw)
+call   48 returned 100%
+branch 49 taken 100% (fallthrough)
+branch 50 taken 0% (throw)
+call   51 returned 100%
+branch 52 taken 100% (fallthrough)
+branch 53 taken 0% (throw)
+call   54 returned 100%
+branch 55 taken 100% (fallthrough)
+branch 56 taken 0% (throw)
+call   57 returned 100%
+branch 58 taken 100% (fallthrough)
+branch 59 taken 0% (throw)
+call   60 returned 100%
+call   61 never executed
+call   62 never executed
+call   63 never executed
+        -:  368:  // Initialize a span
+      600:  369:  TextMapReader reader(carrier);
+call    0 returned 100%
+call    1 never executed
+      600:  370:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 0%
+branch  3 taken 100%
+call    4 never executed
+      600:  371:  TextMapWriter writer(writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 0%
+branch  3 taken 100%
+call    4 never executed
+      600:  372:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 returned 100%
+branch  7 taken 0%
+branch  8 taken 100%
+call    9 never executed
+     1200:  373:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  374:      "post_storage_read_posts_server",
+     1800:  375:      {opentracing::ChildOf(parent_span->get())});
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+branch 12 taken 0%
+branch 13 taken 100%
+call   14 never executed
+      600:  376:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+        -:  377:
+      600:  378:  if (post_ids.empty()) {
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0%
+      600:  379:    return;
+        -:  380:  }
+        -:  381:
+    #####:  382:  std::set<int64_t> post_ids_not_cached(post_ids.begin(), post_ids.end());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 returned 100%
+branch  7 taken 0%
+branch  8 taken 100%
+call    9 never executed
+    #####:  383:  if (post_ids_not_cached.size() != post_ids.size()) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  384:    LOG(error)<< "Post_ids are duplicated";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  385:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  386:    se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
+    #####:  387:    se.message = "Post_ids are duplicated";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  388:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  389:  }
+    #####:  390:  std::map<int64_t, Post> return_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  391:  memcached_return_t memcached_rc;
+        -:  392:  auto memcached_client =
+    #####:  393:      memcached_pool_pop(_memcached_client_pool, true, &memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  394:  if (!memcached_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  395:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  396:    se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  397:    se.message = "Failed to pop a client from memcached pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  398:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  399:  }
+        -:  400:
+        -:  401:  char **keys;
+        -:  402:  size_t *key_sizes;
+    #####:  403:  keys = new char *[post_ids.size()];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####:  404:  key_sizes = new size_t[post_ids.size()];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####:  405:  int idx = 0;
+    #####:  406:  for (auto &post_id : post_ids) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  407:    std::string key_str = std::to_string(post_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  408:    keys[idx] = new char[key_str.length() + 1];
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  409:    strcpy(keys[idx], key_str.c_str());
+call    0 never executed
+    #####:  410:    key_sizes[idx] = key_str.length();
+call    0 never executed
+    #####:  411:    idx++;
+        -:  412:  }
+        -:  413:  memcached_rc =
+    #####:  414:      memcached_mget(memcached_client, keys, key_sizes, post_ids.size());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  415:  if (memcached_rc != MEMCACHED_SUCCESS) {
+branch  0 never executed
+branch  1 never executed
+    #####:  416:    LOG(error) << "Cannot get post_ids of request " << req_id << ": "
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+    #####:  417:               << memcached_strerror(memcached_client, memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  418:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  419:    se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  420:    se.message = memcached_strerror(memcached_client, memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  421:    memcached_pool_push(_memcached_client_pool, memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  422:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  423:  }
+        -:  424:
+        -:  425:  char return_key[MEMCACHED_MAX_KEY];
+        -:  426:  size_t return_key_length;
+        -:  427:  char *return_value;
+        -:  428:  size_t return_value_length;
+        -:  429:  uint32_t flags;
+    #####:  430:  auto get_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:  431:      "post_storage_mmc_mget_client", {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  432:
+    #####:  433:  while (true) {
+        -:  434:    return_value =
+        -:  435:        memcached_fetch(memcached_client, return_key, &return_key_length,
+    #####:  436:                        &return_value_length, &flags, &memcached_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  437:    if (return_value == nullptr) {
+branch  0 never executed
+branch  1 never executed
+    #####:  438:      LOG(debug) << "Memcached mget finished";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  439:      break;
+        -:  440:    }
+    #####:  441:    if (memcached_rc != MEMCACHED_SUCCESS) {
+branch  0 never executed
+branch  1 never executed
+    #####:  442:      free(return_value);
+    #####:  443:      memcached_quit(memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  444:      memcached_pool_push(_memcached_client_pool, memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  445:      LOG(error) << "Cannot get posts of request " << req_id;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  446:      ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  447:      se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  448:      se.message = "Cannot get posts of request " + std::to_string(req_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:  449:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  450:    }
+    #####:  451:    Post new_post;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  452:    json post_json = json::parse(
+    #####:  453:        std::string(return_value, return_value + return_value_length));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+    #####:  454:    new_post.req_id = post_json["req_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  455:    new_post.timestamp = post_json["timestamp"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  456:    new_post.post_id = post_json["post_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  457:    new_post.creator.user_id = post_json["creator"]["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:  458:    new_post.creator.username = post_json["creator"]["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  459:    new_post.post_type = post_json["post_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  460:    new_post.text = post_json["text"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  461:    for (auto &item : post_json["media"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  462:      Media media;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  463:      media.media_id = item["media_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  464:      media.media_type = item["media_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  465:      new_post.media.emplace_back(media);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  466:    }
+    #####:  467:    for (auto &item : post_json["user_mentions"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  468:      UserMention user_mention;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  469:      user_mention.username = item["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  470:      user_mention.user_id = item["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  471:      new_post.user_mentions.emplace_back(user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  472:    }
+    #####:  473:    for (auto &item : post_json["urls"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  474:      Url url;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  475:      url.shortened_url = item["shortened_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  476:      url.expanded_url = item["expanded_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  477:      new_post.urls.emplace_back(url);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  478:    }
+    #####:  479:    return_map.insert(std::make_pair(new_post.post_id, new_post));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  480:    post_ids_not_cached.erase(new_post.post_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  481:    free(return_value);
+        -:  482:  }
+    #####:  483:  get_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  484:  memcached_quit(memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  485:  memcached_pool_push(_memcached_client_pool, memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  486:  for (int i = 0; i < post_ids.size(); ++i) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  487:    delete keys[i];
+call    0 never executed
+        -:  488:  }
+    #####:  489:  delete[] keys;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+    #####:  490:  delete[] key_sizes;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+        -:  491:
+    #####:  492:  std::vector<std::future<void>> set_futures;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  493:  std::map<int64_t, std::string> post_json_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  494:
+        -:  495:  // Find the rest in MongoDB
+    #####:  496:  if (!post_ids_not_cached.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  497:    mongoc_client_t *mongodb_client =
+    #####:  498:        mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  499:    if (!mongodb_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  500:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  501:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  502:      se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  503:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  504:    }
+        -:  505:    auto collection =
+    #####:  506:        mongoc_client_get_collection(mongodb_client, "post", "post");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  507:    if (!collection) {
+branch  0 never executed
+branch  1 never executed
+    #####:  508:      ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  509:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  510:      se.message = "Failed to create collection user from DB user";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  511:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  512:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  513:    }
+    #####:  514:    bson_t *query = bson_new();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  515:    bson_t query_child;
+        -:  516:    bson_t query_post_id_list;
+        -:  517:    const char *key;
+    #####:  518:    idx = 0;
+        -:  519:    char buf[16];
+        -:  520:
+    #####:  521:    BSON_APPEND_DOCUMENT_BEGIN(query, "post_id", &query_child);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  522:    BSON_APPEND_ARRAY_BEGIN(&query_child, "$in", &query_post_id_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  523:    for (auto &item : post_ids_not_cached) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  524:      bson_uint32_to_string(idx, &key, buf, sizeof buf);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  525:      BSON_APPEND_INT64(&query_post_id_list, key, item);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  526:      idx++;
+        -:  527:    }
+    #####:  528:    bson_append_array_end(&query_child, &query_post_id_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  529:    bson_append_document_end(query, &query_child);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  530:    mongoc_cursor_t *cursor =
+    #####:  531:        mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  532:    const bson_t *doc;
+        -:  533:
+    #####:  534:    auto find_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:  535:        "mongo_find_client", {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  536:    while (true) {
+    #####:  537:      bool found = mongoc_cursor_next(cursor, &doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  538:      if (!found) {
+branch  0 never executed
+branch  1 never executed
+    #####:  539:        break;
+        -:  540:      }
+    #####:  541:      Post new_post;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  542:      char *post_json_char = bson_as_json(doc, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  543:      json post_json = json::parse(post_json_char);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+    #####:  544:      new_post.req_id = post_json["req_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  545:      new_post.timestamp = post_json["timestamp"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  546:      new_post.post_id = post_json["post_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  547:      new_post.creator.user_id = post_json["creator"]["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:  548:      new_post.creator.username = post_json["creator"]["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  549:      new_post.post_type = post_json["post_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  550:      new_post.text = post_json["text"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  551:      for (auto &item : post_json["media"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  552:        Media media;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  553:        media.media_id = item["media_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  554:        media.media_type = item["media_type"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  555:        new_post.media.emplace_back(media);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  556:      }
+    #####:  557:      for (auto &item : post_json["user_mentions"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  558:        UserMention user_mention;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  559:        user_mention.username = item["username"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  560:        user_mention.user_id = item["user_id"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  561:        new_post.user_mentions.emplace_back(user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  562:      }
+    #####:  563:      for (auto &item : post_json["urls"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    #####:  564:        Url url;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  565:        url.shortened_url = item["shortened_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  566:        url.expanded_url = item["expanded_url"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  567:        new_post.urls.emplace_back(url);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  568:      }
+    #####:  569:      post_json_map.insert({new_post.post_id, std::string(post_json_char)});
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  570:      return_map.insert({new_post.post_id, new_post});
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  571:      bson_free(post_json_char);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  572:    }
+    #####:  573:    find_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  574:    bson_error_t error;
+    #####:  575:    if (mongoc_cursor_error(cursor, &error)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  576:      LOG(warning) << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  577:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  578:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  579:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  580:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  581:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  582:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  583:      se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  584:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  585:    }
+    #####:  586:    bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  587:    mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  588:    mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  589:    mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  590:
+        -:  591:    // upload posts to memcached
+function _ZZN14social_network18PostStorageHandler9ReadPostsERSt6vectorINS_4PostESaIS2_EElRKS1_IlSaIlEERKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESG_St4lessISG_ESaISt4pairIKSG_SG_EEEENKUlvE_clEv called 0 returned 0% blocks executed 0%
+    #####:  592:    set_futures.emplace_back(std::async(std::launch::async, [&]() {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  593:      memcached_return_t _rc;
+        -:  594:      auto _memcached_client =
+    #####:  595:          memcached_pool_pop(_memcached_client_pool, true, &_rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  596:      if (!_memcached_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  597:        LOG(error) << "Failed to pop a client from memcached pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  598:        ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  599:        se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:  600:        se.message = "Failed to pop a client from memcached pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  601:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  602:      }
+    #####:  603:      auto set_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:  604:          "mmc_set_client", {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  605:      for (auto &it : post_json_map) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  606:        std::string id_str = std::to_string(it.first);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  607:        _rc = memcached_set(_memcached_client, id_str.c_str(), id_str.length(),
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+        -:  608:                            it.second.c_str(), it.second.length(),
+    #####:  609:                            static_cast<time_t>(0), static_cast<uint32_t>(0));
+        -:  610:      }
+    #####:  611:      memcached_pool_push(_memcached_client_pool, _memcached_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  612:      set_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  613:    }));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  614:  }
+        -:  615:
+    #####:  616:  if (return_map.size() != post_ids.size()) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  617:    try {
+    #####:  618:      for (auto &it : set_futures) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  619:        it.get();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  620:      }
+    =====:  621:    } catch (...) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+    =====:  622:      LOG(warning) << "Failed to set posts to memcached";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+        -:  623:    }
+    #####:  624:    LOG(error) << "Return set incomplete";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  625:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  626:    se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
+    #####:  627:    se.message = "Return set incomplete";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  628:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  629:  }
+        -:  630:
+    #####:  631:  for (auto &post_id : post_ids) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  632:    _return.emplace_back(return_map[post_id]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  633:  }
+        -:  634:
+        -:  635:  try {
+    #####:  636:    for (auto &it : set_futures) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  637:      it.get();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  638:    }
+    =====:  639:  } catch (...) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+    =====:  640:    LOG(warning) << "Failed to set posts to memcached";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+        -:  641:  }
+        -:  642:
+        -:  643:  // 新增：批量读取完成日志
+    #####:  644:  LOG(info) << "ReadPosts completed [req_id=" << req_id << ", total return count=" << _return.size() << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  645:}
+        -:  646:
+        -:  647:}  // namespace social_network
+        -:  648:
+        -:  649:#endif  // SOCIAL_NETWORK_MICROSERVICES_POSTSTORAGEHANDLER_H

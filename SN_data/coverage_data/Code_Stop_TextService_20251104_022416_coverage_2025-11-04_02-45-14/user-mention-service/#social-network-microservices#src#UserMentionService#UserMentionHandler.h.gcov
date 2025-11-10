@@ -1,0 +1,1113 @@
+        -:    0:Source:/social-network-microservices/src/UserMentionService/UserMentionHandler.h
+        -:    0:Graph:/social-network-microservices/build/src/UserMentionService/CMakeFiles/UserMentionService.dir/UserMentionService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/UserMentionService/CMakeFiles/UserMentionService.dir/UserMentionService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_USERMENTIONSERVICE_USERMENTIONHANDLER_H_
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_SRC_USERMENTIONSERVICE_USERMENTIONHANDLER_H_
+        -:    3:
+        -:    4:#include <bson.h>
+        -:    5:#include <libmemcached/memcached.h>
+        -:    6:#include <libmemcached/util.h>
+        -:    7:#include <mongoc.h>
+        -:    8:
+        -:    9:#include "../../gen-cpp/UserMentionService.h"
+        -:   10:#include "../../gen-cpp/social_network_types.h"
+        -:   11:#include "../ClientPool.h"
+        -:   12:#include "../logger.h"
+        -:   13:#include "../tracing.h"
+        -:   14:#include "../utils.h"
+        -:   15:
+        -:   16:namespace social_network {
+        -:   17:
+        -:   18:class UserMentionHandler : public UserMentionServiceIf {
+        -:   19: public:
+        -:   20:  UserMentionHandler(memcached_pool_st *, mongoc_client_pool_t *);
+function _ZN14social_network18UserMentionHandlerD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network18UserMentionHandlerD2Ev called 0 returned 0% blocks executed 0%
+    #####:   21:  ~UserMentionHandler() override = default;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+        -:   22:
+        -:   23:  void ComposeUserMentions(std::vector<UserMention> &_return, int64_t,
+        -:   24:                           const std::vector<std::string> &,
+        -:   25:                           const std::map<std::string, std::string> &) override;
+        -:   26:
+        -:   27: private:
+        -:   28:  memcached_pool_st *_memcached_client_pool;
+        -:   29:  mongoc_client_pool_t *_mongodb_client_pool;
+        -:   30:};
+        -:   31:
+function _ZN14social_network18UserMentionHandlerC2EP17memcached_pool_stP21_mongoc_client_pool_t called 1 returned 100% blocks executed 100%
+        1:   32:UserMentionHandler::UserMentionHandler(
+        -:   33:    memcached_pool_st *memcached_client_pool,
+        1:   34:    mongoc_client_pool_t *mongodb_client_pool) {
+call    0 returned 100%
+        1:   35:  _memcached_client_pool = memcached_client_pool;
+        1:   36:  _mongodb_client_pool = mongodb_client_pool;
+        1:   37:}
+        -:   38:
+function _ZN14social_network18UserMentionHandler19ComposeUserMentionsERSt6vectorINS_11UserMentionESaIS2_EElRKS1_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt3mapISB_SB_St4lessISB_ESaISt4pairIKSB_SB_EEE called 0 returned 0% blocks executed 0%
+    #####:   39:void UserMentionHandler::ComposeUserMentions(
+        -:   40:    std::vector<UserMention> &_return, int64_t req_id,
+        -:   41:    const std::vector<std::string> &usernames,
+        -:   42:    const std::map<std::string, std::string> &carrier) {
+        -:   43:  // 记录收到请求
+    #####:   44:  LOG(info) << "Received ComposeUserMentions request [req_id=" << req_id << ", usernames count=" << usernames.size() << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+call   63 never executed
+        -:   45:
+        -:   46:  // Initialize a span
+    #####:   47:  TextMapReader reader(carrier);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   48:  std::map<std::string, std::string> writer_text_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   49:  TextMapWriter writer(writer_text_map);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   50:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:   51:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:   52:      "compose_user_mentions_server",
+    #####:   53:      {opentracing::ChildOf(parent_span->get())});
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:   54:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+        -:   55:
+    #####:   56:  std::vector<UserMention> user_mentions;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   57:  if (!usernames.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   58:    std::map<std::string, bool> usernames_not_cached;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:   59:
+    #####:   60:    for (auto &username : usernames) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:   61:      usernames_not_cached.emplace(std::make_pair(username, false));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+        -:   62:    }
+        -:   63:
+        -:   64:    // Find in Memcached
+        -:   65:    memcached_return_t rc;
+    #####:   66:    auto client = memcached_pool_pop(_memcached_client_pool, true, &rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   67:    if (!client) {
+branch  0 never executed
+branch  1 never executed
+    #####:   68:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:   69:      se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:   70:      se.message = "Failed to pop a client from memcached pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   71:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:   72:    }
+        -:   73:
+        -:   74:    char **keys;
+        -:   75:    size_t *key_sizes;
+    #####:   76:    keys = new char *[usernames.size()];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####:   77:    key_sizes = new size_t[usernames.size()];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####:   78:    int idx = 0;
+    #####:   79:    for (auto &username : usernames) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:   80:      std::string key_str = username + ":user_id";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:   81:      keys[idx] = new char[key_str.length() + 1];
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   82:      strcpy(keys[idx], key_str.c_str());
+call    0 never executed
+    #####:   83:      key_sizes[idx] = key_str.length();
+call    0 never executed
+    #####:   84:      idx++;
+        -:   85:    }
+        -:   86:
+    #####:   87:    auto get_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:   88:        "compose_user_mentions_memcached_get_client",
+    #####:   89:        {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    #####:   90:    rc = memcached_mget(client, keys, key_sizes, usernames.size());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   91:    if (rc != MEMCACHED_SUCCESS) {
+branch  0 never executed
+branch  1 never executed
+    #####:   92:      LOG(error) << "Cannot get usernames of request " << req_id << ": "
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+    #####:   93:                 << memcached_strerror(client, rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:   94:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:   95:      se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+    #####:   96:      se.message = memcached_strerror(client, rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:   97:      memcached_pool_push(_memcached_client_pool, client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   98:      get_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:   99:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  100:    }
+        -:  101:
+        -:  102:    char return_key[MEMCACHED_MAX_KEY];
+        -:  103:    size_t return_key_length;
+        -:  104:    char *return_value;
+        -:  105:    size_t return_value_length;
+        -:  106:    uint32_t flags;
+        -:  107:
+    #####:  108:    while (true) {
+        -:  109:      return_value = memcached_fetch(client, return_key, &return_key_length,
+    #####:  110:                                     &return_value_length, &flags, &rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  111:      if (return_value == nullptr) {
+branch  0 never executed
+branch  1 never executed
+    #####:  112:        LOG(debug) << "Memcached mget finished "
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  113:                   << memcached_strerror(client, rc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  114:        break;
+        -:  115:      }
+    #####:  116:      if (rc != MEMCACHED_SUCCESS) {
+branch  0 never executed
+branch  1 never executed
+    #####:  117:        free(return_value);
+    #####:  118:        memcached_quit(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  119:        memcached_pool_push(_memcached_client_pool, client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  120:        LOG(error) << "Cannot get components of request " << req_id;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  121:        ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  122:        se.errorCode = ErrorCode::SE_MEMCACHED_ERROR;
+        -:  123:        se.message =
+    #####:  124:            "Cannot get usernames of request " + std::to_string(req_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:  125:        get_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  126:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  127:      }
+    #####:  128:      UserMention new_user_mention;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  129:      std::string username(return_key, return_key + return_key_length);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+        -:  130:      username =
+    #####:  131:          username.substr(0, username.length() - std::strlen(":user_id"));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+    #####:  132:      new_user_mention.username = username;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  133:      new_user_mention.user_id = std::stoul(
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  134:          std::string(return_value, return_value + return_value_length));
+    #####:  135:      user_mentions.emplace_back(new_user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  136:      usernames_not_cached.erase(username);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  137:      free(return_value);
+        -:  138:    }
+    #####:  139:    memcached_quit(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  140:    memcached_pool_push(_memcached_client_pool, client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  141:    get_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  142:    for (int i = 0; i < usernames.size(); ++i) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  143:      delete keys[i];
+call    0 never executed
+        -:  144:    }
+    #####:  145:    delete[] keys;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+    #####:  146:    delete[] key_sizes;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+        -:  147:
+        -:  148:    // Memcached 查询后
+    #####:  149:    LOG(info) << "ComposeUserMentions Memcached hit [req_id=" << req_id << ", hit count=" << user_mentions.size() << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  150:
+        -:  151:    // Find the rest in MongoDB
+    #####:  152:    if (!usernames_not_cached.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  153:      mongoc_client_t *mongodb_client =
+    #####:  154:          mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  155:      if (!mongodb_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  156:        ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  157:        se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  158:        se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  159:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  160:      }
+        -:  161:
+        -:  162:      auto collection =
+    #####:  163:          mongoc_client_get_collection(mongodb_client, "user", "user");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  164:      if (!collection) {
+branch  0 never executed
+branch  1 never executed
+    #####:  165:        ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  166:        se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  167:        se.message = "Failed to create collection user from DB user";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  168:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  169:        throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  170:      }
+        -:  171:
+    #####:  172:      bson_t *query = bson_new();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  173:      bson_t query_child_0;
+        -:  174:      bson_t query_username_list;
+        -:  175:      const char *key;
+    #####:  176:      idx = 0;
+        -:  177:      char buf[16];
+        -:  178:
+    #####:  179:      BSON_APPEND_DOCUMENT_BEGIN(query, "username", &query_child_0);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  180:      BSON_APPEND_ARRAY_BEGIN(&query_child_0, "$in", &query_username_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  181:      for (auto &item : usernames_not_cached) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  182:        bson_uint32_to_string(idx, &key, buf, sizeof buf);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  183:        BSON_APPEND_UTF8(&query_username_list, key, item.first.c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  184:        idx++;
+        -:  185:      }
+    #####:  186:      bson_append_array_end(&query_child_0, &query_username_list);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  187:      bson_append_document_end(query, &query_child_0);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  188:
+    #####:  189:      auto find_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  190:          "compose_user_mentions_mongo_find_client",
+    #####:  191:          {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  192:      mongoc_cursor_t *cursor =
+    #####:  193:          mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  194:      const bson_t *doc;
+        -:  195:
+    #####:  196:      while (mongoc_cursor_next(cursor, &doc)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+        -:  197:        bson_iter_t iter;
+    #####:  198:        UserMention new_user_mention;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  199:        if (bson_iter_init_find(&iter, doc, "user_id")) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  200:          new_user_mention.user_id = bson_iter_value(&iter)->value.v_int64;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  201:        } else {
+    #####:  202:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  203:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  204:          se.message = "Attribute of MongoDB item is not complete";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  205:          bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  206:          mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  207:          mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  208:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  209:          find_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  210:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  211:        }
+    #####:  212:        if (bson_iter_init_find(&iter, doc, "username")) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  213:          new_user_mention.username = bson_iter_value(&iter)->value.v_utf8.str;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  214:        } else {
+    #####:  215:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  216:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  217:          se.message = "Attribute of MongoDB item is not complete";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  218:          bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  219:          mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  220:          mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  221:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  222:          find_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  223:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  224:        }
+    #####:  225:        user_mentions.emplace_back(new_user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  226:      }
+    #####:  227:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  228:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  229:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  230:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  231:      find_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  232:    }
+        -:  233:  }
+        -:  234:
+        -:  235:  // MongoDB 查询后（只要 user_mentions 有新增就会体现到 size）
+    #####:  236:  LOG(info) << "ComposeUserMentions MongoDB hit [req_id=" << req_id << ", total user_mentions count=" << user_mentions.size() << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  237:
+    #####:  238:  _return = user_mentions;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  239:  span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  240:
+        -:  241:  // 方法结束
+    #####:  242:  LOG(info) << "ComposeUserMentions completed [req_id=" << req_id << ", return count=" << user_mentions.size() << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+    #####:  243:}
+        -:  244:
+        -:  245:}  // namespace social_network
+        -:  246:
+        -:  247:#endif  // SOCIAL_NETWORK_MICROSERVICES_SRC_USERMENTIONSERVICE_USERMENTIONHANDLER_H_

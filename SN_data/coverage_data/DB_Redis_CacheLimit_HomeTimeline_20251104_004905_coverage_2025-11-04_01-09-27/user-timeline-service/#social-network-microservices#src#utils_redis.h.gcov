@@ -1,0 +1,386 @@
+        -:    0:Source:/social-network-microservices/src/utils_redis.h
+        -:    0:Graph:/social-network-microservices/build/src/UserTimelineService/CMakeFiles/UserTimelineService.dir/UserTimelineService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/UserTimelineService/CMakeFiles/UserTimelineService.dir/UserTimelineService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_REDIS_H_
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_REDIS_H_
+        -:    3:
+        -:    4:#include <sw/redis++/redis++.h>
+        -:    5:#include <chrono>
+        -:    6:
+        -:    7:using namespace sw::redis;
+        -:    8:namespace social_network {
+        -:    9:
+function _ZN14social_network22init_redis_client_poolERKN8nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerEEERKS9_ called 1 returned 100% blocks executed 61%
+        1:   10:Redis init_redis_client_pool(
+        -:   11:    const json &config_json,
+        -:   12:    const std::string &service_name
+        -:   13:) {
+        2:   14:  ConnectionOptions connection_options;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+        1:   15:  connection_options.host = config_json[service_name + "-redis"]["addr"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+call   16 returned 100%
+call   17 never executed
+call   18 never executed
+        1:   16:  connection_options.port = config_json[service_name + "-redis"]["port"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 never executed
+        -:   17:
+        1:   18:  if (config_json["ssl"]["enabled"]) {
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+branch  9 taken 0% (fallthrough)
+branch 10 taken 100%
+    #####:   19:    std::string ca_file = config_json["ssl"]["caPath"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+        -:   20:
+    #####:   21:    connection_options.tls.enabled = true;
+    #####:   22:    connection_options.tls.cacert = ca_file.c_str();
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   23:  }
+        -:   24:
+        1:   25:  ConnectionPoolOptions pool_options;
+        1:   26:  pool_options.size = config_json[service_name + "-redis"]["connections"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 never executed
+        1:   27:  pool_options.wait_timeout = std::chrono::milliseconds(config_json[service_name + "-redis"]["timeout_ms"]);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 never executed
+        1:   28:  pool_options.connection_lifetime = std::chrono::milliseconds(config_json[service_name + "-redis"]["keepalive_ms"]);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+call   13 never executed
+        -:   29:
+        2:   30:  return Redis(connection_options, pool_options);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:   31:}
+        -:   32:
+function _ZN14social_network30init_redis_cluster_client_poolERKN8nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerEEERKS9_ called 0 returned 0% blocks executed 0%
+    #####:   33:RedisCluster init_redis_cluster_client_pool(
+        -:   34:    const json &config_json,
+        -:   35:    const std::string &service_name
+        -:   36:) {
+    #####:   37:  ConnectionOptions connection_options;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   38:  connection_options.host = config_json[service_name + "-redis"]["addr"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+    #####:   39:  connection_options.port = config_json[service_name + "-redis"]["port"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+        -:   40:
+    #####:   41:  if (config_json["ssl"]["enabled"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+    #####:   42:    std::string ca_file = config_json["ssl"]["caPath"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+        -:   43:
+    #####:   44:    connection_options.tls.enabled = true;
+    #####:   45:    connection_options.tls.cacert = ca_file.c_str();
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   46:  }
+        -:   47:
+    #####:   48:  ConnectionPoolOptions pool_options;
+    #####:   49:  pool_options.size = config_json[service_name + "-redis"]["connections"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:   50:  pool_options.wait_timeout = std::chrono::milliseconds(config_json[service_name + "-redis"]["timeout_ms"]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:   51:  pool_options.connection_lifetime = std::chrono::milliseconds(config_json[service_name + "-redis"]["keepalive_ms"]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+        -:   52:
+    #####:   53:  return RedisCluster(connection_options, pool_options);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   54:}
+        -:   55:
+function _ZN14social_network30init_redis_replica_client_poolERKN8nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerEEERKS9_ called 0 returned 0% blocks executed 0%
+    #####:   56:Redis init_redis_replica_client_pool(
+        -:   57:    const json& config_json,
+        -:   58:    const std::string& service_name
+        -:   59:) {
+    #####:   60:    ConnectionOptions connection_options;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   61:    connection_options.host = config_json[service_name]["addr"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+    #####:   62:    connection_options.port = config_json[service_name]["port"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+        -:   63:
+    #####:   64:    if (config_json["ssl"]["enabled"]) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+    #####:   65:        std::string ca_file = config_json["ssl"]["caPath"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+        -:   66:
+    #####:   67:        connection_options.tls.enabled = true;
+    #####:   68:        connection_options.tls.cacert = ca_file.c_str();
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   69:    }
+        -:   70:
+    #####:   71:    ConnectionPoolOptions pool_options;
+    #####:   72:    pool_options.size = config_json[service_name]["connections"];
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:   73:    pool_options.wait_timeout = std::chrono::milliseconds(config_json[service_name]["timeout_ms"]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:   74:    pool_options.connection_lifetime = std::chrono::milliseconds(config_json[service_name]["keepalive_ms"]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+        -:   75:
+    #####:   76:    return Redis(connection_options, pool_options);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   77:}
+        -:   78:
+        -:   79:
+        -:   80:} // namespace social_network
+        -:   81:
+        -:   82:#endif //SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_REDIS_H_

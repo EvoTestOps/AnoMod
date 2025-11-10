@@ -1,0 +1,1074 @@
+        -:    0:Source:/social-network-microservices/src/TextService/TextHandler.h
+        -:    0:Graph:/social-network-microservices/build/src/TextService/CMakeFiles/TextService.dir/TextService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/TextService/CMakeFiles/TextService.dir/TextService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_TEXTHANDLER_H
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_TEXTHANDLER_H
+        -:    3:
+        -:    4:#include <future>
+        -:    5:#include <iostream>
+        -:    6:#include <regex>
+        -:    7:#include <string>
+        -:    8:
+        -:    9:#include "../../gen-cpp/TextService.h"
+        -:   10:#include "../../gen-cpp/UrlShortenService.h"
+        -:   11:#include "../../gen-cpp/UserMentionService.h"
+        -:   12:#include "../ClientPool.h"
+        -:   13:#include "../ThriftClient.h"
+        -:   14:#include "../logger.h"
+        -:   15:#include "../tracing.h"
+        -:   16:
+        -:   17:namespace social_network {
+        -:   18:
+        -:   19:class TextHandler : public TextServiceIf {
+        -:   20: public:
+        -:   21:  TextHandler(ClientPool<ThriftClient<UrlShortenServiceClient>> *,
+        -:   22:              ClientPool<ThriftClient<UserMentionServiceClient>> *);
+function _ZN14social_network11TextHandlerD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network11TextHandlerD2Ev called 0 returned 0% blocks executed 0%
+    #####:   23:  ~TextHandler() override = default;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+        -:   24:
+        -:   25:  void ComposeText(TextServiceReturn &_return, int64_t, const std::string &,
+        -:   26:                   const std::map<std::string, std::string> &) override;
+        -:   27:
+        -:   28: private:
+        -:   29:  ClientPool<ThriftClient<UrlShortenServiceClient>> *_url_client_pool;
+        -:   30:  ClientPool<ThriftClient<UserMentionServiceClient>> *_user_mention_client_pool;
+        -:   31:};
+        -:   32:
+function _ZN14social_network11TextHandlerC2EPNS_10ClientPoolINS_12ThriftClientINS_23UrlShortenServiceClientEEEEEPNS1_INS2_INS_24UserMentionServiceClientEEEEE called 1 returned 100% blocks executed 100%
+        1:   33:TextHandler::TextHandler(
+        -:   34:    ClientPool<ThriftClient<UrlShortenServiceClient>> *url_client_pool,
+        -:   35:    ClientPool<ThriftClient<UserMentionServiceClient>>
+        1:   36:        *user_mention_client_pool) {
+call    0 returned 100%
+        1:   37:  _url_client_pool = url_client_pool;
+        1:   38:  _user_mention_client_pool = user_mention_client_pool;
+        1:   39:}
+        -:   40:
+function _ZN14social_network11TextHandler11ComposeTextERNS_17TextServiceReturnElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS8_S8_St4lessIS8_ESaISt4pairIS9_S8_EEE called 200 returned 100% blocks executed 46%
+      200:   41:void TextHandler::ComposeText(
+        -:   42:    TextServiceReturn &_return, int64_t req_id, const std::string &text,
+        -:   43:    const std::map<std::string, std::string> &carrier) {
+        -:   44:  // 新增：记录收到的 ComposeText 请求
+      400:   45:  LOG(info) << "Received ComposeText request [req_id=" << req_id << ", text length=" << text.length() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+branch 14 taken 100% (fallthrough)
+branch 15 taken 0%
+call   16 returned 100%
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+call   20 returned 100%
+call   21 returned 100%
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0% (throw)
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 returned 100%
+branch 28 taken 100% (fallthrough)
+branch 29 taken 0% (throw)
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+branch 34 taken 100% (fallthrough)
+branch 35 taken 0% (throw)
+call   36 returned 100%
+branch 37 taken 100% (fallthrough)
+branch 38 taken 0% (throw)
+call   39 returned 100%
+branch 40 taken 100% (fallthrough)
+branch 41 taken 0% (throw)
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0% (throw)
+call   45 returned 100%
+branch 46 taken 100% (fallthrough)
+branch 47 taken 0% (throw)
+call   48 returned 100%
+branch 49 taken 100% (fallthrough)
+branch 50 taken 0% (throw)
+call   51 returned 100%
+branch 52 taken 100% (fallthrough)
+branch 53 taken 0% (throw)
+call   54 returned 100%
+branch 55 taken 100% (fallthrough)
+branch 56 taken 0% (throw)
+call   57 returned 100%
+branch 58 taken 100% (fallthrough)
+branch 59 taken 0% (throw)
+call   60 returned 100%
+call   61 never executed
+call   62 never executed
+call   63 never executed
+        -:   46:
+        -:   47:  // Initialize a span
+      400:   48:  TextMapReader reader(carrier);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:   49:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:   50:  TextMapWriter writer(writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:   51:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 returned 100%
+call    7 never executed
+      400:   52:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+      800:   53:      "compose_text_server", {opentracing::ChildOf(parent_span->get())});
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 never executed
+      200:   54:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+        -:   55:
+      400:   56:  std::vector<std::string> mention_usernames;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:   57:  std::smatch m;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 never executed
+      400:   58:  std::regex e("@[a-zA-Z0-9-_]+");
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+      400:   59:  auto s = text;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+      200:   60:  while (std::regex_search(s, m, e)) {
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+    #####:   61:    auto user_mention = m.str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:   62:    user_mention = user_mention.substr(1, user_mention.length());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+    #####:   63:    mention_usernames.emplace_back(user_mention);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   64:    s = m.suffix().str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+        -:   65:  }
+        -:   66:
+      400:   67:  std::vector<std::string> urls;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      200:   68:  e = "(http://|https://)([a-zA-Z0-9_!~*'().&=+$%-]+)";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:   69:  s = text;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:   70:  while (std::regex_search(s, m, e)) {
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+branch  3 taken 0% (fallthrough)
+branch  4 taken 100%
+    #####:   71:    auto url = m.str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:   72:    urls.emplace_back(url);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   73:    s = m.suffix().str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+        -:   74:  }
+        -:   75:
+        -:   76:  // 新增：记录提取到的 @用户 和 URL 数量
+      400:   77:  LOG(info) << "Extracted mentions and urls [req_id=" << req_id << ", mention count=" << mention_usernames.size() << ", url count=" << urls.size() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+branch 15 taken 100% (fallthrough)
+branch 16 taken 0%
+call   17 returned 100%
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+call   21 returned 100%
+call   22 returned 100%
+branch 23 taken 100% (fallthrough)
+branch 24 taken 0% (throw)
+call   25 returned 100%
+branch 26 taken 100% (fallthrough)
+branch 27 taken 0% (throw)
+call   28 returned 100%
+branch 29 taken 100% (fallthrough)
+branch 30 taken 0% (throw)
+call   31 returned 100%
+branch 32 taken 100% (fallthrough)
+branch 33 taken 0% (throw)
+call   34 returned 100%
+branch 35 taken 100% (fallthrough)
+branch 36 taken 0% (throw)
+call   37 returned 100%
+branch 38 taken 100% (fallthrough)
+branch 39 taken 0% (throw)
+call   40 returned 100%
+branch 41 taken 100% (fallthrough)
+branch 42 taken 0% (throw)
+call   43 returned 100%
+branch 44 taken 100% (fallthrough)
+branch 45 taken 0% (throw)
+call   46 returned 100%
+branch 47 taken 100% (fallthrough)
+branch 48 taken 0% (throw)
+call   49 returned 100%
+branch 50 taken 100% (fallthrough)
+branch 51 taken 0% (throw)
+call   52 returned 100%
+branch 53 taken 100% (fallthrough)
+branch 54 taken 0% (throw)
+call   55 returned 100%
+branch 56 taken 100% (fallthrough)
+branch 57 taken 0% (throw)
+call   58 returned 100%
+branch 59 taken 100% (fallthrough)
+branch 60 taken 0% (throw)
+call   61 returned 100%
+branch 62 taken 100% (fallthrough)
+branch 63 taken 0% (throw)
+call   64 returned 100%
+branch 65 taken 100% (fallthrough)
+branch 66 taken 0% (throw)
+call   67 returned 100%
+call   68 never executed
+call   69 never executed
+        -:   78:
+function _ZZN14social_network11TextHandler11ComposeTextERNS_17TextServiceReturnElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS8_S8_St4lessIS8_ESaISt4pairIS9_S8_EEEENKUlvE_clEv called 200 returned 100% blocks executed 48%
+      200:   79:  auto shortened_urls_future = std::async(std::launch::async, [&]() {
+      400:   80:    auto url_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+      800:   81:        "compose_urls_client", {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 never executed
+        -:   82:
+      400:   83:    std::map<std::string, std::string> url_writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:   84:    TextMapWriter url_writer(url_writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      200:   85:    opentracing::Tracer::Global()->Inject(url_span->context(), url_writer);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+        -:   86:
+      400:   87:    auto url_client_wrapper = _url_client_pool->Pop();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:   88:    if (!url_client_wrapper) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   89:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:   90:      se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    #####:   91:      se.message = "Failed to connect to url-shorten-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   92:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:   93:    }
+      200:   94:    std::vector<Url> _return_urls;
+call    0 returned 100%
+      200:   95:    auto url_client = url_client_wrapper->GetClient();
+call    0 returned 100%
+        -:   96:    try {
+      600:   97:      url_client->ComposeUrls(_return_urls, req_id, urls, url_writer_text_map);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+    =====:   98:    } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:   99:      LOG(error) << "Failed to upload urls to url-shorten-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  100:      _url_client_pool->Remove(url_client_wrapper);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  101:      throw;
+call    0 never executed
+        -:  102:    }
+      200:  103:    _url_client_pool->Keepalive(url_client_wrapper);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  104:    // 新增：成功调用 url-shortener 服务日志
+      800:  105:    LOG(info) << "ComposeUrls to url-shorten-service succeeded [req_id=" << req_id << ", url count=" << urls.size() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+branch 14 taken 100% (fallthrough)
+branch 15 taken 0%
+call   16 returned 100%
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+call   20 returned 100%
+call   21 returned 100%
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0% (throw)
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 returned 100%
+branch 28 taken 100% (fallthrough)
+branch 29 taken 0% (throw)
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+branch 34 taken 100% (fallthrough)
+branch 35 taken 0% (throw)
+call   36 returned 100%
+branch 37 taken 100% (fallthrough)
+branch 38 taken 0% (throw)
+call   39 returned 100%
+branch 40 taken 100% (fallthrough)
+branch 41 taken 0% (throw)
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0% (throw)
+call   45 returned 100%
+branch 46 taken 100% (fallthrough)
+branch 47 taken 0% (throw)
+call   48 returned 100%
+branch 49 taken 100% (fallthrough)
+branch 50 taken 0% (throw)
+call   51 returned 100%
+branch 52 taken 100% (fallthrough)
+branch 53 taken 0% (throw)
+call   54 returned 100%
+branch 55 taken 100% (fallthrough)
+branch 56 taken 0% (throw)
+call   57 returned 100%
+branch 58 taken 100% (fallthrough)
+branch 59 taken 0% (throw)
+call   60 returned 100%
+call   61 never executed
+call   62 never executed
+call   63 never executed
+      400:  106:    return _return_urls;
+      400:  107:  });
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:  108:
+function _ZZN14social_network11TextHandler11ComposeTextERNS_17TextServiceReturnElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt3mapIS8_S8_St4lessIS8_ESaISt4pairIS9_S8_EEEENKUlvE0_clEv called 200 returned 100% blocks executed 48%
+      200:  109:  auto user_mention_future = std::async(std::launch::async, [&]() {
+      400:  110:    auto user_mention_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  111:        "compose_user_mentions_client",
+      800:  112:        {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 never executed
+        -:  113:
+      400:  114:    std::map<std::string, std::string> user_mention_writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  115:    TextMapWriter user_mention_writer(user_mention_writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      600:  116:    opentracing::Tracer::Global()->Inject(user_mention_span->context(),
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 never executed
+      400:  117:                                          user_mention_writer);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+        -:  118:
+      400:  119:    auto user_mention_client_wrapper = _user_mention_client_pool->Pop();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  120:    if (!user_mention_client_wrapper) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  121:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  122:      se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    #####:  123:      se.message = "Failed to connect to user-mention-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  124:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  125:    }
+      200:  126:    std::vector<UserMention> _return_user_mentions;
+call    0 returned 100%
+      200:  127:    auto user_mention_client = user_mention_client_wrapper->GetClient();
+call    0 returned 100%
+        -:  128:    try {
+      400:  129:      user_mention_client->ComposeUserMentions(_return_user_mentions, req_id,
+      400:  130:                                               mention_usernames,
+      400:  131:                                               user_mention_writer_text_map);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+    =====:  132:    } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  133:      LOG(error) << "Failed to upload user_mentions to user-mention-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  134:      _user_mention_client_pool->Remove(user_mention_client_wrapper);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  135:      throw;
+call    0 never executed
+        -:  136:    }
+        -:  137:
+      200:  138:    _user_mention_client_pool->Keepalive(user_mention_client_wrapper);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  139:    // 新增：成功调用 user-mention 服务日志
+      800:  140:    LOG(info) << "ComposeUserMentions to user-mention-service succeeded [req_id=" << req_id << ", mention count=" << mention_usernames.size() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+branch 14 taken 100% (fallthrough)
+branch 15 taken 0%
+call   16 returned 100%
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+call   20 returned 100%
+call   21 returned 100%
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0% (throw)
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 returned 100%
+branch 28 taken 100% (fallthrough)
+branch 29 taken 0% (throw)
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+branch 34 taken 100% (fallthrough)
+branch 35 taken 0% (throw)
+call   36 returned 100%
+branch 37 taken 100% (fallthrough)
+branch 38 taken 0% (throw)
+call   39 returned 100%
+branch 40 taken 100% (fallthrough)
+branch 41 taken 0% (throw)
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0% (throw)
+call   45 returned 100%
+branch 46 taken 100% (fallthrough)
+branch 47 taken 0% (throw)
+call   48 returned 100%
+branch 49 taken 100% (fallthrough)
+branch 50 taken 0% (throw)
+call   51 returned 100%
+branch 52 taken 100% (fallthrough)
+branch 53 taken 0% (throw)
+call   54 returned 100%
+branch 55 taken 100% (fallthrough)
+branch 56 taken 0% (throw)
+call   57 returned 100%
+branch 58 taken 100% (fallthrough)
+branch 59 taken 0% (throw)
+call   60 returned 100%
+call   61 never executed
+call   62 never executed
+call   63 never executed
+      400:  141:    return _return_user_mentions;
+      400:  142:  });
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:  143:
+      400:  144:  std::vector<Url> target_urls;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+        -:  145:  try {
+      200:  146:    target_urls = shortened_urls_future.get();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+    =====:  147:  } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  148:    LOG(error) << "Failed to get shortened urls from url-shorten-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  149:    throw;
+call    0 never executed
+        -:  150:  }
+        -:  151:
+      400:  152:  std::vector<UserMention> user_mentions;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+        -:  153:  try {
+      200:  154:    user_mentions = user_mention_future.get();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+    =====:  155:  } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  156:    LOG(error) << "Failed to upload user mentions to user-mention-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  157:    throw;
+call    0 never executed
+        -:  158:  }
+        -:  159:
+      400:  160:  std::string updated_text;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      200:  161:  if (!urls.empty()) {
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+    #####:  162:    s = text;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  163:    int idx = 0;
+    #####:  164:    while (std::regex_search(s, m, e)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  165:      auto url = m.str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  166:      urls.emplace_back(url);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  167:      updated_text += m.prefix().str() + target_urls[idx].shortened_url;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    #####:  168:      s = m.suffix().str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+    #####:  169:      idx++;
+        -:  170:    }
+        -:  171:  } else {
+      200:  172:    updated_text = text;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  173:  }
+        -:  174:
+      200:  175:  _return.user_mentions = user_mentions;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  176:  _return.text = updated_text;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  177:  _return.urls = target_urls;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  178:
+        -:  179:  // 新增：方法结束日志
+      400:  180:  LOG(info) << "ComposeText completed [req_id=" << req_id << ", user_mentions count=" << user_mentions.size() << ", urls count=" << target_urls.size() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+branch 15 taken 100% (fallthrough)
+branch 16 taken 0%
+call   17 returned 100%
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+call   21 returned 100%
+call   22 returned 100%
+branch 23 taken 100% (fallthrough)
+branch 24 taken 0% (throw)
+call   25 returned 100%
+branch 26 taken 100% (fallthrough)
+branch 27 taken 0% (throw)
+call   28 returned 100%
+branch 29 taken 100% (fallthrough)
+branch 30 taken 0% (throw)
+call   31 returned 100%
+branch 32 taken 100% (fallthrough)
+branch 33 taken 0% (throw)
+call   34 returned 100%
+branch 35 taken 100% (fallthrough)
+branch 36 taken 0% (throw)
+call   37 returned 100%
+branch 38 taken 100% (fallthrough)
+branch 39 taken 0% (throw)
+call   40 returned 100%
+branch 41 taken 100% (fallthrough)
+branch 42 taken 0% (throw)
+call   43 returned 100%
+branch 44 taken 100% (fallthrough)
+branch 45 taken 0% (throw)
+call   46 returned 100%
+branch 47 taken 100% (fallthrough)
+branch 48 taken 0% (throw)
+call   49 returned 100%
+branch 50 taken 100% (fallthrough)
+branch 51 taken 0% (throw)
+call   52 returned 100%
+branch 53 taken 100% (fallthrough)
+branch 54 taken 0% (throw)
+call   55 returned 100%
+branch 56 taken 100% (fallthrough)
+branch 57 taken 0% (throw)
+call   58 returned 100%
+branch 59 taken 100% (fallthrough)
+branch 60 taken 0% (throw)
+call   61 returned 100%
+branch 62 taken 100% (fallthrough)
+branch 63 taken 0% (throw)
+call   64 returned 100%
+branch 65 taken 100% (fallthrough)
+branch 66 taken 0% (throw)
+call   67 returned 100%
+call   68 never executed
+call   69 never executed
+        -:  181:
+      200:  182:  span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+      200:  183:}
+        -:  184:
+        -:  185:}  // namespace social_network
+        -:  186:
+        -:  187:#endif  // SOCIAL_NETWORK_MICROSERVICES_TEXTHANDLER_H

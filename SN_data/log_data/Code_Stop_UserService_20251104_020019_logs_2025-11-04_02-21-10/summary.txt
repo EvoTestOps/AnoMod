@@ -1,0 +1,39 @@
+收集时间: 
+时间范围: 完整历史记录（无限制）
+收集的服务: 12 个核心服务
+处理方式: 收集原始日志，未进行任何过滤
+
+日志文件总结:
+- ComposePostService: 100K (801行) - 错误: 200, 警告: 0
+0, 启动日志: 1
+- PostStorageService: 88K (601行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- UserService: 未找到日志文件
+- UserMentionService: 100K (601行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- UniqueIdService: 68K (403行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- MediaService: 92K (601行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- SocialGraphService: 26M (153221行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- UserTimelineService: 208K (1201行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- UrlShortenService: 60K (401行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- HomeTimelineService: 244K (1401行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- TextService: 152K (1001行) - 错误: 0
+0, 警告: 0
+0, 启动日志: 1
+- NginxThrift: 236K (2400行) - 错误: 800, 警告: 0
+0, 启动日志: 0
+0

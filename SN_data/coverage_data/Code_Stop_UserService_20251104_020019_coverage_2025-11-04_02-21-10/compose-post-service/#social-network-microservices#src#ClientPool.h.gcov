@@ -1,0 +1,2238 @@
+        -:    0:Source:/social-network-microservices/src/ClientPool.h
+        -:    0:Graph:/social-network-microservices/build/src/ComposePostService/CMakeFiles/ComposePostService.dir/ComposePostService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/ComposePostService/CMakeFiles/ComposePostService.dir/ComposePostService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H
+        -:    3:
+        -:    4:#include <vector>
+        -:    5:#include <mutex>
+        -:    6:#include <condition_variable>
+        -:    7:#include <deque>
+        -:    8:#include <chrono>
+        -:    9:#include <string>
+        -:   10:#include <nlohmann/json.hpp>
+        -:   11:
+        -:   12:#include "logger.h"
+        -:   13:
+        -:   14:namespace social_network {
+        -:   15:using json = nlohmann::json;
+        -:   16:
+        -:   17:template<class TClient>
+        -:   18:class ClientPool {
+        -:   19: public:
+        -:   20:  ClientPool(const std::string &client_type, const std::string &addr,
+        -:   21:      int port, int min_size, int max_size, int timeout_ms, int keepalive_ms,
+        -:   22:      const json &config_json);
+        -:   23:  ~ClientPool();
+        -:   24:
+        -:   25:  ClientPool(const ClientPool&) = delete;
+        -:   26:  ClientPool& operator=(const ClientPool&) = delete;
+        -:   27:  ClientPool(ClientPool&&) = default;
+        -:   28:  ClientPool& operator=(ClientPool&&) = default;
+        -:   29:
+        -:   30:  TClient * Pop();
+        -:   31:  void Push(TClient *);
+        -:   32:  void Keepalive(TClient *);
+        -:   33:  void Remove(TClient *);
+        -:   34:
+        -:   35: private:
+        -:   36:  std::deque<TClient *> _pool;
+        -:   37:  std::string _addr;
+        -:   38:  std::string _client_type;
+        -:   39:  int _port;
+        -:   40:  int _min_pool_size{};
+        -:   41:  int _max_pool_size{};
+        -:   42:  int _curr_pool_size{};
+        -:   43:  int _timeout_ms;
+        -:   44:  int _keepalive_ms;
+        -:   45:  std::mutex _mtx;
+        -:   46:  std::condition_variable _cv;
+        -:   47:  const json *_config_json;
+        -:   48:
+        -:   49:};
+        -:   50:
+        -:   51:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEEC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_iiiiiRKN8nlohmann10basic_jsonISt3mapSt6vectorSA_blmdSaNSD_14adl_serializerEEE called 1 returned 100% blocks executed 44%
+        7:   52:ClientPool<TClient>::ClientPool(const std::string &client_type,
+        -:   53:    const std::string &addr, int port, int min_pool_size,
+        -:   54:    int max_pool_size, int timeout_ms, int keepalive_ms,
+        7:   55:    const json &config_json) {
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 returned 100%
+call   13 returned 100%
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 100%
+call   19 returned 100%
+call   20 returned 100%
+call   21 returned 100%
+call   22 returned 100%
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 returned 100%
+call   28 returned 100%
+call   29 returned 100%
+call   30 returned 100%
+call   31 returned 100%
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 returned 100%
+call   37 returned 100%
+call   38 returned 100%
+call   39 returned 100%
+call   40 returned 100%
+call   41 never executed
+call   42 never executed
+call   43 never executed
+call   44 never executed
+call   45 returned 100%
+call   46 returned 100%
+call   47 returned 100%
+call   48 returned 100%
+call   49 returned 100%
+call   50 never executed
+call   51 never executed
+call   52 never executed
+call   53 never executed
+call   54 returned 100%
+call   55 returned 100%
+call   56 returned 100%
+call   57 returned 100%
+call   58 returned 100%
+call   59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        7:   56:  _addr = addr;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+        7:   57:  _port = port;
+        7:   58:  _min_pool_size = min_pool_size;
+        7:   59:  _max_pool_size = max_pool_size;
+        7:   60:  _timeout_ms = timeout_ms;
+        7:   61:  _client_type = client_type;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+        7:   62:  _keepalive_ms = keepalive_ms;
+        7:   63:  _config_json = &config_json;
+        -:   64:
+        7:   65:  for (int i = 0; i < min_pool_size; ++i) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+branch  6 taken 0% (fallthrough)
+branch  7 taken 100%
+branch  8 taken 0% (fallthrough)
+branch  9 taken 100%
+branch 10 taken 0% (fallthrough)
+branch 11 taken 100%
+branch 12 taken 0% (fallthrough)
+branch 13 taken 100%
+    #####:   66:    TClient *client = new TClient(addr, port, keepalive_ms, config_json);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 never executed
+branch 30 never executed
+call   31 never executed
+branch 32 never executed
+branch 33 never executed
+call   34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+    #####:   67:    _pool.emplace_back(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+        -:   68:  }
+        7:   69:  _curr_pool_size = min_pool_size;
+        7:   70:}
+        -:   71:
+        -:   72:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEED2Ev called 0 returned 0% blocks executed 0%
+    #####:   73:ClientPool<TClient>::~ClientPool() {
+    #####:   74:  while (!_pool.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+    #####:   75:    delete _pool.front();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+    #####:   76:    _pool.pop_front();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+        -:   77:  }
+    #####:   78:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+        -:   79:
+        -:   80:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEE3PopEv called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEE3PopEv called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEE3PopEv called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEE3PopEv called 200 returned 100% blocks executed 16%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEE3PopEv called 200 returned 100% blocks executed 16%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEE3PopEv called 200 returned 100% blocks executed 16%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEE3PopEv called 200 returned 0% blocks executed 34%
+      800:   81:TClient * ClientPool<TClient>::Pop() {
+      800:   82:  TClient * client = nullptr;
+        -:   83:  {
+     1600:   84:    std::unique_lock<std::mutex> cv_lock(_mtx);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 never executed
+call   19 never executed
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 never executed
+call   24 never executed
+call   25 returned 100%
+branch 26 taken 100% (fallthrough)
+branch 27 taken 0% (throw)
+call   28 never executed
+call   29 never executed
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 never executed
+call   34 never executed
+      800:   85:    while (_pool.size() == 0 && _curr_pool_size == _max_pool_size) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+branch 17 never executed
+branch 18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 returned 100%
+branch 22 taken 34% (fallthrough)
+branch 23 taken 67%
+branch 24 taken 0% (fallthrough)
+branch 25 taken 100%
+branch 26 taken 0% (fallthrough)
+branch 27 taken 100%
+call   28 returned 100%
+branch 29 taken 34% (fallthrough)
+branch 30 taken 67%
+branch 31 taken 0% (fallthrough)
+branch 32 taken 100%
+branch 33 taken 0% (fallthrough)
+branch 34 taken 100%
+call   35 returned 100%
+branch 36 taken 34% (fallthrough)
+branch 37 taken 67%
+branch 38 taken 0% (fallthrough)
+branch 39 taken 100%
+branch 40 taken 0% (fallthrough)
+branch 41 taken 100%
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0%
+branch 45 taken 0% (fallthrough)
+branch 46 taken 100%
+branch 47 taken 0% (fallthrough)
+branch 48 taken 100%
+        -:   86:      // Create a new a client if current pool size is less than
+        -:   87:      // the max pool size.
+    #####:   88:      auto wait_time = std::chrono::system_clock::now() +
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:   89:          std::chrono::milliseconds(_timeout_ms);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+        -:   90:      bool wait_success = _cv.wait_until(cv_lock, wait_time,
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+function _ZZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEE3PopEvENKUlvE_clEv called 0 returned 0% blocks executed 0%
+    #####:   91:            [this] { return _pool.size() > 0 || _curr_pool_size < _max_pool_size; });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+branch 54 never executed
+branch 55 never executed
+    #####:   92:      if (!wait_success) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 never executed
+branch 12 never executed
+branch 13 never executed
+    #####:   93:        LOG(warning) << "ClientPool pop timeout";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+branch 63 never executed
+branch 64 never executed
+call   65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+branch 71 never executed
+branch 72 never executed
+call   73 never executed
+branch 74 never executed
+branch 75 never executed
+call   76 never executed
+branch 77 never executed
+branch 78 never executed
+call   79 never executed
+branch 80 never executed
+branch 81 never executed
+call   82 never executed
+branch 83 never executed
+branch 84 never executed
+call   85 never executed
+branch 86 never executed
+branch 87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+call   99 never executed
+call   100 never executed
+branch 101 never executed
+branch 102 never executed
+call   103 never executed
+branch 104 never executed
+branch 105 never executed
+call   106 never executed
+branch 107 never executed
+branch 108 never executed
+call   109 never executed
+branch 110 never executed
+branch 111 never executed
+call   112 never executed
+branch 113 never executed
+branch 114 never executed
+call   115 never executed
+call   116 never executed
+branch 117 never executed
+branch 118 never executed
+call   119 never executed
+call   120 never executed
+branch 121 never executed
+branch 122 never executed
+call   123 never executed
+branch 124 never executed
+branch 125 never executed
+call   126 never executed
+branch 127 never executed
+branch 128 never executed
+call   129 never executed
+branch 130 never executed
+branch 131 never executed
+call   132 never executed
+branch 133 never executed
+branch 134 never executed
+call   135 never executed
+branch 136 never executed
+branch 137 never executed
+call   138 never executed
+branch 139 never executed
+branch 140 never executed
+call   141 never executed
+branch 142 never executed
+branch 143 never executed
+call   144 never executed
+branch 145 never executed
+branch 146 never executed
+call   147 never executed
+call   148 never executed
+call   149 never executed
+call   150 never executed
+branch 151 never executed
+branch 152 never executed
+call   153 never executed
+branch 154 never executed
+branch 155 never executed
+call   156 never executed
+branch 157 never executed
+branch 158 never executed
+call   159 never executed
+branch 160 never executed
+branch 161 never executed
+call   162 never executed
+branch 163 never executed
+branch 164 never executed
+call   165 never executed
+call   166 never executed
+branch 167 never executed
+branch 168 never executed
+call   169 never executed
+call   170 never executed
+branch 171 never executed
+branch 172 never executed
+call   173 never executed
+branch 174 never executed
+branch 175 never executed
+call   176 never executed
+branch 177 never executed
+branch 178 never executed
+call   179 never executed
+branch 180 never executed
+branch 181 never executed
+call   182 never executed
+branch 183 never executed
+branch 184 never executed
+call   185 never executed
+branch 186 never executed
+branch 187 never executed
+call   188 never executed
+branch 189 never executed
+branch 190 never executed
+call   191 never executed
+branch 192 never executed
+branch 193 never executed
+call   194 never executed
+branch 195 never executed
+branch 196 never executed
+call   197 never executed
+call   198 never executed
+call   199 never executed
+call   200 never executed
+branch 201 never executed
+branch 202 never executed
+call   203 never executed
+branch 204 never executed
+branch 205 never executed
+call   206 never executed
+branch 207 never executed
+branch 208 never executed
+call   209 never executed
+branch 210 never executed
+branch 211 never executed
+call   212 never executed
+branch 213 never executed
+branch 214 never executed
+call   215 never executed
+call   216 never executed
+branch 217 never executed
+branch 218 never executed
+call   219 never executed
+call   220 never executed
+branch 221 never executed
+branch 222 never executed
+call   223 never executed
+branch 224 never executed
+branch 225 never executed
+call   226 never executed
+branch 227 never executed
+branch 228 never executed
+call   229 never executed
+branch 230 never executed
+branch 231 never executed
+call   232 never executed
+branch 233 never executed
+branch 234 never executed
+call   235 never executed
+branch 236 never executed
+branch 237 never executed
+call   238 never executed
+branch 239 never executed
+branch 240 never executed
+call   241 never executed
+branch 242 never executed
+branch 243 never executed
+call   244 never executed
+branch 245 never executed
+branch 246 never executed
+call   247 never executed
+call   248 never executed
+call   249 never executed
+call   250 never executed
+branch 251 never executed
+branch 252 never executed
+call   253 never executed
+branch 254 never executed
+branch 255 never executed
+call   256 never executed
+branch 257 never executed
+branch 258 never executed
+call   259 never executed
+branch 260 never executed
+branch 261 never executed
+call   262 never executed
+branch 263 never executed
+branch 264 never executed
+call   265 never executed
+call   266 never executed
+branch 267 never executed
+branch 268 never executed
+call   269 never executed
+call   270 never executed
+branch 271 never executed
+branch 272 never executed
+call   273 never executed
+branch 274 never executed
+branch 275 never executed
+call   276 never executed
+branch 277 never executed
+branch 278 never executed
+call   279 never executed
+branch 280 never executed
+branch 281 never executed
+call   282 never executed
+branch 283 never executed
+branch 284 never executed
+call   285 never executed
+branch 286 never executed
+branch 287 never executed
+call   288 never executed
+branch 289 never executed
+branch 290 never executed
+call   291 never executed
+branch 292 never executed
+branch 293 never executed
+call   294 never executed
+branch 295 never executed
+branch 296 never executed
+call   297 never executed
+call   298 never executed
+call   299 never executed
+call   300 never executed
+branch 301 never executed
+branch 302 never executed
+call   303 never executed
+branch 304 never executed
+branch 305 never executed
+call   306 never executed
+branch 307 never executed
+branch 308 never executed
+call   309 never executed
+branch 310 never executed
+branch 311 never executed
+call   312 never executed
+branch 313 never executed
+branch 314 never executed
+call   315 never executed
+call   316 never executed
+branch 317 never executed
+branch 318 never executed
+call   319 never executed
+call   320 never executed
+branch 321 never executed
+branch 322 never executed
+call   323 never executed
+branch 324 never executed
+branch 325 never executed
+call   326 never executed
+branch 327 never executed
+branch 328 never executed
+call   329 never executed
+branch 330 never executed
+branch 331 never executed
+call   332 never executed
+branch 333 never executed
+branch 334 never executed
+call   335 never executed
+branch 336 never executed
+branch 337 never executed
+call   338 never executed
+branch 339 never executed
+branch 340 never executed
+call   341 never executed
+branch 342 never executed
+branch 343 never executed
+call   344 never executed
+branch 345 never executed
+branch 346 never executed
+call   347 never executed
+call   348 never executed
+call   349 never executed
+    #####:   94:        LOG(info) << _pool.size() << " " << _curr_pool_size;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+branch 71 never executed
+branch 72 never executed
+call   73 never executed
+call   74 never executed
+branch 75 never executed
+branch 76 never executed
+call   77 never executed
+call   78 never executed
+branch 79 never executed
+branch 80 never executed
+call   81 never executed
+branch 82 never executed
+branch 83 never executed
+call   84 never executed
+branch 85 never executed
+branch 86 never executed
+call   87 never executed
+branch 88 never executed
+branch 89 never executed
+call   90 never executed
+branch 91 never executed
+branch 92 never executed
+call   93 never executed
+branch 94 never executed
+branch 95 never executed
+call   96 never executed
+branch 97 never executed
+branch 98 never executed
+call   99 never executed
+branch 100 never executed
+branch 101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+branch 109 never executed
+branch 110 never executed
+call   111 never executed
+call   112 never executed
+call   113 never executed
+call   114 never executed
+branch 115 never executed
+branch 116 never executed
+call   117 never executed
+branch 118 never executed
+branch 119 never executed
+call   120 never executed
+branch 121 never executed
+branch 122 never executed
+call   123 never executed
+branch 124 never executed
+branch 125 never executed
+call   126 never executed
+call   127 never executed
+branch 128 never executed
+branch 129 never executed
+call   130 never executed
+call   131 never executed
+branch 132 never executed
+branch 133 never executed
+call   134 never executed
+call   135 never executed
+branch 136 never executed
+branch 137 never executed
+call   138 never executed
+branch 139 never executed
+branch 140 never executed
+call   141 never executed
+branch 142 never executed
+branch 143 never executed
+call   144 never executed
+branch 145 never executed
+branch 146 never executed
+call   147 never executed
+branch 148 never executed
+branch 149 never executed
+call   150 never executed
+branch 151 never executed
+branch 152 never executed
+call   153 never executed
+branch 154 never executed
+branch 155 never executed
+call   156 never executed
+branch 157 never executed
+branch 158 never executed
+call   159 never executed
+branch 160 never executed
+branch 161 never executed
+call   162 never executed
+branch 163 never executed
+branch 164 never executed
+call   165 never executed
+branch 166 never executed
+branch 167 never executed
+call   168 never executed
+call   169 never executed
+call   170 never executed
+call   171 never executed
+branch 172 never executed
+branch 173 never executed
+call   174 never executed
+branch 175 never executed
+branch 176 never executed
+call   177 never executed
+branch 178 never executed
+branch 179 never executed
+call   180 never executed
+branch 181 never executed
+branch 182 never executed
+call   183 never executed
+call   184 never executed
+branch 185 never executed
+branch 186 never executed
+call   187 never executed
+call   188 never executed
+branch 189 never executed
+branch 190 never executed
+call   191 never executed
+call   192 never executed
+branch 193 never executed
+branch 194 never executed
+call   195 never executed
+branch 196 never executed
+branch 197 never executed
+call   198 never executed
+branch 199 never executed
+branch 200 never executed
+call   201 never executed
+branch 202 never executed
+branch 203 never executed
+call   204 never executed
+branch 205 never executed
+branch 206 never executed
+call   207 never executed
+branch 208 never executed
+branch 209 never executed
+call   210 never executed
+branch 211 never executed
+branch 212 never executed
+call   213 never executed
+branch 214 never executed
+branch 215 never executed
+call   216 never executed
+branch 217 never executed
+branch 218 never executed
+call   219 never executed
+branch 220 never executed
+branch 221 never executed
+call   222 never executed
+branch 223 never executed
+branch 224 never executed
+call   225 never executed
+call   226 never executed
+call   227 never executed
+call   228 never executed
+branch 229 never executed
+branch 230 never executed
+call   231 never executed
+branch 232 never executed
+branch 233 never executed
+call   234 never executed
+branch 235 never executed
+branch 236 never executed
+call   237 never executed
+branch 238 never executed
+branch 239 never executed
+call   240 never executed
+call   241 never executed
+branch 242 never executed
+branch 243 never executed
+call   244 never executed
+call   245 never executed
+branch 246 never executed
+branch 247 never executed
+call   248 never executed
+call   249 never executed
+branch 250 never executed
+branch 251 never executed
+call   252 never executed
+branch 253 never executed
+branch 254 never executed
+call   255 never executed
+branch 256 never executed
+branch 257 never executed
+call   258 never executed
+branch 259 never executed
+branch 260 never executed
+call   261 never executed
+branch 262 never executed
+branch 263 never executed
+call   264 never executed
+branch 265 never executed
+branch 266 never executed
+call   267 never executed
+branch 268 never executed
+branch 269 never executed
+call   270 never executed
+branch 271 never executed
+branch 272 never executed
+call   273 never executed
+branch 274 never executed
+branch 275 never executed
+call   276 never executed
+branch 277 never executed
+branch 278 never executed
+call   279 never executed
+branch 280 never executed
+branch 281 never executed
+call   282 never executed
+call   283 never executed
+call   284 never executed
+call   285 never executed
+branch 286 never executed
+branch 287 never executed
+call   288 never executed
+branch 289 never executed
+branch 290 never executed
+call   291 never executed
+branch 292 never executed
+branch 293 never executed
+call   294 never executed
+branch 295 never executed
+branch 296 never executed
+call   297 never executed
+call   298 never executed
+branch 299 never executed
+branch 300 never executed
+call   301 never executed
+call   302 never executed
+branch 303 never executed
+branch 304 never executed
+call   305 never executed
+call   306 never executed
+branch 307 never executed
+branch 308 never executed
+call   309 never executed
+branch 310 never executed
+branch 311 never executed
+call   312 never executed
+branch 313 never executed
+branch 314 never executed
+call   315 never executed
+branch 316 never executed
+branch 317 never executed
+call   318 never executed
+branch 319 never executed
+branch 320 never executed
+call   321 never executed
+branch 322 never executed
+branch 323 never executed
+call   324 never executed
+branch 325 never executed
+branch 326 never executed
+call   327 never executed
+branch 328 never executed
+branch 329 never executed
+call   330 never executed
+branch 331 never executed
+branch 332 never executed
+call   333 never executed
+branch 334 never executed
+branch 335 never executed
+call   336 never executed
+branch 337 never executed
+branch 338 never executed
+call   339 never executed
+call   340 never executed
+call   341 never executed
+call   342 never executed
+branch 343 never executed
+branch 344 never executed
+call   345 never executed
+branch 346 never executed
+branch 347 never executed
+call   348 never executed
+branch 349 never executed
+branch 350 never executed
+call   351 never executed
+branch 352 never executed
+branch 353 never executed
+call   354 never executed
+call   355 never executed
+branch 356 never executed
+branch 357 never executed
+call   358 never executed
+call   359 never executed
+branch 360 never executed
+branch 361 never executed
+call   362 never executed
+call   363 never executed
+branch 364 never executed
+branch 365 never executed
+call   366 never executed
+branch 367 never executed
+branch 368 never executed
+call   369 never executed
+branch 370 never executed
+branch 371 never executed
+call   372 never executed
+branch 373 never executed
+branch 374 never executed
+call   375 never executed
+branch 376 never executed
+branch 377 never executed
+call   378 never executed
+branch 379 never executed
+branch 380 never executed
+call   381 never executed
+branch 382 never executed
+branch 383 never executed
+call   384 never executed
+branch 385 never executed
+branch 386 never executed
+call   387 never executed
+branch 388 never executed
+branch 389 never executed
+call   390 never executed
+branch 391 never executed
+branch 392 never executed
+call   393 never executed
+branch 394 never executed
+branch 395 never executed
+call   396 never executed
+call   397 never executed
+call   398 never executed
+    #####:   95:        cv_lock.unlock();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+    #####:   96:        return nullptr;
+        -:   97:      }
+        -:   98:    }
+      800:   99:    if (_pool.size() > 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 returned 100%
+branch 10 taken 67% (fallthrough)
+branch 11 taken 34%
+call   12 returned 100%
+branch 13 taken 67% (fallthrough)
+branch 14 taken 34%
+call   15 returned 100%
+branch 16 taken 67% (fallthrough)
+branch 17 taken 34%
+call   18 returned 100%
+branch 19 taken 0% (fallthrough)
+branch 20 taken 100%
+      399:  100:      client = _pool.front();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 never executed
+      399:  101:      _pool.pop_front();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 never executed
+        -:  102:    } else {
+      401:  103:      client = new TClient(_addr, _port, _keepalive_ms, *_config_json);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 returned 100%
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0% (throw)
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 never executed
+call   28 returned 100%
+branch 29 taken 100% (fallthrough)
+branch 30 taken 0% (throw)
+call   31 returned 100%
+branch 32 taken 100% (fallthrough)
+branch 33 taken 0% (throw)
+call   34 never executed
+call   35 returned 100%
+branch 36 taken 100% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 never executed
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0% (throw)
+call   45 returned 100%
+branch 46 taken 100% (fallthrough)
+branch 47 taken 0% (throw)
+call   48 never executed
+      401:  104:      _curr_pool_size++;
+        -:  105:    }
+      800:  106:  cv_lock.unlock();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+call   21 returned 100%
+branch 22 taken 100%
+branch 23 taken 0%
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 returned 100%
+branch 28 taken 100%
+branch 29 taken 0%
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+branch 34 taken 100%
+branch 35 taken 0%
+call   36 returned 100%
+branch 37 taken 100% (fallthrough)
+branch 38 taken 0% (throw)
+call   39 returned 100%
+branch 40 taken 100%
+branch 41 taken 0%
+        -:  107:  } // cv_lock(_mtx)
+        -:  108:
+        -:  109:
+      800:  110:  if (client) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 taken 100%
+branch  7 taken 0%
+branch  8 taken 100%
+branch  9 taken 0%
+branch 10 taken 100%
+branch 11 taken 0%
+branch 12 taken 100%
+branch 13 taken 0%
+        -:  111:    try {
+      800:  112:      client->Connect();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 returned 100%
+branch 19 taken 0% (fallthrough)
+branch 20 taken 100% (throw)
+      400:  113:    } catch (...) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 returned 100%
+call   13 returned 100%
+      400:  114:      LOG(error) << "Failed to connect " + _client_type;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+branch 59 never executed
+branch 60 never executed
+call   61 never executed
+branch 62 never executed
+branch 63 never executed
+call   64 never executed
+branch 65 never executed
+branch 66 never executed
+call   67 never executed
+branch 68 never executed
+branch 69 never executed
+call   70 never executed
+branch 71 never executed
+branch 72 never executed
+call   73 never executed
+call   74 never executed
+branch 75 never executed
+branch 76 never executed
+call   77 never executed
+call   78 never executed
+branch 79 never executed
+branch 80 never executed
+call   81 never executed
+branch 82 never executed
+branch 83 never executed
+call   84 never executed
+branch 85 never executed
+branch 86 never executed
+call   87 never executed
+branch 88 never executed
+branch 89 never executed
+call   90 never executed
+branch 91 never executed
+branch 92 never executed
+call   93 never executed
+branch 94 never executed
+branch 95 never executed
+call   96 never executed
+branch 97 never executed
+branch 98 never executed
+call   99 never executed
+branch 100 never executed
+branch 101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+call   106 never executed
+call   107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+branch 117 never executed
+branch 118 never executed
+call   119 never executed
+branch 120 never executed
+branch 121 never executed
+call   122 never executed
+branch 123 never executed
+branch 124 never executed
+call   125 never executed
+branch 126 never executed
+branch 127 never executed
+call   128 never executed
+call   129 never executed
+branch 130 never executed
+branch 131 never executed
+call   132 never executed
+call   133 never executed
+branch 134 never executed
+branch 135 never executed
+call   136 never executed
+branch 137 never executed
+branch 138 never executed
+call   139 never executed
+branch 140 never executed
+branch 141 never executed
+call   142 never executed
+branch 143 never executed
+branch 144 never executed
+call   145 never executed
+branch 146 never executed
+branch 147 never executed
+call   148 never executed
+branch 149 never executed
+branch 150 never executed
+call   151 never executed
+branch 152 never executed
+branch 153 never executed
+call   154 never executed
+branch 155 never executed
+branch 156 never executed
+call   157 never executed
+branch 158 never executed
+branch 159 never executed
+call   160 never executed
+call   161 never executed
+call   162 never executed
+call   163 never executed
+call   164 never executed
+call   165 never executed
+branch 166 never executed
+branch 167 never executed
+call   168 never executed
+branch 169 never executed
+branch 170 never executed
+call   171 never executed
+branch 172 never executed
+branch 173 never executed
+call   174 never executed
+branch 175 never executed
+branch 176 never executed
+call   177 never executed
+branch 178 never executed
+branch 179 never executed
+call   180 never executed
+branch 181 never executed
+branch 182 never executed
+call   183 never executed
+call   184 never executed
+branch 185 never executed
+branch 186 never executed
+call   187 never executed
+call   188 never executed
+branch 189 never executed
+branch 190 never executed
+call   191 never executed
+branch 192 never executed
+branch 193 never executed
+call   194 never executed
+branch 195 never executed
+branch 196 never executed
+call   197 never executed
+branch 198 never executed
+branch 199 never executed
+call   200 never executed
+branch 201 never executed
+branch 202 never executed
+call   203 never executed
+branch 204 never executed
+branch 205 never executed
+call   206 never executed
+branch 207 never executed
+branch 208 never executed
+call   209 never executed
+branch 210 never executed
+branch 211 never executed
+call   212 never executed
+branch 213 never executed
+branch 214 never executed
+call   215 never executed
+call   216 never executed
+call   217 never executed
+call   218 never executed
+call   219 never executed
+call   220 never executed
+branch 221 never executed
+branch 222 never executed
+call   223 never executed
+branch 224 never executed
+branch 225 never executed
+call   226 never executed
+branch 227 never executed
+branch 228 never executed
+call   229 never executed
+branch 230 never executed
+branch 231 never executed
+call   232 never executed
+branch 233 never executed
+branch 234 never executed
+call   235 never executed
+branch 236 never executed
+branch 237 never executed
+call   238 never executed
+call   239 never executed
+branch 240 never executed
+branch 241 never executed
+call   242 never executed
+call   243 never executed
+branch 244 never executed
+branch 245 never executed
+call   246 never executed
+branch 247 never executed
+branch 248 never executed
+call   249 never executed
+branch 250 never executed
+branch 251 never executed
+call   252 never executed
+branch 253 never executed
+branch 254 never executed
+call   255 never executed
+branch 256 never executed
+branch 257 never executed
+call   258 never executed
+branch 259 never executed
+branch 260 never executed
+call   261 never executed
+branch 262 never executed
+branch 263 never executed
+call   264 never executed
+branch 265 never executed
+branch 266 never executed
+call   267 never executed
+branch 268 never executed
+branch 269 never executed
+call   270 never executed
+call   271 never executed
+call   272 never executed
+call   273 never executed
+call   274 never executed
+call   275 never executed
+branch 276 never executed
+branch 277 never executed
+call   278 never executed
+branch 279 never executed
+branch 280 never executed
+call   281 never executed
+branch 282 never executed
+branch 283 never executed
+call   284 never executed
+branch 285 never executed
+branch 286 never executed
+call   287 never executed
+branch 288 never executed
+branch 289 never executed
+call   290 never executed
+branch 291 never executed
+branch 292 never executed
+call   293 never executed
+call   294 never executed
+branch 295 never executed
+branch 296 never executed
+call   297 never executed
+call   298 never executed
+branch 299 never executed
+branch 300 never executed
+call   301 never executed
+branch 302 never executed
+branch 303 never executed
+call   304 never executed
+branch 305 never executed
+branch 306 never executed
+call   307 never executed
+branch 308 never executed
+branch 309 never executed
+call   310 never executed
+branch 311 never executed
+branch 312 never executed
+call   313 never executed
+branch 314 never executed
+branch 315 never executed
+call   316 never executed
+branch 317 never executed
+branch 318 never executed
+call   319 never executed
+branch 320 never executed
+branch 321 never executed
+call   322 never executed
+branch 323 never executed
+branch 324 never executed
+call   325 never executed
+call   326 never executed
+call   327 never executed
+call   328 never executed
+call   329 never executed
+call   330 returned 100%
+branch 331 taken 100% (fallthrough)
+branch 332 taken 0% (throw)
+call   333 returned 100%
+branch 334 taken 100% (fallthrough)
+branch 335 taken 0% (throw)
+call   336 returned 100%
+branch 337 taken 100% (fallthrough)
+branch 338 taken 0% (throw)
+call   339 returned 100%
+branch 340 taken 50% (fallthrough)
+branch 341 taken 50%
+call   342 returned 100%
+branch 343 taken 100% (fallthrough)
+branch 344 taken 0% (throw)
+call   345 returned 100%
+branch 346 taken 100% (fallthrough)
+branch 347 taken 0%
+call   348 returned 100%
+call   349 returned 100%
+branch 350 taken 100% (fallthrough)
+branch 351 taken 0% (throw)
+call   352 returned 100%
+call   353 returned 100%
+branch 354 taken 100% (fallthrough)
+branch 355 taken 0% (throw)
+call   356 returned 100%
+branch 357 taken 100% (fallthrough)
+branch 358 taken 0% (throw)
+call   359 returned 100%
+branch 360 taken 100% (fallthrough)
+branch 361 taken 0% (throw)
+call   362 returned 100%
+branch 363 taken 100% (fallthrough)
+branch 364 taken 0% (throw)
+call   365 returned 100%
+branch 366 taken 100% (fallthrough)
+branch 367 taken 0% (throw)
+call   368 returned 100%
+branch 369 taken 100% (fallthrough)
+branch 370 taken 0% (throw)
+call   371 returned 100%
+branch 372 taken 100% (fallthrough)
+branch 373 taken 0% (throw)
+call   374 returned 100%
+branch 375 taken 100% (fallthrough)
+branch 376 taken 0% (throw)
+call   377 returned 100%
+branch 378 taken 100% (fallthrough)
+branch 379 taken 0% (throw)
+call   380 returned 100%
+call   381 returned 100%
+call   382 never executed
+call   383 never executed
+call   384 never executed
+      200:  115:      Remove(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+      200:  116:      throw;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 returned 100%
+        -:  117:    }
+        -:  118:  }
+      600:  119:  return client;
+        -:  120:}
+        -:  121:
+        -:  122:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEE4PushEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEE4PushEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEE4PushEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEE4PushEPS3_ called 134 returned 100% blocks executed 78%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEE4PushEPS3_ called 134 returned 100% blocks executed 78%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEE4PushEPS3_ called 134 returned 100% blocks executed 78%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEE4PushEPS3_ called 0 returned 0% blocks executed 0%
+      402:  123:void ClientPool<TClient>::Push(TClient *client) {
+      804:  124:  std::unique_lock<std::mutex> cv_lock(_mtx);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 returned 100%
+call   19 never executed
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+call   24 never executed
+call   25 returned 100%
+branch 26 taken 100% (fallthrough)
+branch 27 taken 0% (throw)
+call   28 returned 100%
+call   29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+      402:  125:  _pool.push_back(client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+      402:  126:  cv_lock.unlock();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+      402:  127:  _cv.notify_one();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 never executed
+      402:  128:}
+        -:  129:
+        -:  130:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEE6RemoveEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEE6RemoveEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEE6RemoveEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEE6RemoveEPS3_ called 66 returned 100% blocks executed 80%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEE6RemoveEPS3_ called 66 returned 100% blocks executed 80%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEE6RemoveEPS3_ called 66 returned 100% blocks executed 80%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEE6RemoveEPS3_ called 200 returned 100% blocks executed 80%
+      398:  131:void ClientPool<TClient>::Remove(TClient *client) {
+        -:  132:  // No need to delete it from _pool because the *client has been poped out
+      398:  133:  delete client;
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 taken 100% (fallthrough)
+branch 10 taken 0%
+call   11 returned 100%
+branch 12 taken 100% (fallthrough)
+branch 13 taken 0%
+call   14 returned 100%
+branch 15 taken 100% (fallthrough)
+branch 16 taken 0%
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0%
+call   20 returned 100%
+      796:  134:  std::unique_lock<std::mutex> cv_lock(_mtx);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 returned 100%
+call   19 never executed
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+call   24 never executed
+call   25 returned 100%
+branch 26 taken 100% (fallthrough)
+branch 27 taken 0% (throw)
+call   28 returned 100%
+call   29 never executed
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+call   34 never executed
+      398:  135:  _curr_pool_size--;
+      398:  136:  cv_lock.unlock();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+call   18 returned 100%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 0% (throw)
+      398:  137:  _cv.notify_one();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+      398:  138:}
+        -:  139:
+        -:  140:template<class TClient>
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25HomeTimelineServiceClientEEEE9KeepaliveEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_25UserTimelineServiceClientEEEE9KeepaliveEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_24PostStorageServiceClientEEEE9KeepaliveEPS3_ called 0 returned 0% blocks executed 0%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_21UniqueIdServiceClientEEEE9KeepaliveEPS3_ called 200 returned 100% blocks executed 100%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_18MediaServiceClientEEEE9KeepaliveEPS3_ called 200 returned 100% blocks executed 100%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17TextServiceClientEEEE9KeepaliveEPS3_ called 200 returned 100% blocks executed 100%
+function _ZN14social_network10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEE9KeepaliveEPS3_ called 0 returned 0% blocks executed 0%
+      600:  141:void ClientPool<TClient>::Keepalive(TClient *client) {
+     1200:  142:  long curr_timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 never executed
+     1800:  143:          std::chrono::system_clock::now().time_since_epoch()).count();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+call   15 returned 100%
+call   16 returned 100%
+call   17 returned 100%
+call   18 never executed
+call   19 never executed
+call   20 never executed
+      600:  144:  if (curr_timestamp - client->_connect_timestamp > client->_keepalive_ms) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 taken 33% (fallthrough)
+branch  7 taken 67%
+branch  8 taken 33% (fallthrough)
+branch  9 taken 67%
+branch 10 taken 33% (fallthrough)
+branch 11 taken 67%
+branch 12 never executed
+branch 13 never executed
+      198:  145:    Remove(client);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 never executed
+        -:  146:  } else {
+      402:  147:    Push(client);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 never executed
+        -:  148:  }
+      600:  149:}
+        -:  150:
+        -:  151:} // namespace social_network
+        -:  152:
+        -:  153:
+        -:  154:#endif //SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H

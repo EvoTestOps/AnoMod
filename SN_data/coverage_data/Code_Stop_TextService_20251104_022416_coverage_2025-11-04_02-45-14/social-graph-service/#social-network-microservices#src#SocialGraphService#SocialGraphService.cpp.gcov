@@ -1,0 +1,989 @@
+        -:    0:Source:/social-network-microservices/src/SocialGraphService/SocialGraphService.cpp
+        -:    0:Graph:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <signal.h>
+        -:    2:#include <thrift/protocol/TBinaryProtocol.h>
+        -:    3:#include <thrift/server/TThreadedServer.h>
+        -:    4:#include <thrift/transport/TBufferTransports.h>
+        -:    5:#include <thrift/transport/TServerSocket.h>
+        -:    6:
+        -:    7:#include <boost/program_options.hpp>
+        -:    8:
+        -:    9:#include "../utils.h"
+        -:   10:#include "../utils_mongodb.h"
+        -:   11:#include "../utils_redis.h"
+        -:   12:#include "../utils_thrift.h"
+        -:   13:#include "SocialGraphHandler.h"
+        -:   14:
+        -:   15:extern "C" void __gcov_flush();
+        -:   16:
+        -:   17:using json = nlohmann::json;
+        -:   18:using apache::thrift::protocol::TBinaryProtocolFactory;
+        -:   19:using apache::thrift::server::TThreadedServer;
+        -:   20:using apache::thrift::transport::TFramedTransportFactory;
+        -:   21:using apache::thrift::transport::TServerSocket;
+        -:   22:using namespace social_network;
+        -:   23:
+function _Z13sigintHandleri called 0 returned 0% blocks executed 0%
+    #####:   24:void sigintHandler(int sig) { exit(EXIT_SUCCESS); }
+        -:   25:
+function _Z14handle_sigusr1i called 1 returned 0% blocks executed 100%
+        1:   26:void handle_sigusr1(int signum) {
+        1:   27:  __gcov_flush();
+call    0 returned 0%
+    #####:   28:}
+        -:   29:
+function main called 1 returned 0% blocks executed 28%
+        1:   30:int main(int argc, char *argv[]) {
+        1:   31:  signal(SIGINT, sigintHandler);
+call    0 returned 100%
+        1:   32:  signal(SIGUSR1, handle_sigusr1);
+call    0 returned 100%
+        1:   33:  init_logger();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:   34:
+        -:   35:  // Command line options
+        -:   36:  namespace po = boost::program_options;
+        1:   37:  po::options_description desc("Options");
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+        2:   38:  desc.add_options()("help", "produce help message")(
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+        -:   39:      "redis-cluster",
+        2:   40:      po::value<bool>()->default_value(false)->implicit_value(true),
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        1:   41:      "Enable redis cluster mode");
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:   42:
+        1:   43:  po::variables_map vm;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+        1:   44:  po::store(po::parse_command_line(argc, argv, desc), vm);
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+        1:   45:  po::notify(vm);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:   46:
+        1:   47:  if (vm.count("help")) {
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+branch  9 taken 0% (fallthrough)
+branch 10 taken 100%
+call   11 never executed
+call   12 never executed
+    #####:   48:    std::cout << desc << "\n";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:   49:    return 0;
+        -:   50:  }
+        -:   51:
+        1:   52:  bool redis_cluster_flag = false;
+        1:   53:  if (vm.count("redis-cluster")) {
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+branch  9 taken 100% (fallthrough)
+branch 10 taken 0%
+call   11 never executed
+call   12 never executed
+        1:   54:    if (vm["redis-cluster"].as<bool>()) {
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+branch  8 taken 100% (fallthrough)
+branch  9 taken 0% (throw)
+call   10 returned 100%
+call   11 returned 100%
+branch 12 taken 0% (fallthrough)
+branch 13 taken 100%
+call   14 never executed
+call   15 never executed
+    #####:   55:      redis_cluster_flag = true;
+        -:   56:    }
+        -:   57:  }
+        -:   58:
+        1:   59:  SetUpTracer("config/jaeger-config.yml", "social-graph-service");
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+call    5 returned 100%
+branch  6 taken 100% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 100%
+branch  9 taken 100% (fallthrough)
+branch 10 taken 0% (throw)
+call   11 returned 100%
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+        -:   60:
+        1:   61:  json config_json;
+call    0 returned 100%
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+        1:   62:  if (load_config_file("config/service-config.json", &config_json) != 0) {
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+branch  9 taken 0% (fallthrough)
+branch 10 taken 100%
+call   11 never executed
+call   12 never executed
+    #####:   63:    exit(EXIT_FAILURE);
+call    0 never executed
+        -:   64:  }
+        -:   65:
+        1:   66:  int port = config_json["social-graph-service"]["port"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        -:   67:
+        1:   68:  int mongodb_conns = config_json["social-graph-mongodb"]["connections"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        1:   69:  int mongodb_timeout = config_json["social-graph-mongodb"]["timeout_ms"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        -:   70:
+        1:   71:  std::string user_addr = config_json["user-service"]["addr"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+        1:   72:  int user_port = config_json["user-service"]["port"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        1:   73:  int user_conns = config_json["user-service"]["connections"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        1:   74:  int user_timeout = config_json["user-service"]["timeout_ms"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        1:   75:  int user_keepalive = config_json["user-service"]["keepalive_ms"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        -:   76:
+        1:   77:  int redis_cluster_config_flag = config_json["social-graph-redis"]["use_cluster"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        1:   78:  int redis_replica_config_flag = config_json["social-graph-redis"]["use_replica"];
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+        -:   79:  mongoc_client_pool_t *mongodb_client_pool =
+        1:   80:      init_mongodb_client_pool(config_json, "social-graph", mongodb_conns);
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+        -:   81:
+        1:   82:  if (mongodb_client_pool == nullptr) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   83:    return EXIT_FAILURE;
+        -:   84:  }
+        -:   85:
+        1:   86:  if (redis_replica_config_flag && (redis_cluster_config_flag || redis_cluster_flag)) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:   87:      LOG(error) << "Can't start service when Redis Cluster and Redis Replica are enabled at the same time";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    #####:   88:      exit(EXIT_FAILURE);
+call    0 never executed
+        -:   89:  }
+        -:   90:
+        -:   91:  ClientPool<ThriftClient<UserServiceClient>> user_client_pool(
+        -:   92:      "social-graph", user_addr, user_port, 0, user_conns, user_timeout,
+        1:   93:      user_keepalive, config_json);
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+        -:   94:
+        1:   95:  mongoc_client_t *mongodb_client = mongoc_client_pool_pop(mongodb_client_pool);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        1:   96:  if (!mongodb_client) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   97:    LOG(fatal) << "Failed to pop mongoc client";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:   98:    return EXIT_FAILURE;
+        -:   99:  }
+        1:  100:  bool r = false;
+        3:  101:  while (!r) {
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        1:  102:    r = CreateIndex(mongodb_client, "social-graph", "user_id", true);
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+call    5 returned 100%
+branch  6 taken 100% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 100%
+branch  9 taken 100% (fallthrough)
+branch 10 taken 0% (throw)
+call   11 returned 100%
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+        1:  103:    if (!r) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  104:      LOG(error) << "Failed to create mongodb index, try again";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    #####:  105:      sleep(1);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  106:    }
+        -:  107:  }
+        1:  108:  mongoc_client_pool_push(mongodb_client_pool, mongodb_client);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  109:
+        -:  110:  std::shared_ptr<TServerSocket> server_socket =
+        1:  111:      get_server_socket(config_json, "0.0.0.0", port);
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+        -:  112:
+        1:  113:  if (redis_cluster_flag || redis_cluster_config_flag) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+        -:  114:    RedisCluster redis_cluster_client_pool =
+    #####:  115:        init_redis_cluster_client_pool(config_json, "social-graph");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+        -:  116:    TThreadedServer server(
+    #####:  117:        std::make_shared<SocialGraphServiceProcessor>(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  118:            std::make_shared<SocialGraphHandler>(mongodb_client_pool,
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  119:                                                 &redis_cluster_client_pool,
+        -:  120:                                                 &user_client_pool)),
+    #####:  121:        server_socket, std::make_shared<TFramedTransportFactory>(),
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  122:        std::make_shared<TBinaryProtocolFactory>());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+    #####:  123:    LOG(info) << "Starting the social-graph-service server with Redis Cluster support...";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  124:    server.serve();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  125:  }
+        -:  126:  
+        1:  127:  else if (redis_replica_config_flag) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  128:      Redis redis_replica_client_pool = init_redis_replica_client_pool(config_json, "redis-replica");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+    #####:  129:      Redis redis_primary_client_pool = init_redis_replica_client_pool(config_json, "redis-primary");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+        -:  130:
+        -:  131:      TThreadedServer server(
+    #####:  132:          std::make_shared<SocialGraphServiceProcessor>(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  133:              std::make_shared<SocialGraphHandler>(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  134:                  mongodb_client_pool, &redis_replica_client_pool, &redis_primary_client_pool, &user_client_pool)),
+    #####:  135:          server_socket, std::make_shared<TFramedTransportFactory>(),
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  136:          std::make_shared<TBinaryProtocolFactory>());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+    #####:  137:      LOG(info) << "Starting the social-graph-service server with Redis replica support";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    #####:  138:      server.serve();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  139:  }
+        -:  140:
+        -:  141:  else {
+        -:  142:    Redis redis_client_pool =
+        1:  143:        init_redis_client_pool(config_json, "social-graph");
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+call   11 never executed
+        -:  144:    TThreadedServer server(
+        2:  145:        std::make_shared<SocialGraphServiceProcessor>(
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        2:  146:            std::make_shared<SocialGraphHandler>(
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:  147:                mongodb_client_pool, &redis_client_pool, &user_client_pool)),
+        2:  148:        server_socket, std::make_shared<TFramedTransportFactory>(),
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        6:  149:        std::make_shared<TBinaryProtocolFactory>());
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 returned 100%
+call   13 returned 100%
+branch 14 taken 100% (fallthrough)
+branch 15 taken 0% (throw)
+call   16 returned 100%
+call   17 returned 100%
+call   18 returned 100%
+call   19 returned 100%
+call   20 returned 100%
+call   21 returned 100%
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+        2:  150:    LOG(info) << "Starting the social-graph-service server ...";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 100%
+call   16 returned 100%
+branch 17 taken 100% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 100%
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+branch 24 taken 100% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 100%
+branch 27 taken 100% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 100%
+branch 30 taken 100% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 100%
+branch 33 taken 100% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 100%
+branch 36 taken 100% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 100%
+branch 42 taken 100% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 100%
+branch 45 taken 100% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+call   48 never executed
+call   49 never executed
+        1:  151:    server.serve();
+call    0 returned 0%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  152:  }
+function _GLOBAL__sub_I__ZN14social_network11init_loggerEv called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 100%
+        3:  153:}
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0%
+call    5 never executed

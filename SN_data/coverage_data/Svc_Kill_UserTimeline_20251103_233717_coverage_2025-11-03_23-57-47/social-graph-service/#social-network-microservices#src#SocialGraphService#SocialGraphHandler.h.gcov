@@ -1,0 +1,5258 @@
+        -:    0:Source:/social-network-microservices/src/SocialGraphService/SocialGraphHandler.h
+        -:    0:Graph:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcno
+        -:    0:Data:/social-network-microservices/build/src/SocialGraphService/CMakeFiles/SocialGraphService.dir/SocialGraphService.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SOCIAL_NETWORK_MICROSERVICES_SOCIALGRAPHHANDLER_H
+        -:    2:#define SOCIAL_NETWORK_MICROSERVICES_SOCIALGRAPHHANDLER_H
+        -:    3:
+        -:    4:#include <bson/bson.h>
+        -:    5:#include <mongoc.h>
+        -:    6:#include <sw/redis++/redis++.h>
+        -:    7:
+        -:    8:#include <chrono>
+        -:    9:#include <future>
+        -:   10:#include <iostream>
+        -:   11:#include <string>
+        -:   12:#include <thread>
+        -:   13:#include <vector>
+        -:   14:
+        -:   15:#include "../../gen-cpp/SocialGraphService.h"
+        -:   16:#include "../../gen-cpp/UserService.h"
+        -:   17:#include "../ClientPool.h"
+        -:   18:#include "../ThriftClient.h"
+        -:   19:#include "../logger.h"
+        -:   20:#include "../tracing.h"
+        -:   21:
+        -:   22:using namespace sw::redis;
+        -:   23:
+        -:   24:namespace social_network {
+        -:   25:
+        -:   26:using std::chrono::duration_cast;
+        -:   27:using std::chrono::milliseconds;
+        -:   28:using std::chrono::system_clock;
+        -:   29:
+        -:   30:class SocialGraphHandler : public SocialGraphServiceIf {
+        -:   31: public:
+        -:   32:  SocialGraphHandler(mongoc_client_pool_t *, Redis *,
+        -:   33:                     ClientPool<ThriftClient<UserServiceClient>> *);
+        -:   34:  SocialGraphHandler(mongoc_client_pool_t *, Redis *, Redis *,
+        -:   35:      ClientPool<ThriftClient<UserServiceClient>>*);
+        -:   36:  SocialGraphHandler(mongoc_client_pool_t *, RedisCluster *,
+        -:   37:                     ClientPool<ThriftClient<UserServiceClient>> *);
+function _ZN14social_network18SocialGraphHandlerD0Ev called 0 returned 0% blocks executed 0%
+function _ZN14social_network18SocialGraphHandlerD2Ev called 0 returned 0% blocks executed 0%
+    #####:   38:  ~SocialGraphHandler() override = default;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+        -:   39:  bool IsRedisReplicationEnabled();
+        -:   40:  void GetFollowers(std::vector<int64_t> &, int64_t, int64_t,
+        -:   41:                    const std::map<std::string, std::string> &) override;
+        -:   42:  void GetFollowees(std::vector<int64_t> &, int64_t, int64_t,
+        -:   43:                    const std::map<std::string, std::string> &) override;
+        -:   44:  void Follow(int64_t, int64_t, int64_t,
+        -:   45:              const std::map<std::string, std::string> &) override;
+        -:   46:  void Unfollow(int64_t, int64_t, int64_t,
+        -:   47:                const std::map<std::string, std::string> &) override;
+        -:   48:  void FollowWithUsername(int64_t, const std::string &, const std::string &,
+        -:   49:                          const std::map<std::string, std::string> &) override;
+        -:   50:  void UnfollowWithUsername(
+        -:   51:      int64_t, const std::string &, const std::string &,
+        -:   52:      const std::map<std::string, std::string> &) override;
+        -:   53:  void InsertUser(int64_t, int64_t,
+        -:   54:                  const std::map<std::string, std::string> &) override;
+        -:   55:
+        -:   56: private:
+        -:   57:  mongoc_client_pool_t *_mongodb_client_pool;
+        -:   58:  Redis *_redis_client_pool;
+        -:   59:  Redis *_redis_replica_client_pool;
+        -:   60:  Redis *_redis_primary_client_pool;
+        -:   61:  RedisCluster *_redis_cluster_client_pool;
+        -:   62:  ClientPool<ThriftClient<UserServiceClient>> *_user_service_client_pool;
+        -:   63:};
+        -:   64:
+function _ZN14social_network18SocialGraphHandlerC2EP21_mongoc_client_pool_tPN2sw5redis5RedisEPNS_10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEEE called 1 returned 100% blocks executed 100%
+        1:   65:SocialGraphHandler::SocialGraphHandler(
+        -:   66:    mongoc_client_pool_t *mongodb_client_pool, Redis *redis_client_pool,
+        1:   67:    ClientPool<ThriftClient<UserServiceClient>> *user_service_client_pool) {
+call    0 returned 100%
+        1:   68:  _mongodb_client_pool = mongodb_client_pool;
+        1:   69:  _redis_client_pool = redis_client_pool;
+        1:   70:  _redis_replica_client_pool = nullptr;
+        1:   71:  _redis_primary_client_pool = nullptr;
+        1:   72:  _redis_cluster_client_pool = nullptr;
+        1:   73:  _user_service_client_pool = user_service_client_pool;
+        1:   74:}
+        -:   75:
+function _ZN14social_network18SocialGraphHandlerC2EP21_mongoc_client_pool_tPN2sw5redis5RedisES6_PNS_10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEEE called 0 returned 0% blocks executed 0%
+    #####:   76:SocialGraphHandler::SocialGraphHandler(
+        -:   77:    mongoc_client_pool_t* mongodb_client_pool, Redis* redis_replica_client_pool, Redis* redis_primary_client_pool,
+    #####:   78:    ClientPool<ThriftClient<UserServiceClient>>* user_service_client_pool) {
+call    0 never executed
+    #####:   79:    _mongodb_client_pool = mongodb_client_pool;
+    #####:   80:    _redis_client_pool = nullptr;
+    #####:   81:    _redis_replica_client_pool = redis_replica_client_pool;
+    #####:   82:    _redis_primary_client_pool = redis_primary_client_pool;
+    #####:   83:    _redis_cluster_client_pool = nullptr;
+    #####:   84:    _user_service_client_pool = user_service_client_pool;
+    #####:   85:}
+        -:   86:
+function _ZN14social_network18SocialGraphHandlerC2EP21_mongoc_client_pool_tPN2sw5redis12RedisClusterEPNS_10ClientPoolINS_12ThriftClientINS_17UserServiceClientEEEEE called 0 returned 0% blocks executed 0%
+    #####:   87:SocialGraphHandler::SocialGraphHandler(
+        -:   88:    mongoc_client_pool_t *mongodb_client_pool,
+        -:   89:    RedisCluster *redis_cluster_client_pool,
+    #####:   90:    ClientPool<ThriftClient<UserServiceClient>> *user_service_client_pool) {
+call    0 never executed
+    #####:   91:  _mongodb_client_pool = mongodb_client_pool;
+    #####:   92:  _redis_client_pool = nullptr;
+    #####:   93:  _redis_replica_client_pool = nullptr;
+    #####:   94:  _redis_primary_client_pool = nullptr;
+    #####:   95:  _redis_cluster_client_pool = redis_cluster_client_pool;
+    #####:   96:  _user_service_client_pool = user_service_client_pool;
+    #####:   97:}
+        -:   98:
+function _ZN14social_network18SocialGraphHandler25IsRedisReplicationEnabledEv called 0 returned 0% blocks executed 0%
+    #####:   99:bool SocialGraphHandler::IsRedisReplicationEnabled() {
+    #####:  100:    return (_redis_primary_client_pool || _redis_replica_client_pool);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  101:}
+        -:  102:
+function _ZN14social_network18SocialGraphHandler6FollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEE called 37812 returned 99% blocks executed 57%
+    37812:  103:void SocialGraphHandler::Follow(
+        -:  104:    int64_t req_id, int64_t user_id, int64_t followee_id,
+        -:  105:    const std::map<std::string, std::string> &carrier) {
+    75633:  106:  LOG(info) << "Received Follow request [req_id=" << req_id << ", user_id=" << user_id << ", followee_id=" << followee_id << "]";
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 99%
+branch  7 taken 99% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 99%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 99%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 100%
+call   16 returned 100%
+branch 17 taken 100% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 99%
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 99%
+branch 24 taken 99% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 99%
+branch 27 taken 99% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 99%
+branch 30 taken 99% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 99%
+branch 33 taken 99% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 99%
+branch 36 taken 99% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 99%
+branch 39 taken 99% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 99%
+branch 42 taken 99% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 99%
+branch 45 taken 99% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 99%
+branch 48 taken 99% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 99%
+branch 51 taken 99% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 99%
+branch 54 taken 99% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 99%
+branch 57 taken 99% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 99%
+branch 60 taken 99% (fallthrough)
+branch 61 taken 0% (throw)
+call   62 returned 99%
+branch 63 taken 99% (fallthrough)
+branch 64 taken 0% (throw)
+call   65 returned 99%
+call   66 never executed
+call   67 never executed
+call   68 never executed
+        -:  107:  // Initialize a span
+    75643:  108:  TextMapReader reader(carrier);
+call    0 returned 100%
+call    1 returned 99%
+call    2 never executed
+    75644:  109:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 100%
+call    1 returned 99%
+call    2 never executed
+    75645:  110:  TextMapWriter writer(writer_text_map);
+call    0 returned 99%
+call    1 returned 99%
+call    2 never executed
+    75646:  111:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 100%
+call    1 returned 99%
+call    2 returned 99%
+branch  3 taken 99% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 99%
+call    6 returned 99%
+call    7 never executed
+    75646:  112:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 99%
+   151284:  113:      "follow_server", {opentracing::ChildOf(parent_span->get())});
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 99%
+call    5 returned 100%
+call    6 returned 99%
+call    7 returned 99%
+call    8 returned 99%
+call    9 returned 99%
+call   10 returned 99%
+call   11 returned 99%
+call   12 never executed
+    37822:  114:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+call    3 returned 99%
+call    4 returned 99%
+branch  5 taken 99% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+        -:  115:
+        -:  116:  int64_t timestamp =
+    75636:  117:      duration_cast<milliseconds>(system_clock::now().time_since_epoch())
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 100%
+    37822:  118:          .count();
+call    0 returned 99%
+        -:  119:
+        -:  120:  std::future<void> mongo_update_follower_future =
+function _ZZN14social_network18SocialGraphHandler6FollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEEENKUlvE_clEv called 37820 returned 99% blocks executed 33%
+    37820:  121:      std::async(std::launch::async, [&]() {
+        -:  122:        mongoc_client_t *mongodb_client =
+    75640:  123:            mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37822:  124:        if (!mongodb_client) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  125:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  126:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  127:          se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  128:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  129:        }
+        -:  130:        auto collection = mongoc_client_get_collection(
+    37822:  131:            mongodb_client, "social-graph", "social-graph");
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37816:  132:        if (!collection) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  133:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  134:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  135:          se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  136:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  137:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  138:        }
+        -:  139:
+        -:  140:        // Update follower->followee edges
+        -:  141:        const bson_t *doc;
+    75636:  142:        bson_t *search_not_exist = BCON_NEW(
+call    0 returned 99%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 99%
+call    5 returned 99%
+branch  6 taken 99% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 99%
+branch  9 taken 99% (fallthrough)
+branch 10 taken 0% (throw)
+        -:  143:            "$and", "[", "{", "user_id", BCON_INT64(user_id), "}", "{",
+        -:  144:            "followees", "{", "$not", "{", "$elemMatch", "{", "user_id",
+        -:  145:            BCON_INT64(followee_id), "}", "}", "}", "}", "]");
+    75642:  146:        bson_t *update = BCON_NEW("$push", "{", "followees", "{", "user_id",
+call    0 returned 99%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+call    5 returned 99%
+branch  6 taken 99% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 99%
+branch  9 taken 99% (fallthrough)
+branch 10 taken 0% (throw)
+        -:  147:                                  BCON_INT64(followee_id), "timestamp",
+        -:  148:                                  BCON_INT64(timestamp), "}", "}");
+        -:  149:        bson_error_t error;
+        -:  150:        bson_t reply;
+    75631:  151:        auto update_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 99%
+   151289:  152:            "mongo_update_client", {opentracing::ChildOf(&span->context())});
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+call    3 returned 99%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 99%
+call    7 returned 99%
+call    8 returned 99%
+call    9 returned 99%
+call   10 never executed
+        -:  153:        bool updated = mongoc_collection_find_and_modify(
+        -:  154:            collection, search_not_exist, nullptr, update, nullptr, false,
+    37817:  155:            false, true, &reply, &error);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37806:  156:        if (!updated) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  157:          LOG(error) << "Failed to update social graph for user " << user_id
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  158:                     << " to MongoDB: " << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  159:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  160:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  161:          se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  162:          bson_destroy(&reply);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  163:          bson_destroy(update);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  164:          bson_destroy(search_not_exist);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  165:          mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  166:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  167:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  168:        }
+    37806:  169:        update_span->Finish();
+call    0 returned 99%
+call    1 returned 99%
+    37818:  170:        bson_destroy(&reply);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37824:  171:        bson_destroy(update);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37822:  172:        bson_destroy(search_not_exist);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37821:  173:        mongoc_collection_destroy(collection);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37820:  174:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+   113458:  175:      });
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 never executed
+        -:  176:
+        -:  177:  std::future<void> mongo_update_followee_future =
+function _ZZN14social_network18SocialGraphHandler6FollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEEENKUlvE0_clEv called 37814 returned 99% blocks executed 33%
+    37814:  178:      std::async(std::launch::async, [&]() {
+        -:  179:        mongoc_client_t *mongodb_client =
+    75636:  180:            mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37822:  181:        if (!mongodb_client) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  182:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  183:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  184:          se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  185:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  186:        }
+        -:  187:        auto collection = mongoc_client_get_collection(
+    37822:  188:            mongodb_client, "social-graph", "social-graph");
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37820:  189:        if (!collection) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  190:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  191:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  192:          se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  193:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  194:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  195:        }
+        -:  196:
+        -:  197:        // Update followee->follower edges
+        -:  198:        bson_t *search_not_exist =
+    75644:  199:            BCON_NEW("$and", "[", "{", "user_id", BCON_INT64(followee_id), "}",
+call    0 returned 99%
+call    1 returned 99%
+branch  2 taken 99% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 99%
+call    5 returned 100%
+branch  6 taken 100% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 99%
+branch  9 taken 99% (fallthrough)
+branch 10 taken 0% (throw)
+        -:  200:                     "{", "followers", "{", "$not", "{", "$elemMatch", "{",
+        -:  201:                     "user_id", BCON_INT64(user_id), "}", "}", "}", "}", "]");
+    75648:  202:        bson_t *update = BCON_NEW("$push", "{", "followers", "{", "user_id",
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 99%
+call    5 returned 99%
+branch  6 taken 99% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 99%
+branch  9 taken 99% (fallthrough)
+branch 10 taken 0% (throw)
+        -:  203:                                  BCON_INT64(user_id), "timestamp",
+        -:  204:                                  BCON_INT64(timestamp), "}", "}");
+        -:  205:        bson_error_t error;
+    75635:  206:        auto update_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 99%
+        -:  207:            "social_graph_mongo_update_client",
+   151288:  208:            {opentracing::ChildOf(&span->context())});
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 99%
+call    6 returned 99%
+call    7 returned 100%
+call    8 returned 99%
+call    9 returned 99%
+call   10 never executed
+        -:  209:        bson_t reply;
+        -:  210:        bool updated = mongoc_collection_find_and_modify(
+        -:  211:            collection, search_not_exist, nullptr, update, nullptr, false,
+    37814:  212:            false, true, &reply, &error);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37818:  213:        if (!updated) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  214:          LOG(error) << "Failed to update social graph for user " << followee_id
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  215:                     << " to MongoDB: " << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  216:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  217:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  218:          se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  219:          bson_destroy(update);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  220:          bson_destroy(&reply);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  221:          bson_destroy(search_not_exist);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  222:          mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  223:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  224:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  225:        }
+    37818:  226:        update_span->Finish();
+call    0 returned 99%
+call    1 returned 99%
+    37807:  227:        bson_destroy(update);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37820:  228:        bson_destroy(&reply);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37819:  229:        bson_destroy(search_not_exist);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37821:  230:        mongoc_collection_destroy(collection);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37822:  231:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+   113429:  232:      });
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 never executed
+        -:  233:
+function _ZZN14social_network18SocialGraphHandler6FollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEEENKUlvE1_clEv called 37800 returned 99% blocks executed 14%
+    37800:  234:  std::future<void> redis_update_future = std::async(std::launch::async, [&]() {
+    75633:  235:    auto redis_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 99%
+        -:  236:        "social_graph_redis_update_client",
+   151256:  237:        {opentracing::ChildOf(&span->context())});
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+call    3 returned 99%
+call    4 returned 99%
+call    5 returned 99%
+call    6 returned 99%
+call    7 returned 99%
+call    8 returned 99%
+call    9 returned 99%
+call   10 never executed
+        -:  238:
+        -:  239:    {
+    37812:  240:      if (_redis_client_pool) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+    75623:  241:        auto pipe = _redis_client_pool->pipeline(false);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 never executed
+   113449:  242:        pipe.zadd(std::to_string(user_id) + ":followees",
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+branch  4 taken 99% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 99%
+call    7 returned 100%
+call    8 never executed
+call    9 never executed
+   226913:  243:                  std::to_string(followee_id), timestamp, UpdateType::NOT_EXIST)
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 returned 99%
+call    5 returned 100%
+branch  6 taken 100% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 100%
+call    9 never executed
+    75635:  244:            .zadd(std::to_string(followee_id) + ":followers",
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+branch  4 taken 99% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+call    7 returned 100%
+call    8 never executed
+call    9 never executed
+   226925:  245:                  std::to_string(user_id), timestamp, UpdateType::NOT_EXIST);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 returned 99%
+call    5 returned 99%
+branch  6 taken 99% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 100%
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+        -:  246:        try {
+    37823:  247:          auto replies = pipe.exec();
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+    =====:  248:        } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  249:          LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  250:          throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  251:        }
+        -:  252:      }
+    #####:  253:      else if (IsRedisReplicationEnabled()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  254:          auto pipe = _redis_primary_client_pool->pipeline(false);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  255:          pipe.zadd(std::to_string(user_id) + ":followees",
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  256:              std::to_string(followee_id), timestamp, UpdateType::NOT_EXIST)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  257:              .zadd(std::to_string(followee_id) + ":followers",
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  258:                  std::to_string(user_id), timestamp, UpdateType::NOT_EXIST);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+        -:  259:          try {
+    #####:  260:              auto replies = pipe.exec();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+        -:  261:          }
+    =====:  262:          catch (const Error& err) {
+call    0 never executed
+call    1 never executed
+    =====:  263:              LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  264:              throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  265:          }
+        -:  266:      }
+        -:  267:      else {
+        -:  268:        // TODO: Redis++ currently does not support pipeline with multiple
+        -:  269:        //       hashtags in cluster mode.
+        -:  270:        //       Currently, we send one request for each follower, which may
+        -:  271:        //       incur some performance overhead. We are following the updates
+        -:  272:        //       of Redis++ clients:
+        -:  273:        //       https://github.com/sewenew/redis-plus-plus/issues/212
+        -:  274:        try {
+    #####:  275:          _redis_cluster_client_pool->zadd(
+call    0 never executed
+call    1 never executed
+    #####:  276:              std::to_string(user_id) + ":followees",
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  277:              std::to_string(followee_id), timestamp, UpdateType::NOT_EXIST);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  278:          _redis_cluster_client_pool->zadd(
+call    0 never executed
+call    1 never executed
+    #####:  279:              std::to_string(followee_id) + ":followers",
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  280:              std::to_string(user_id), timestamp, UpdateType::NOT_EXIST);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    =====:  281:        } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  282:          LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  283:          throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  284:        }
+        -:  285:      }
+        -:  286:    }
+    37820:  287:    redis_span->Finish();
+call    0 returned 99%
+call    1 returned 99%
+   113441:  288:  });
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 never executed
+        -:  289:
+        -:  290:  try {
+    37800:  291:    redis_update_future.get();
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37804:  292:    mongo_update_follower_future.get();
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37813:  293:    mongo_update_followee_future.get();
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    75641:  294:    LOG(info) << "Follow operation completed [req_id=" << req_id << ", user_id=" << user_id << ", followee_id=" << followee_id << "]";
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 99%
+branch  7 taken 99% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 99%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 99%
+call   16 returned 99%
+branch 17 taken 99% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 99%
+call   20 returned 99%
+branch 21 taken 99% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 99%
+branch 24 taken 99% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 99%
+branch 27 taken 99% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 99%
+branch 30 taken 99% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 99%
+branch 33 taken 99% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 99%
+branch 36 taken 99% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 99%
+branch 39 taken 99% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 99%
+branch 42 taken 99% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 99%
+branch 45 taken 99% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 99%
+branch 51 taken 99% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 99%
+branch 54 taken 99% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 99%
+branch 57 taken 99% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 99%
+branch 60 taken 99% (fallthrough)
+branch 61 taken 0% (throw)
+call   62 returned 99%
+branch 63 taken 99% (fallthrough)
+branch 64 taken 0% (throw)
+call   65 returned 99%
+call   66 never executed
+call   67 never executed
+branch 68 never executed
+branch 69 never executed
+    =====:  295:  } catch (const std::exception &e) {
+call    0 never executed
+call    1 never executed
+    =====:  296:    LOG(warning) << e.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  297:    throw;
+call    0 never executed
+    =====:  298:  } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  299:    throw;
+call    0 never executed
+        -:  300:  }
+        -:  301:
+    37823:  302:  span->Finish();
+call    0 returned 100%
+call    1 returned 99%
+    37818:  303:}
+        -:  304:
+function _ZN14social_network18SocialGraphHandler8UnfollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEE called 200 returned 100% blocks executed 70%
+      200:  305:void SocialGraphHandler::Unfollow(
+        -:  306:    int64_t req_id, int64_t user_id, int64_t followee_id,
+        -:  307:    const std::map<std::string, std::string> &carrier) {
+      400:  308:  LOG(info) << "Received Unfollow request [req_id=" << req_id << ", user_id=" << user_id << ", followee_id=" << followee_id << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 100%
+call   16 returned 100%
+branch 17 taken 100% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 100%
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+branch 24 taken 100% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 100%
+branch 27 taken 100% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 100%
+branch 30 taken 100% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 100%
+branch 33 taken 100% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 100%
+branch 36 taken 100% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 100%
+branch 42 taken 100% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 100%
+branch 45 taken 100% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 100%
+branch 51 taken 100% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 100%
+branch 54 taken 100% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 100%
+branch 57 taken 100% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 100%
+branch 60 taken 100% (fallthrough)
+branch 61 taken 0% (throw)
+call   62 returned 100%
+branch 63 taken 100% (fallthrough)
+branch 64 taken 0% (throw)
+call   65 returned 100%
+call   66 never executed
+call   67 never executed
+call   68 never executed
+        -:  309:  // Initialize a span
+      400:  310:  TextMapReader reader(carrier);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  311:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  312:  TextMapWriter writer(writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  313:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 returned 100%
+call    7 never executed
+      400:  314:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+      800:  315:      "unfollow_server", {opentracing::ChildOf(parent_span->get())});
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 never executed
+      200:  316:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+        -:  317:
+        -:  318:  std::future<void> mongo_update_follower_future =
+function _ZZN14social_network18SocialGraphHandler8UnfollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEEENKUlvE_clEv called 200 returned 100% blocks executed 30%
+      200:  319:      std::async(std::launch::async, [&]() {
+        -:  320:        mongoc_client_t *mongodb_client =
+      400:  321:            mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  322:        if (!mongodb_client) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  323:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  324:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  325:          se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  326:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  327:        }
+        -:  328:        auto collection = mongoc_client_get_collection(
+      200:  329:            mongodb_client, "social-graph", "social-graph");
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  330:        if (!collection) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  331:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  332:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  333:          se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  334:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  335:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  336:        }
+      200:  337:        bson_t *query = bson_new();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  338:
+        -:  339:        // Update follower->followee edges
+      200:  340:        BSON_APPEND_INT64(query, "user_id", user_id);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  341:        bson_t *update = BCON_NEW("$pull", "{", "followees", "{", "user_id",
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+        -:  342:                                  BCON_INT64(followee_id), "}", "}");
+        -:  343:        bson_t reply;
+        -:  344:        bson_error_t error;
+      400:  345:        auto update_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  346:            "social_graph_mongo_delete_client",
+      800:  347:            {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 never executed
+        -:  348:        bool updated = mongoc_collection_find_and_modify(
+        -:  349:            collection, query, nullptr, update, nullptr, false, false, true,
+      200:  350:            &reply, &error);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  351:        if (!updated) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  352:          LOG(error) << "Failed to delete social graph for user " << user_id
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  353:                     << " to MongoDB: " << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  354:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  355:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  356:          se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  357:          bson_destroy(update);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  358:          bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  359:          bson_destroy(&reply);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  360:          mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  361:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  362:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  363:        }
+      200:  364:        update_span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+      200:  365:        bson_destroy(update);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  366:        bson_destroy(query);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  367:        bson_destroy(&reply);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  368:        mongoc_collection_destroy(collection);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  369:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      600:  370:      });
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:  371:
+        -:  372:  std::future<void> mongo_update_followee_future =
+function _ZZN14social_network18SocialGraphHandler8UnfollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEEENKUlvE0_clEv called 200 returned 100% blocks executed 30%
+      200:  373:      std::async(std::launch::async, [&]() {
+        -:  374:        mongoc_client_t *mongodb_client =
+      400:  375:            mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  376:        if (!mongodb_client) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  377:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  378:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  379:          se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  380:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  381:        }
+        -:  382:        auto collection = mongoc_client_get_collection(
+      200:  383:            mongodb_client, "social-graph", "social-graph");
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  384:        if (!collection) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  385:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  386:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  387:          se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  388:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  389:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  390:        }
+      200:  391:        bson_t *query = bson_new();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  392:
+        -:  393:        // Update followee->follower edges
+      200:  394:        BSON_APPEND_INT64(query, "user_id", followee_id);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  395:        bson_t *update = BCON_NEW("$pull", "{", "followers", "{", "user_id",
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+        -:  396:                                  BCON_INT64(user_id), "}", "}");
+        -:  397:        bson_t reply;
+        -:  398:        bson_error_t error;
+      400:  399:        auto update_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  400:            "social_graph_mongo_delete_client",
+      800:  401:            {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 never executed
+        -:  402:        bool updated = mongoc_collection_find_and_modify(
+        -:  403:            collection, query, nullptr, update, nullptr, false, false, true,
+      200:  404:            &reply, &error);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  405:        if (!updated) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  406:          LOG(error) << "Failed to delete social graph for user " << followee_id
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  407:                     << " to MongoDB: " << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  408:          ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  409:          se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  410:          se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  411:          bson_destroy(update);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  412:          bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  413:          bson_destroy(&reply);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  414:          mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  415:          mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  416:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  417:        }
+      200:  418:        update_span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+      200:  419:        bson_destroy(update);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  420:        bson_destroy(query);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  421:        bson_destroy(&reply);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  422:        mongoc_collection_destroy(collection);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  423:        mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      600:  424:      });
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+        -:  425:
+function _ZZN14social_network18SocialGraphHandler8UnfollowElllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEEENKUlvE1_clEv called 200 returned 100% blocks executed 14%
+      200:  426:  std::future<void> redis_update_future = std::async(std::launch::async, [&]() {
+      400:  427:    auto redis_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  428:        "social_graph_redis_update_client",
+      800:  429:        {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 never executed
+        -:  430:    {
+      200:  431:      if (_redis_client_pool) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+      400:  432:        auto pipe = _redis_client_pool->pipeline(false);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+call    5 never executed
+      600:  433:        std::string followee_key = std::to_string(user_id) + ":followees";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+call    7 returned 100%
+call    8 never executed
+call    9 never executed
+      600:  434:        std::string follower_key = std::to_string(followee_id) + ":followers";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+call    7 returned 100%
+call    8 never executed
+      400:  435:        pipe.zrem(followee_key, std::to_string(followee_id))
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+branch  6 taken 100% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 100%
+call    9 never executed
+      600:  436:            .zrem(follower_key, std::to_string(user_id));
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+branch  6 taken 100% (fallthrough)
+branch  7 taken 0% (throw)
+call    8 returned 100%
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+        -:  437:
+        -:  438:        try {
+      200:  439:          auto replies = pipe.exec();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+    =====:  440:        } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  441:          LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  442:          throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  443:        }
+        -:  444:      } 
+    #####:  445:      else if (IsRedisReplicationEnabled()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  446:          auto pipe = _redis_primary_client_pool->pipeline(false);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+    #####:  447:          std::string followee_key = std::to_string(user_id) + ":followees";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  448:          std::string follower_key = std::to_string(followee_id) + ":followers";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    #####:  449:          pipe.zrem(followee_key, std::to_string(followee_id))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  450:              .zrem(follower_key, std::to_string(user_id));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+        -:  451:
+        -:  452:          try {
+    #####:  453:              auto replies = pipe.exec();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+        -:  454:          }
+    =====:  455:          catch (const Error& err) {
+call    0 never executed
+call    1 never executed
+    =====:  456:              LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  457:              throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  458:          }
+        -:  459:      }
+        -:  460:      else {
+    #####:  461:        std::string followee_key = std::to_string(user_id) + ":followees";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  462:        std::string follower_key = std::to_string(followee_id) + ":followers";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+        -:  463:        try {
+    #####:  464:          _redis_cluster_client_pool->zrem(followee_key,
+call    0 never executed
+call    1 never executed
+    #####:  465:                                           std::to_string(followee_id));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  466:          _redis_cluster_client_pool->zrem(follower_key,
+call    0 never executed
+call    1 never executed
+    #####:  467:                                           std::to_string(user_id));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    =====:  468:        } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  469:          LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  470:          throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  471:        }
+        -:  472:      }
+        -:  473:    }
+      200:  474:    redis_span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+      600:  475:  });
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 never executed
+call    5 never executed
+        -:  476:
+        -:  477:  try {
+      200:  478:    redis_update_future.get();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  479:    mongo_update_follower_future.get();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      200:  480:    mongo_update_followee_future.get();
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      400:  481:    LOG(info) << "Unfollow operation completed [req_id=" << req_id << ", user_id=" << user_id << ", followee_id=" << followee_id << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 100%
+call   16 returned 100%
+branch 17 taken 100% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 100%
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+branch 24 taken 100% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 100%
+branch 27 taken 100% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 100%
+branch 30 taken 100% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 100%
+branch 33 taken 100% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 100%
+branch 36 taken 100% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 100%
+branch 42 taken 100% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 100%
+branch 45 taken 100% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 100%
+branch 51 taken 100% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 100%
+branch 54 taken 100% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 100%
+branch 57 taken 100% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 100%
+branch 60 taken 100% (fallthrough)
+branch 61 taken 0% (throw)
+call   62 returned 100%
+branch 63 taken 100% (fallthrough)
+branch 64 taken 0% (throw)
+call   65 returned 100%
+call   66 never executed
+call   67 never executed
+    =====:  482:  } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  483:    throw;
+call    0 never executed
+        -:  484:  }
+        -:  485:
+      200:  486:  span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+      200:  487:}
+        -:  488:
+function _ZN14social_network18SocialGraphHandler12GetFollowersERSt6vectorIlSaIlEEllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_St4lessISB_ESaISt4pairIKSB_SB_EEE called 200 returned 100% blocks executed 26%
+      200:  489:void SocialGraphHandler::GetFollowers(
+        -:  490:    std::vector<int64_t> &_return, const int64_t req_id, const int64_t user_id,
+        -:  491:    const std::map<std::string, std::string> &carrier) {
+      400:  492:  LOG(info) << "Received GetFollowers request [req_id=" << req_id << ", user_id=" << user_id << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 100%
+call   16 returned 100%
+branch 17 taken 100% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 100%
+call   20 returned 100%
+branch 21 taken 100% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+branch 24 taken 100% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 100%
+branch 27 taken 100% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 100%
+branch 30 taken 100% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 100%
+branch 33 taken 100% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 100%
+branch 36 taken 100% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 100%
+branch 42 taken 100% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 100%
+branch 45 taken 100% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 100%
+branch 51 taken 100% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 100%
+branch 54 taken 100% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 100%
+branch 57 taken 100% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 100%
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  493:  // Initialize a span
+      400:  494:  TextMapReader reader(carrier);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  495:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  496:  TextMapWriter writer(writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  497:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 returned 100%
+call    7 never executed
+      400:  498:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+      800:  499:      "get_followers_server", {opentracing::ChildOf(parent_span->get())});
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 never executed
+      200:  500:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+call   10 never executed
+        -:  501:
+      400:  502:  auto redis_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  503:      "social_graph_redis_get_client",
+      800:  504:      {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 never executed
+        -:  505:
+      400:  506:  std::vector<std::string> followers_str;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+      400:  507:  std::string key = std::to_string(user_id) + ":followers";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+call    7 returned 100%
+call    8 never executed
+        -:  508:  try {
+      200:  509:    if (_redis_client_pool) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+      200:  510:      _redis_client_pool->zrange(key, 0, -1, std::back_inserter(followers_str));
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+        -:  511:    } 
+    #####:  512:    else if (IsRedisReplicationEnabled()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  513:        _redis_replica_client_pool->zrange(key, 0, -1, std::back_inserter(followers_str));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+        -:  514:    }
+        -:  515:    else {
+    #####:  516:      _redis_cluster_client_pool->zrange(key, 0, -1,
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  517:                                         std::back_inserter(followers_str));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  518:    }
+    =====:  519:  } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  520:    LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  521:    throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  522:  }
+      200:  523:  redis_span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+        -:  524:
+        -:  525:  // If user_id in the sodical graph Redis server, read from Redis
+      200:  526:  if (followers_str.size() > 0) {
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0%
+     6800:  527:    for (auto const &follower_str : followers_str) {
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 97% (fallthrough)
+branch  4 taken 3%
+call    5 returned 100%
+call    6 returned 100%
+     6600:  528:      _return.emplace_back(std::stoul(follower_str));
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+        -:  529:    }
+        -:  530:  }
+        -:  531:  // If user_id in the sodical graph Redis server, read from MongoDB and
+        -:  532:  // update Redis.
+        -:  533:  else {
+        -:  534:    mongoc_client_t *mongodb_client =
+    #####:  535:        mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  536:    if (!mongodb_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  537:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  538:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  539:      se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  540:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  541:    }
+        -:  542:    auto collection = mongoc_client_get_collection(
+    #####:  543:        mongodb_client, "social-graph", "social-graph");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  544:    if (!collection) {
+branch  0 never executed
+branch  1 never executed
+    #####:  545:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  546:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  547:      se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  548:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  549:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  550:    }
+    #####:  551:    bson_t *query = bson_new();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  552:    BSON_APPEND_INT64(query, "user_id", user_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  553:    auto find_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  554:        "social_graph_mongo_find_client",
+    #####:  555:        {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  556:    mongoc_cursor_t *cursor =
+    #####:  557:        mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  558:    const bson_t *doc;
+    #####:  559:    bool found = mongoc_cursor_next(cursor, &doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  560:    if (found) {
+branch  0 never executed
+branch  1 never executed
+        -:  561:      bson_iter_t iter_0;
+        -:  562:      bson_iter_t iter_1;
+        -:  563:      bson_iter_t user_id_child;
+        -:  564:      bson_iter_t timestamp_child;
+    #####:  565:      int index = 0;
+    #####:  566:      std::unordered_map<std::string, double> redis_zset;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  567:      bson_iter_init(&iter_0, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  568:      bson_iter_init(&iter_1, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  569:
+    #####:  570:      while (bson_iter_find_descendant(
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  571:                 &iter_0,
+    #####:  572:                 ("followers." + std::to_string(index) + ".user_id").c_str(),
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+    #####:  573:                 &user_id_child) &&
+branch  0 never executed
+branch  1 never executed
+    #####:  574:             BSON_ITER_HOLDS_INT64(&user_id_child) &&
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  575:             bson_iter_find_descendant(
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  576:                 &iter_1,
+    #####:  577:                 ("followers." + std::to_string(index) + ".timestamp").c_str(),
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+    #####:  578:                 &timestamp_child) &&
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  579:             BSON_ITER_HOLDS_INT64(&timestamp_child)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  580:        auto iter_user_id = bson_iter_int64(&user_id_child);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  581:        auto iter_timestamp = bson_iter_int64(&timestamp_child);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  582:        _return.emplace_back(iter_user_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  583:        redis_zset.emplace(std::pair<std::string, double>(
+    #####:  584:            std::to_string(iter_user_id), (double)iter_timestamp));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+    #####:  585:        bson_iter_init(&iter_0, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  586:        bson_iter_init(&iter_1, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  587:        index++;
+        -:  588:      }
+    #####:  589:      find_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  590:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  591:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  592:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  593:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  594:
+        -:  595:      // Update Redis
+    #####:  596:      std::string key = std::to_string(user_id) + ":followers";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    #####:  597:      auto redis_insert_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  598:          "social_graph_redis_insert_client",
+    #####:  599:          {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  600:      try {
+    #####:  601:        if (_redis_client_pool) {
+branch  0 never executed
+branch  1 never executed
+    #####:  602:          _redis_client_pool->zadd(key, redis_zset.begin(), redis_zset.end());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  603:        } 
+    #####:  604:        else if (IsRedisReplicationEnabled()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  605:            _redis_primary_client_pool->zadd(key, redis_zset.begin(), redis_zset.end());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  606:        }
+        -:  607:        else {
+    #####:  608:          _redis_cluster_client_pool->zadd(key, redis_zset.begin(),
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  609:                                           redis_zset.end());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  610:        }
+    =====:  611:      } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  612:        LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  613:        throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  614:      }
+    #####:  615:      redis_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  616:    } else {
+    #####:  617:      LOG(warning) << "user_id: " << user_id << " not found";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+call   54 never executed
+call   55 never executed
+    #####:  618:      find_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  619:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  620:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  621:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  622:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  623:    }
+        -:  624:  }
+      400:  625:  LOG(info) << "GetFollowers completed [req_id=" << req_id << ", user_id=" << user_id << ", followers_count=" << _return.size() << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+call   13 returned 100%
+branch 14 taken 100% (fallthrough)
+branch 15 taken 0%
+call   16 returned 100%
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+call   20 returned 100%
+call   21 returned 100%
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0% (throw)
+call   24 returned 100%
+branch 25 taken 100% (fallthrough)
+branch 26 taken 0% (throw)
+call   27 returned 100%
+branch 28 taken 100% (fallthrough)
+branch 29 taken 0% (throw)
+call   30 returned 100%
+branch 31 taken 100% (fallthrough)
+branch 32 taken 0% (throw)
+call   33 returned 100%
+branch 34 taken 100% (fallthrough)
+branch 35 taken 0% (throw)
+call   36 returned 100%
+branch 37 taken 100% (fallthrough)
+branch 38 taken 0% (throw)
+call   39 returned 100%
+branch 40 taken 100% (fallthrough)
+branch 41 taken 0% (throw)
+call   42 returned 100%
+branch 43 taken 100% (fallthrough)
+branch 44 taken 0% (throw)
+call   45 returned 100%
+branch 46 taken 100% (fallthrough)
+branch 47 taken 0% (throw)
+call   48 returned 100%
+branch 49 taken 100% (fallthrough)
+branch 50 taken 0% (throw)
+call   51 returned 100%
+branch 52 taken 100% (fallthrough)
+branch 53 taken 0% (throw)
+call   54 returned 100%
+branch 55 taken 100% (fallthrough)
+branch 56 taken 0% (throw)
+call   57 returned 100%
+branch 58 taken 100% (fallthrough)
+branch 59 taken 0% (throw)
+call   60 returned 100%
+branch 61 taken 100% (fallthrough)
+branch 62 taken 0% (throw)
+call   63 returned 100%
+branch 64 taken 100% (fallthrough)
+branch 65 taken 0% (throw)
+call   66 returned 100%
+call   67 never executed
+call   68 never executed
+      200:  626:  span->Finish();
+call    0 returned 100%
+call    1 returned 100%
+      200:  627:}
+        -:  628:
+function _ZN14social_network18SocialGraphHandler12GetFolloweesERSt6vectorIlSaIlEEllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_St4lessISB_ESaISt4pairIKSB_SB_EEE called 0 returned 0% blocks executed 0%
+    #####:  629:void SocialGraphHandler::GetFollowees(
+        -:  630:    std::vector<int64_t> &_return, const int64_t req_id, const int64_t user_id,
+        -:  631:    const std::map<std::string, std::string> &carrier) {
+    #####:  632:  LOG(info) << "Received GetFollowees request [req_id=" << req_id << ", user_id=" << user_id << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  633:  // Initialize a span
+    #####:  634:  TextMapReader reader(carrier);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  635:  std::map<std::string, std::string> writer_text_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  636:  TextMapWriter writer(writer_text_map);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  637:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  638:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+    #####:  639:      "get_followees_server", {opentracing::ChildOf(parent_span->get())});
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:  640:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  641:
+    #####:  642:  auto redis_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  643:      "social_graph_redis_get_client",
+    #####:  644:      {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  645:
+    #####:  646:  std::vector<std::string> followees_str;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  647:  std::string key = std::to_string(user_id) + ":followees";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+        -:  648:  try {
+    #####:  649:    if (_redis_client_pool) {
+branch  0 never executed
+branch  1 never executed
+    #####:  650:      _redis_client_pool->zrange(key, 0, -1, std::back_inserter(followees_str));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+        -:  651:    }
+    #####:  652:    else if (IsRedisReplicationEnabled()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  653:        _redis_replica_client_pool->zrange(key, 0, -1, std::back_inserter(followees_str));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+        -:  654:    }
+        -:  655:    else {
+    #####:  656:      _redis_cluster_client_pool->zrange(key, 0, -1,
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  657:                                         std::back_inserter(followees_str));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  658:    }
+    =====:  659:  } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  660:    LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  661:    throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  662:  }
+    #####:  663:  redis_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  664:
+        -:  665:  // If user_id in the sodical graph Redis server, read from Redis
+    #####:  666:  if (followees_str.size() > 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  667:    for (auto const &followee_str : followees_str) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+    #####:  668:      _return.emplace_back(std::stoul(followee_str));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  669:    }
+        -:  670:  }
+        -:  671:  // If user_id in the sodical graph Redis server, read from MongoDB and
+        -:  672:  // update Redis.
+        -:  673:  else {
+    #####:  674:    redis_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  675:    mongoc_client_t *mongodb_client =
+    #####:  676:        mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  677:    if (!mongodb_client) {
+branch  0 never executed
+branch  1 never executed
+    #####:  678:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  679:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  680:      se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  681:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  682:    }
+        -:  683:    auto collection = mongoc_client_get_collection(
+    #####:  684:        mongodb_client, "social-graph", "social-graph");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  685:    if (!collection) {
+branch  0 never executed
+branch  1 never executed
+    #####:  686:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  687:      se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  688:      se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  689:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  690:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  691:    }
+    #####:  692:    bson_t *query = bson_new();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  693:    BSON_APPEND_INT64(query, "user_id", user_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  694:    auto find_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  695:        "social_graph_mongo_find_client",
+    #####:  696:        {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  697:    mongoc_cursor_t *cursor =
+    #####:  698:        mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  699:    const bson_t *doc;
+    #####:  700:    bool found = mongoc_cursor_next(cursor, &doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  701:    if (!found) {
+branch  0 never executed
+branch  1 never executed
+    #####:  702:      ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  703:      se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
+    #####:  704:      se.message = "Cannot find user_id in MongoDB.";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  705:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  706:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  707:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  708:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  709:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  710:    } else {
+        -:  711:      bson_iter_t iter_0;
+        -:  712:      bson_iter_t iter_1;
+        -:  713:      bson_iter_t user_id_child;
+        -:  714:      bson_iter_t timestamp_child;
+    #####:  715:      int index = 0;
+        -:  716:
+    #####:  717:      bson_iter_init(&iter_0, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  718:      bson_iter_init(&iter_1, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  719:
+    #####:  720:      std::multimap<std::string, double> redis_zset;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  721:
+    #####:  722:      while (bson_iter_find_descendant(
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  723:                 &iter_0,
+    #####:  724:                 ("followees." + std::to_string(index) + ".user_id").c_str(),
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+    #####:  725:                 &user_id_child) &&
+branch  0 never executed
+branch  1 never executed
+    #####:  726:             BSON_ITER_HOLDS_INT64(&user_id_child) &&
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  727:             bson_iter_find_descendant(
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  728:                 &iter_1,
+    #####:  729:                 ("followees." + std::to_string(index) + ".timestamp").c_str(),
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+    #####:  730:                 &timestamp_child) &&
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  731:             BSON_ITER_HOLDS_INT64(&timestamp_child)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  732:        auto iter_user_id = bson_iter_int64(&user_id_child);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  733:        auto iter_timestamp = bson_iter_int64(&timestamp_child);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  734:        _return.emplace_back(iter_user_id);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  735:
+        -:  736:        redis_zset.emplace(std::pair<std::string, double>(
+    #####:  737:            std::to_string(iter_user_id), (double)iter_timestamp));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+    #####:  738:        bson_iter_init(&iter_0, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  739:        bson_iter_init(&iter_1, doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  740:        index++;
+        -:  741:      }
+        -:  742:
+    #####:  743:      find_span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  744:      bson_destroy(query);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  745:      mongoc_cursor_destroy(cursor);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  746:      mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  747:      mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  748:
+        -:  749:      // Update redis
+    #####:  750:      std::string key = std::to_string(user_id) + ":followees";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    #####:  751:      auto redis_insert_span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  752:          "social_graph_redis_insert_client",
+    #####:  753:          {opentracing::ChildOf(&span->context())});
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+        -:  754:      try {
+    #####:  755:        if (_redis_client_pool) {
+branch  0 never executed
+branch  1 never executed
+    #####:  756:          _redis_client_pool->zadd(key, redis_zset.begin(), redis_zset.end());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  757:        } 
+    #####:  758:        else if (IsRedisReplicationEnabled()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  759:            _redis_primary_client_pool->zadd(key, redis_zset.begin(), redis_zset.end());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  760:        }
+        -:  761:        else {
+    #####:  762:          _redis_cluster_client_pool->zadd(key, redis_zset.begin(),
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  763:                                           redis_zset.end());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  764:        }
+    =====:  765:      } catch (const Error &err) {
+call    0 never executed
+call    1 never executed
+    =====:  766:        LOG(error) << err.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  767:        throw err;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  768:      }
+    #####:  769:      redis_span->Finish();
+call    0 never executed
+call    1 never executed
+        -:  770:    }
+        -:  771:  }
+    #####:  772:  LOG(info) << "GetFollowees completed [req_id=" << req_id << ", user_id=" << user_id << ", followees_count=" << _return.size() << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+    #####:  773:  span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  774:}
+        -:  775:
+function _ZN14social_network18SocialGraphHandler10InsertUserEllRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_St4lessIS7_ESaISt4pairIKS7_S7_EEE called 962 returned 100% blocks executed 53%
+      962:  776:void SocialGraphHandler::InsertUser(
+        -:  777:    int64_t req_id, int64_t user_id,
+        -:  778:    const std::map<std::string, std::string> &carrier) {
+     1924:  779:  LOG(info) << "Received InsertUser request [req_id=" << req_id << ", user_id=" << user_id << "]";
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+branch  4 taken 99% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 99%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 100%
+call   16 returned 100%
+branch 17 taken 100% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 100%
+call   20 returned 99%
+branch 21 taken 99% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 99%
+branch 24 taken 99% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 99%
+branch 27 taken 99% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 99%
+branch 30 taken 99% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 99%
+branch 33 taken 99% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 99%
+branch 36 taken 99% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 99%
+branch 42 taken 99% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 99%
+branch 45 taken 99% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 99%
+branch 51 taken 99% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 100%
+branch 54 taken 100% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 99%
+branch 57 taken 99% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 100%
+call   60 never executed
+call   61 never executed
+call   62 never executed
+        -:  780:  // Initialize a span
+     1924:  781:  TextMapReader reader(carrier);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+     1924:  782:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+     1924:  783:  TextMapWriter writer(writer_text_map);
+call    0 returned 100%
+call    1 returned 100%
+call    2 never executed
+     1924:  784:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+branch  3 taken 100% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 100%
+call    6 returned 100%
+call    7 never executed
+     1924:  785:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+     3848:  786:      "insert_user_server", {opentracing::ChildOf(parent_span->get())});
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 never executed
+      962:  787:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+call    8 returned 100%
+call    9 never executed
+        -:  788:
+        -:  789:  mongoc_client_t *mongodb_client =
+      962:  790:      mongoc_client_pool_pop(_mongodb_client_pool);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      962:  791:  if (!mongodb_client) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  792:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  793:    se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  794:    se.message = "Failed to pop a client from MongoDB pool";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  795:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  796:  }
+        -:  797:  auto collection = mongoc_client_get_collection(mongodb_client, "social-graph",
+      962:  798:                                                 "social-graph");
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      962:  799:  if (!collection) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  800:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  801:    se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  802:    se.message = "Failed to create collection social_graph from MongoDB";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  803:    mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  804:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  805:  }
+        -:  806:
+      962:  807:  bson_t *new_doc = BCON_NEW("user_id", BCON_INT64(user_id), "followers", "[",
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+        -:  808:                             "]", "followees", "[", "]");
+        -:  809:  bson_error_t error;
+     1924:  810:  auto insert_span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 100%
+        -:  811:      "social_graph_mongo_insert_client",
+     3847:  812:      {opentracing::ChildOf(&span->context())});
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 99%
+call   10 never executed
+        -:  813:  bool inserted = mongoc_collection_insert_one(collection, new_doc, nullptr,
+      962:  814:                                               nullptr, &error);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+      961:  815:  insert_span->Finish();
+call    0 returned 99%
+call    1 returned 100%
+      962:  816:  if (!inserted) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  817:    LOG(error) << "Failed to insert social graph for user " << user_id
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+call   51 never executed
+call   52 never executed
+    #####:  818:               << " to MongoDB: " << error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  819:    ServiceException se;
+call    0 never executed
+call    1 never executed
+    #####:  820:    se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+    #####:  821:    se.message = error.message;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  822:    bson_destroy(new_doc);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  823:    mongoc_collection_destroy(collection);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  824:    mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  825:    throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  826:  }
+      962:  827:  bson_destroy(new_doc);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      962:  828:  mongoc_collection_destroy(collection);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+      962:  829:  mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+     1923:  830:  LOG(info) << "InsertUser operation completed [req_id=" << req_id << ", user_id=" << user_id << "]";
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 99%
+call   16 returned 99%
+branch 17 taken 99% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 100%
+call   20 returned 99%
+branch 21 taken 99% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 100%
+branch 24 taken 100% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 100%
+branch 27 taken 100% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 100%
+branch 30 taken 100% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 100%
+branch 33 taken 100% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 100%
+branch 36 taken 100% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 100%
+branch 39 taken 100% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 100%
+branch 42 taken 100% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 100%
+branch 45 taken 100% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 100%
+branch 51 taken 100% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 100%
+branch 54 taken 100% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 100%
+branch 57 taken 100% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 100%
+call   60 never executed
+call   61 never executed
+      962:  831:  span->Finish();
+call    0 returned 100%
+call    1 returned 99%
+      962:  832:}
+        -:  833:
+function _ZN14social_network18SocialGraphHandler18FollowWithUsernameElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_RKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEE called 37553 returned 99% blocks executed 58%
+    37553:  834:void SocialGraphHandler::FollowWithUsername(
+        -:  835:    int64_t req_id, const std::string &user_name,
+        -:  836:    const std::string &followee_name,
+        -:  837:    const std::map<std::string, std::string> &carrier) {
+    75170:  838:  LOG(info) << "Received FollowWithUsername request [req_id=" << req_id << ", user_name=" << user_name << ", followee_name=" << followee_name << "]";
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 99%
+branch  7 taken 99% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 99%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 99%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 99%
+call   16 returned 99%
+branch 17 taken 99% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 99%
+call   20 returned 99%
+branch 21 taken 99% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 99%
+branch 24 taken 99% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 99%
+branch 27 taken 99% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 99%
+branch 30 taken 99% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 99%
+branch 33 taken 99% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 99%
+branch 36 taken 99% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 99%
+branch 39 taken 99% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 99%
+branch 42 taken 99% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 99%
+branch 45 taken 99% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 99%
+branch 48 taken 99% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 99%
+branch 51 taken 99% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 99%
+branch 54 taken 99% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 99%
+branch 57 taken 99% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 99%
+branch 60 taken 99% (fallthrough)
+branch 61 taken 0% (throw)
+call   62 returned 99%
+branch 63 taken 99% (fallthrough)
+branch 64 taken 0% (throw)
+call   65 returned 99%
+call   66 never executed
+call   67 never executed
+call   68 never executed
+        -:  839:  // Initialize a span
+    75234:  840:  TextMapReader reader(carrier);
+call    0 returned 99%
+call    1 returned 99%
+call    2 never executed
+    75234:  841:  std::map<std::string, std::string> writer_text_map;
+call    0 returned 99%
+call    1 returned 99%
+call    2 never executed
+    75236:  842:  TextMapWriter writer(writer_text_map);
+call    0 returned 99%
+call    1 returned 99%
+call    2 never executed
+    75237:  843:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+branch  3 taken 99% (fallthrough)
+branch  4 taken 0% (throw)
+call    5 returned 99%
+call    6 returned 99%
+call    7 never executed
+    75229:  844:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 returned 99%
+        -:  845:      "follow_with_username_server",
+   150476:  846:      {opentracing::ChildOf(parent_span->get())});
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 returned 99%
+call    5 returned 99%
+call    6 returned 99%
+call    7 returned 99%
+call    8 returned 99%
+call    9 returned 99%
+call   10 returned 99%
+call   11 returned 99%
+call   12 never executed
+    37610:  847:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 returned 99%
+call    1 returned 99%
+call    2 returned 99%
+call    3 returned 99%
+call    4 returned 99%
+branch  5 taken 99% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 99%
+call    8 returned 99%
+call    9 never executed
+        -:  848:
+function _ZZN14social_network18SocialGraphHandler18FollowWithUsernameElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_RKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEEENKUlvE_clEv called 37611 returned 99% blocks executed 15%
+    37611:  849:  std::future<int64_t> user_id_future = std::async(std::launch::async, [&]() {
+    75218:  850:    auto user_client_wrapper = _user_service_client_pool->Pop();
+call    0 returned 99%
+    37623:  851:    if (!user_client_wrapper) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  852:      ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  853:      se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    #####:  854:      se.message = "Failed to connect to social-graph-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  855:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  856:    }
+    37623:  857:    auto user_client = user_client_wrapper->GetClient();
+call    0 returned 99%
+        -:  858:    int64_t _return;
+        -:  859:    try {
+    37619:  860:      _return = user_client->GetUserId(req_id, user_name, writer_text_map);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    =====:  861:    } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  862:      _user_service_client_pool->Remove(user_client_wrapper);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  863:      LOG(error) << "Failed to get user_id from user-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  864:      throw;
+call    0 never executed
+        -:  865:    }
+    37607:  866:    _user_service_client_pool->Keepalive(user_client_wrapper);
+call    0 returned 99%
+    37619:  867:    return _return;
+    75241:  868:  });
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+call    4 never executed
+        -:  869:
+        -:  870:  std::future<int64_t> followee_id_future =
+function _ZZN14social_network18SocialGraphHandler18FollowWithUsernameElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_RKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEEENKUlvE0_clEv called 37607 returned 99% blocks executed 15%
+    37607:  871:      std::async(std::launch::async, [&]() {
+    75221:  872:        auto user_client_wrapper = _user_service_client_pool->Pop();
+call    0 returned 99%
+    37622:  873:        if (!user_client_wrapper) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  874:          ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  875:          se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    #####:  876:          se.message = "Failed to connect to social-graph-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  877:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  878:        }
+    37622:  879:        auto user_client = user_client_wrapper->GetClient();
+call    0 returned 99%
+        -:  880:        int64_t _return;
+        -:  881:        try {
+        -:  882:          _return =
+    37618:  883:              user_client->GetUserId(req_id, followee_name, writer_text_map);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    =====:  884:        } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  885:          _user_service_client_pool->Remove(user_client_wrapper);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  886:          LOG(error) << "Failed to get user_id from user-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  887:          throw;
+call    0 never executed
+        -:  888:        }
+    37614:  889:        _user_service_client_pool->Keepalive(user_client_wrapper);
+call    0 returned 99%
+    37619:  890:        return _return;
+    75210:  891:      });
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+        -:  892:
+        -:  893:  int64_t user_id;
+        -:  894:  int64_t followee_id;
+        -:  895:  try {
+    37600:  896:    user_id = user_id_future.get();
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    37611:  897:    followee_id = followee_id_future.get();
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+    =====:  898:  } catch (const std::exception &e) {
+call    0 never executed
+call    1 never executed
+    =====:  899:    LOG(warning) << e.what();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+call   50 never executed
+    =====:  900:    throw;
+call    0 never executed
+        -:  901:  }
+        -:  902:
+    37613:  903:  if (user_id >= 0 && followee_id >= 0) {
+branch  0 taken 99% (fallthrough)
+branch  1 taken 1%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+    37618:  904:    Follow(req_id, user_id, followee_id, writer_text_map);
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+        -:  905:  }
+    75208:  906:  LOG(info) << "FollowWithUsername operation completed [req_id=" << req_id << ", user_name=" << user_name << ", followee_name=" << followee_name << "]";
+call    0 returned 99%
+branch  1 taken 99% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 99%
+branch  4 taken 99% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 99%
+branch  7 taken 99% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 99%
+branch 10 taken 50% (fallthrough)
+branch 11 taken 50%
+call   12 returned 99%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0%
+call   15 returned 99%
+call   16 returned 99%
+branch 17 taken 99% (fallthrough)
+branch 18 taken 0% (throw)
+call   19 returned 99%
+call   20 returned 99%
+branch 21 taken 99% (fallthrough)
+branch 22 taken 0% (throw)
+call   23 returned 99%
+branch 24 taken 99% (fallthrough)
+branch 25 taken 0% (throw)
+call   26 returned 99%
+branch 27 taken 99% (fallthrough)
+branch 28 taken 0% (throw)
+call   29 returned 99%
+branch 30 taken 99% (fallthrough)
+branch 31 taken 0% (throw)
+call   32 returned 99%
+branch 33 taken 99% (fallthrough)
+branch 34 taken 0% (throw)
+call   35 returned 99%
+branch 36 taken 99% (fallthrough)
+branch 37 taken 0% (throw)
+call   38 returned 99%
+branch 39 taken 99% (fallthrough)
+branch 40 taken 0% (throw)
+call   41 returned 99%
+branch 42 taken 99% (fallthrough)
+branch 43 taken 0% (throw)
+call   44 returned 99%
+branch 45 taken 99% (fallthrough)
+branch 46 taken 0% (throw)
+call   47 returned 99%
+branch 48 taken 99% (fallthrough)
+branch 49 taken 0% (throw)
+call   50 returned 99%
+branch 51 taken 99% (fallthrough)
+branch 52 taken 0% (throw)
+call   53 returned 99%
+branch 54 taken 99% (fallthrough)
+branch 55 taken 0% (throw)
+call   56 returned 100%
+branch 57 taken 100% (fallthrough)
+branch 58 taken 0% (throw)
+call   59 returned 99%
+branch 60 taken 99% (fallthrough)
+branch 61 taken 0% (throw)
+call   62 returned 99%
+branch 63 taken 99% (fallthrough)
+branch 64 taken 0% (throw)
+call   65 returned 99%
+call   66 never executed
+call   67 never executed
+    37623:  907:  span->Finish();
+call    0 returned 99%
+call    1 returned 99%
+    37620:  908:}
+        -:  909:
+function _ZN14social_network18SocialGraphHandler20UnfollowWithUsernameElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_RKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEE called 0 returned 0% blocks executed 0%
+    #####:  910:void SocialGraphHandler::UnfollowWithUsername(
+        -:  911:    int64_t req_id, const std::string &user_name,
+        -:  912:    const std::string &followee_name,
+        -:  913:    const std::map<std::string, std::string> &carrier) {
+    #####:  914:  LOG(info) << "Received UnfollowWithUsername request [req_id=" << req_id << ", user_name=" << user_name << ", followee_name=" << followee_name << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+branch 63 never executed
+branch 64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+        -:  915:  // Initialize a span
+    #####:  916:  TextMapReader reader(carrier);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  917:  std::map<std::string, std::string> writer_text_map;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  918:  TextMapWriter writer(writer_text_map);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  919:  auto parent_span = opentracing::Tracer::Global()->Extract(reader);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  920:  auto span = opentracing::Tracer::Global()->StartSpan(
+call    0 never executed
+        -:  921:      "unfollow_with_username_server",
+    #####:  922:      {opentracing::ChildOf(parent_span->get())});
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+    #####:  923:  opentracing::Tracer::Global()->Inject(span->context(), writer);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+        -:  924:
+function _ZZN14social_network18SocialGraphHandler20UnfollowWithUsernameElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_RKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEEENKUlvE_clEv called 0 returned 0% blocks executed 0%
+    #####:  925:  std::future<int64_t> user_id_future = std::async(std::launch::async, [&]() {
+    #####:  926:    auto user_client_wrapper = _user_service_client_pool->Pop();
+call    0 never executed
+    #####:  927:    if (!user_client_wrapper) {
+branch  0 never executed
+branch  1 never executed
+    #####:  928:      ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  929:      se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    #####:  930:      se.message = "Failed to connect to social-graph-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  931:      throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  932:    }
+    #####:  933:    auto user_client = user_client_wrapper->GetClient();
+call    0 never executed
+        -:  934:    int64_t _return;
+        -:  935:    try {
+    #####:  936:      _return = user_client->GetUserId(req_id, user_name, writer_text_map);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  937:    } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  938:      _user_service_client_pool->Remove(user_client_wrapper);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  939:      LOG(error) << "Failed to get user_id from user-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  940:      throw;
+call    0 never executed
+        -:  941:    }
+    #####:  942:    _user_service_client_pool->Keepalive(user_client_wrapper);
+call    0 never executed
+    #####:  943:    return _return;
+    #####:  944:  });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  945:
+        -:  946:  std::future<int64_t> followee_id_future =
+function _ZZN14social_network18SocialGraphHandler20UnfollowWithUsernameElRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_RKSt3mapIS6_S6_St4lessIS6_ESaISt4pairIS7_S6_EEEENKUlvE0_clEv called 0 returned 0% blocks executed 0%
+    #####:  947:      std::async(std::launch::async, [&]() {
+    #####:  948:        auto user_client_wrapper = _user_service_client_pool->Pop();
+call    0 never executed
+    #####:  949:        if (!user_client_wrapper) {
+branch  0 never executed
+branch  1 never executed
+    #####:  950:          ServiceException se;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  951:          se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    #####:  952:          se.message = "Failed to connect to social-graph-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  953:          throw se;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+        -:  954:        }
+    #####:  955:        auto user_client = user_client_wrapper->GetClient();
+call    0 never executed
+        -:  956:        int64_t _return;
+        -:  957:        try {
+        -:  958:          _return =
+    #####:  959:              user_client->GetUserId(req_id, followee_name, writer_text_map);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  960:        } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  961:          _user_service_client_pool->Remove(user_client_wrapper);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  962:          LOG(error) << "Failed to get user_id from user-service";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+call   49 never executed
+    =====:  963:          throw;
+call    0 never executed
+        -:  964:        }
+    #####:  965:        _user_service_client_pool->Keepalive(user_client_wrapper);
+call    0 never executed
+    #####:  966:        return _return;
+    #####:  967:      });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+        -:  968:
+        -:  969:  int64_t user_id;
+        -:  970:  int64_t followee_id;
+        -:  971:  try {
+    #####:  972:    user_id = user_id_future.get();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  973:    followee_id = followee_id_future.get();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  974:  } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  975:    throw;
+call    0 never executed
+        -:  976:  }
+        -:  977:
+    #####:  978:  if (user_id >= 0 && followee_id >= 0) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  979:    try {
+    #####:  980:      Unfollow(req_id, user_id, followee_id, writer_text_map);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    =====:  981:    } catch (...) {
+call    0 never executed
+call    1 never executed
+    =====:  982:      throw;
+call    0 never executed
+        -:  983:    }
+        -:  984:  }
+    #####:  985:  LOG(info) << "UnfollowWithUsername operation completed [req_id=" << req_id << ", user_name=" << user_name << ", followee_name=" << followee_name << "]";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+branch 63 never executed
+branch 64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+    #####:  986:  span->Finish();
+call    0 never executed
+call    1 never executed
+    #####:  987:}
+        -:  988:
+        -:  989:}  // namespace social_network
+        -:  990:
+        -:  991:#endif  // SOCIAL_NETWORK_MICROSERVICES_SOCIALGRAPHHANDLER_H

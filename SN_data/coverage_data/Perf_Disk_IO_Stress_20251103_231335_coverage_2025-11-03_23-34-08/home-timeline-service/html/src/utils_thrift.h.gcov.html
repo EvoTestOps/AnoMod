@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/utils_thrift.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - utils_thrift.h<span style="font-size: 80%;"> (source / <a href="utils_thrift.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">28.6 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-11-03 23:35:54</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_THRIFT_H_</a>
+<span class="lineNum">       2 </span>            : #define SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_THRIFT_H_
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;string&gt;
+<span class="lineNum">       5 </span>            : #include &lt;nlohmann/json.hpp&gt;
+<span class="lineNum">       6 </span>            : #include &lt;thrift/transport/TServerSocket.h&gt;
+<span class="lineNum">       7 </span>            : #include &lt;thrift/transport/TSSLSocket.h&gt;
+<span class="lineNum">       8 </span>            : #include &lt;thrift/transport/TSSLServerSocket.h&gt;
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : namespace social_network{
+<span class="lineNum">      11 </span>            : using json = nlohmann::json;
+<span class="lineNum">      12 </span>            : using apache::thrift::transport::TServerSocket;
+<span class="lineNum">      13 </span>            : using apache::thrift::transport::TSSLServerSocket;
+<a name="14"><span class="lineNum">      14 </span>            : using apache::thrift::transport::TSSLSocketFactory;</a>
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span><span class="lineCov">          1 : std::shared_ptr&lt;TServerSocket&gt; get_server_socket(const json &amp;config_json, const std::string &amp;address, int port) {</span>
+<span class="lineNum">      17 </span><span class="lineCov">          1 :   bool ssl_enabled = config_json[&quot;ssl&quot;][&quot;enabled&quot;];</span>
+<span class="lineNum">      18 </span><span class="lineCov">          1 :   if (ssl_enabled) {</span>
+<span class="lineNum">      19 </span><span class="lineNoCov">          0 :     std::string cert_path = config_json[&quot;ssl&quot;][&quot;serverCertPath&quot;];</span>
+<span class="lineNum">      20 </span><span class="lineNoCov">          0 :     std::string key_path = config_json[&quot;ssl&quot;][&quot;serverKeyPath&quot;];</span>
+<span class="lineNum">      21 </span><span class="lineNoCov">          0 :     std::string ca_path = config_json[&quot;ssl&quot;][&quot;caPath&quot;];</span>
+<span class="lineNum">      22 </span><span class="lineNoCov">          0 :     std::string ciphers = config_json[&quot;ssl&quot;][&quot;ciphers&quot;];</span>
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span><span class="lineNoCov">          0 :     std::shared_ptr&lt;TSSLSocketFactory&gt; ssl_socket_factory;</span>
+<span class="lineNum">      25 </span><span class="lineNoCov">          0 :     ssl_socket_factory = std::make_shared&lt;TSSLSocketFactory&gt;();</span>
+<span class="lineNum">      26 </span><span class="lineNoCov">          0 :     ssl_socket_factory-&gt;loadCertificate(cert_path.c_str());</span>
+<span class="lineNum">      27 </span><span class="lineNoCov">          0 :     ssl_socket_factory-&gt;loadPrivateKey(key_path.c_str());</span>
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :     ssl_socket_factory-&gt;ciphers(ciphers);</span>
+<span class="lineNum">      29 </span>            :     // if (config_json[&quot;ssl&quot;][&quot;verifyClient&quot;]) {
+<span class="lineNum">      30 </span>            :     //   ssl_socket_factory-&gt;loadTrustedCertificates(ca_path.c_str());
+<span class="lineNum">      31 </span>            :     //   ssl_socket_factory-&gt;authenticate(true);
+<span class="lineNum">      32 </span>            :     // }
+<span class="lineNum">      33 </span><span class="lineNoCov">          0 :     return std::make_shared&lt;TSSLServerSocket&gt;(address, port, ssl_socket_factory);</span>
+<span class="lineNum">      34 </span>            :   }
+<span class="lineNum">      35 </span><span class="lineCov">          1 :   return std::make_shared&lt;TServerSocket&gt;(address, port);</span>
+<span class="lineNum">      36 </span>            : };
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            : } //namespace social_network
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            : #endif //SOCIAL_NETWORK_MICROSERVICES_SRC_UTILS_THRIFT_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

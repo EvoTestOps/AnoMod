@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/HomeTimelineService/HomeTimelineHandler.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/HomeTimelineService</a> - HomeTimelineHandler.h<span style="font-size: 80%;"> (source / <a href="HomeTimelineHandler.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">72</td>
+            <td class="headerCovTableEntry">155</td>
+            <td class="headerCovTableEntryLo">46.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-11-04 00:23:31</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryLo">37.5 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef SOCIAL_NETWORK_MICROSERVICES_SRC_HOMETIMELINESERVICE_HOMETIMELINEHANDLER_H_</a>
+<span class="lineNum">       2 </span>            : #define SOCIAL_NETWORK_MICROSERVICES_SRC_HOMETIMELINESERVICE_HOMETIMELINEHANDLER_H_
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;sw/redis++/redis++.h&gt;
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : #include &lt;future&gt;
+<span class="lineNum">       7 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">       8 </span>            : #include &lt;string&gt;
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #include &quot;../../gen-cpp/HomeTimelineService.h&quot;
+<span class="lineNum">      11 </span>            : #include &quot;../../gen-cpp/PostStorageService.h&quot;
+<span class="lineNum">      12 </span>            : #include &quot;../../gen-cpp/SocialGraphService.h&quot;
+<span class="lineNum">      13 </span>            : #include &quot;../ClientPool.h&quot;
+<span class="lineNum">      14 </span>            : #include &quot;../ThriftClient.h&quot;
+<span class="lineNum">      15 </span>            : #include &quot;../logger.h&quot;
+<span class="lineNum">      16 </span>            : #include &quot;../tracing.h&quot;
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : using namespace sw::redis;
+<span class="lineNum">      19 </span>            : namespace social_network {
+<span class="lineNum">      20 </span>            : class HomeTimelineHandler : public HomeTimelineServiceIf {
+<span class="lineNum">      21 </span>            :  public:
+<span class="lineNum">      22 </span>            :   HomeTimelineHandler(Redis *,
+<span class="lineNum">      23 </span>            :                       ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *,
+<span class="lineNum">      24 </span>            :                       ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt; *);
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            :   HomeTimelineHandler(Redis *,Redis *,
+<span class="lineNum">      28 </span>            :       ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt;*,
+<span class="lineNum">      29 </span>            :       ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt;*);
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            :   HomeTimelineHandler(RedisCluster *,
+<a name="33"><span class="lineNum">      33 </span>            :                       ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *,</a>
+<span class="lineNum">      34 </span>            :                       ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt; *);
+<span class="lineNum">      35 </span><span class="lineNoCov">          0 :   ~HomeTimelineHandler() override = default;</span>
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            :   bool IsRedisReplicationEnabled();
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            :   void ReadHomeTimeline(std::vector&lt;Post&gt; &amp;, int64_t, int64_t, int, int,
+<span class="lineNum">      40 </span>            :                         const std::map&lt;std::string, std::string&gt; &amp;) override;
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            :   void WriteHomeTimeline(int64_t, int64_t, int64_t, int64_t,
+<span class="lineNum">      43 </span>            :                          const std::vector&lt;int64_t&gt; &amp;,
+<span class="lineNum">      44 </span>            :                          const std::map&lt;std::string, std::string&gt; &amp;) override;
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            :  private:
+<span class="lineNum">      47 </span>            :      Redis *_redis_replica_pool;
+<span class="lineNum">      48 </span>            :      Redis *_redis_primary_pool;
+<span class="lineNum">      49 </span>            :      Redis *_redis_client_pool;
+<span class="lineNum">      50 </span>            :      RedisCluster *_redis_cluster_client_pool;
+<span class="lineNum">      51 </span>            :      ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *_post_client_pool;
+<span class="lineNum">      52 </span>            :      ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt; *_social_graph_client_pool;
+<a name="53"><span class="lineNum">      53 </span>            : };</a>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span><span class="lineCov">          1 : HomeTimelineHandler::HomeTimelineHandler(</span>
+<span class="lineNum">      56 </span>            :     Redis *redis_pool,
+<span class="lineNum">      57 </span>            :     ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *post_client_pool,
+<span class="lineNum">      58 </span>            :     ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt;
+<span class="lineNum">      59 </span><span class="lineCov">          1 :         *social_graph_client_pool) {</span>
+<span class="lineNum">      60 </span><span class="lineCov">          1 :     _redis_primary_pool = nullptr;</span>
+<span class="lineNum">      61 </span><span class="lineCov">          1 :     _redis_replica_pool = nullptr;</span>
+<span class="lineNum">      62 </span><span class="lineCov">          1 :     _redis_client_pool = redis_pool;</span>
+<span class="lineNum">      63 </span><span class="lineCov">          1 :     _redis_cluster_client_pool = nullptr;</span>
+<span class="lineNum">      64 </span><span class="lineCov">          1 :     _post_client_pool = post_client_pool;</span>
+<span class="lineNum">      65 </span><span class="lineCov">          1 :     _social_graph_client_pool = social_graph_client_pool;</span>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 : HomeTimelineHandler::HomeTimelineHandler(</span>
+<span class="lineNum">      69 </span>            :     RedisCluster *redis_pool,
+<span class="lineNum">      70 </span>            :     ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt; *post_client_pool,
+<span class="lineNum">      71 </span>            :     ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt;
+<span class="lineNum">      72 </span><span class="lineNoCov">          0 :         *social_graph_client_pool) {</span>
+<span class="lineNum">      73 </span><span class="lineNoCov">          0 :     _redis_primary_pool = nullptr;</span>
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 :     _redis_replica_pool = nullptr;</span>
+<span class="lineNum">      75 </span><span class="lineNoCov">          0 :     _redis_client_pool = nullptr;</span>
+<span class="lineNum">      76 </span><span class="lineNoCov">          0 :     _redis_cluster_client_pool = redis_pool; </span>
+<span class="lineNum">      77 </span><span class="lineNoCov">          0 :     _post_client_pool = post_client_pool;</span>
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :     _social_graph_client_pool = social_graph_client_pool;</span>
+<a name="79"><span class="lineNum">      79 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 : HomeTimelineHandler::HomeTimelineHandler(</span>
+<span class="lineNum">      82 </span>            :     Redis *redis_replica_pool,
+<span class="lineNum">      83 </span>            :     Redis *redis_primary_pool,
+<span class="lineNum">      84 </span>            :     ClientPool&lt;ThriftClient&lt;PostStorageServiceClient&gt;&gt;* post_client_pool,
+<span class="lineNum">      85 </span>            :     ClientPool&lt;ThriftClient&lt;SocialGraphServiceClient&gt;&gt;
+<span class="lineNum">      86 </span><span class="lineNoCov">          0 :     * social_graph_client_pool) {</span>
+<span class="lineNum">      87 </span><span class="lineNoCov">          0 :     _redis_primary_pool = redis_primary_pool;</span>
+<span class="lineNum">      88 </span><span class="lineNoCov">          0 :     _redis_replica_pool = redis_replica_pool;</span>
+<span class="lineNum">      89 </span><span class="lineNoCov">          0 :     _redis_client_pool = nullptr;</span>
+<span class="lineNum">      90 </span><span class="lineNoCov">          0 :     _redis_cluster_client_pool = nullptr;</span>
+<span class="lineNum">      91 </span><span class="lineNoCov">          0 :     _post_client_pool = post_client_pool;</span>
+<span class="lineNum">      92 </span><span class="lineNoCov">          0 :     _social_graph_client_pool = social_graph_client_pool;</span>
+<a name="93"><span class="lineNum">      93 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span><span class="lineNoCov">          0 : bool HomeTimelineHandler::IsRedisReplicationEnabled() {</span>
+<span class="lineNum">      96 </span><span class="lineNoCov">          0 :     return (_redis_primary_pool || _redis_replica_pool);</span>
+<a name="97"><span class="lineNum">      97 </span>            : }</a>
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span><span class="lineCov">        200 : void HomeTimelineHandler::WriteHomeTimeline(</span>
+<span class="lineNum">     100 </span>            :     int64_t req_id, int64_t post_id, int64_t user_id, int64_t timestamp,
+<span class="lineNum">     101 </span>            :     const std::vector&lt;int64_t&gt; &amp;user_mentions_id,
+<span class="lineNum">     102 </span>            :     const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     103 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;Start writing home timeline [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, user_id=&quot; &lt;&lt; user_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     104 </span>            :   // Initialize a span
+<span class="lineNum">     105 </span><span class="lineCov">        400 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     106 </span><span class="lineCov">        400 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     107 </span><span class="lineCov">        400 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     108 </span><span class="lineCov">        800 :       &quot;write_home_timeline_server&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            :   // Find followers of the user
+<span class="lineNum">     111 </span><span class="lineCov">        400 :   auto followers_span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     112 </span><span class="lineCov">        800 :       &quot;get_followers_client&quot;, {opentracing::ChildOf(&amp;span-&gt;context())});</span>
+<span class="lineNum">     113 </span><span class="lineCov">        400 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     114 </span><span class="lineCov">        400 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     115 </span><span class="lineCov">        200 :   opentracing::Tracer::Global()-&gt;Inject(followers_span-&gt;context(), writer);</span>
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span><span class="lineCov">        200 :   auto social_graph_client_wrapper = _social_graph_client_pool-&gt;Pop();</span>
+<span class="lineNum">     118 </span><span class="lineCov">        200 :   if (!social_graph_client_wrapper) {</span>
+<span class="lineNum">     119 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     120 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to social-graph-service&quot;;</span>
+<span class="lineNum">     122 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     123 </span>            :   }
+<span class="lineNum">     124 </span><span class="lineCov">        200 :   auto social_graph_client = social_graph_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     125 </span><span class="lineCov">        400 :   std::vector&lt;int64_t&gt; followers_id;</span>
+<span class="lineNum">     126 </span>            :   try {
+<span class="lineNum">     127 </span>            :     social_graph_client-&gt;GetFollowers(followers_id, req_id, user_id,
+<span class="lineNum">     128 </span><span class="lineCov">        200 :                                       writer_text_map);</span>
+<span class="lineNum">     129 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     130 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to get followers from social-network-service&quot;;</span>
+<span class="lineNum">     131 </span><span class="lineNoCov">          0 :     _social_graph_client_pool-&gt;Remove(social_graph_client_wrapper);</span>
+<span class="lineNum">     132 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     133 </span>            :   }
+<span class="lineNum">     134 </span><span class="lineCov">        200 :   _social_graph_client_pool-&gt;Keepalive(social_graph_client_wrapper);</span>
+<span class="lineNum">     135 </span><span class="lineCov">        200 :   followers_span-&gt;Finish();</span>
+<span class="lineNum">     136 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;Successfully got followers [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, user_id=&quot; &lt;&lt; user_id &lt;&lt; &quot;, followers_count=&quot; &lt;&lt; followers_id.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span><span class="lineCov">        400 :   std::set&lt;int64_t&gt; followers_id_set(followers_id.begin(), followers_id.end());</span>
+<span class="lineNum">     139 </span><span class="lineCov">        200 :   followers_id_set.insert(user_mentions_id.begin(), user_mentions_id.end());</span>
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :   // Update Redis ZSet
+<span class="lineNum">     142 </span>            :   // Zset key: follower_id, Zset value: post_id_str, Zset score: timestamp_str
+<span class="lineNum">     143 </span><span class="lineCov">        400 :   auto redis_span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     144 </span>            :       &quot;write_home_timeline_redis_update_client&quot;,
+<span class="lineNum">     145 </span><span class="lineCov">        800 :       {opentracing::ChildOf(&amp;span-&gt;context())});</span>
+<span class="lineNum">     146 </span><span class="lineCov">        400 :   std::string post_id_str = std::to_string(post_id);</span>
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            :   {
+<span class="lineNum">     149 </span><span class="lineCov">        200 :     if (_redis_client_pool) {</span>
+<span class="lineNum">     150 </span><span class="lineCov">        400 :       auto pipe = _redis_client_pool-&gt;pipeline(false);</span>
+<span class="lineNum">     151 </span><span class="lineCov">       6800 :       for (auto &amp;follower_id : followers_id_set) {</span>
+<span class="lineNum">     152 </span><span class="lineCov">      13200 :         pipe.zadd(std::to_string(follower_id), post_id_str, timestamp,</span>
+<span class="lineNum">     153 </span><span class="lineCov">      19800 :                   UpdateType::NOT_EXIST);</span>
+<span class="lineNum">     154 </span>            :       }
+<span class="lineNum">     155 </span>            :       try {
+<span class="lineNum">     156 </span><span class="lineCov">        400 :         auto replies = pipe.exec();</span>
+<span class="lineNum">     157 </span><span class="lineCov">        400 :         LOG(info) &lt;&lt; &quot;Successfully wrote to redis home timeline [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post_id &lt;&lt; &quot;, followers_count=&quot; &lt;&lt; followers_id_set.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     158 </span><span class="lineNoCov">          0 :       } catch (const Error &amp;err) {</span>
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :         LOG(error) &lt;&lt; err.what();</span>
+<span class="lineNum">     160 </span><span class="lineNoCov">          0 :         throw err;</span>
+<span class="lineNum">     161 </span>            :       }
+<span class="lineNum">     162 </span>            :     }
+<span class="lineNum">     163 </span>            :     
+<span class="lineNum">     164 </span><span class="lineNoCov">          0 :     else if (IsRedisReplicationEnabled()) {</span>
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :         auto pipe = _redis_primary_pool-&gt;pipeline(false);</span>
+<span class="lineNum">     166 </span><span class="lineNoCov">          0 :         for (auto&amp; follower_id : followers_id_set) {</span>
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :             pipe.zadd(std::to_string(follower_id), post_id_str, timestamp,</span>
+<span class="lineNum">     168 </span><span class="lineNoCov">          0 :                 UpdateType::NOT_EXIST);</span>
+<span class="lineNum">     169 </span>            :         }
+<span class="lineNum">     170 </span>            :         try {
+<span class="lineNum">     171 </span><span class="lineNoCov">          0 :             auto replies = pipe.exec();</span>
+<span class="lineNum">     172 </span><span class="lineNoCov">          0 :             LOG(info) &lt;&lt; &quot;Successfully wrote to redis home timeline [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post_id &lt;&lt; &quot;, followers_count=&quot; &lt;&lt; followers_id_set.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     173 </span>            :         }
+<span class="lineNum">     174 </span><span class="lineNoCov">          0 :         catch (const Error&amp; err) {</span>
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :             LOG(error) &lt;&lt; err.what();</span>
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :             throw err;</span>
+<span class="lineNum">     177 </span>            :         }
+<span class="lineNum">     178 </span>            :     }
+<span class="lineNum">     179 </span>            :     
+<span class="lineNum">     180 </span>            :     else {
+<span class="lineNum">     181 </span>            :       // Create multi-pipeline that match with shards pool
+<span class="lineNum">     182 </span><span class="lineNoCov">          0 :       std::map&lt;std::shared_ptr&lt;ConnectionPool&gt;, std::shared_ptr&lt;Pipeline&gt;&gt; pipe_map;</span>
+<span class="lineNum">     183 </span><span class="lineNoCov">          0 :       auto *shards_pool = _redis_cluster_client_pool-&gt;get_shards_pool();</span>
+<span class="lineNum">     184 </span>            : 
+<span class="lineNum">     185 </span><span class="lineNoCov">          0 :       for (auto &amp;follower_id : followers_id_set) {</span>
+<span class="lineNum">     186 </span><span class="lineNoCov">          0 :         auto conn = shards_pool-&gt;fetch(std::to_string(follower_id));</span>
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :         auto pipe = pipe_map.find(conn);</span>
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :         if(pipe == pipe_map.end()) {//Not found, create new pipeline and insert</span>
+<span class="lineNum">     189 </span><span class="lineNoCov">          0 :           auto new_pipe = std::make_shared&lt;Pipeline&gt;(_redis_cluster_client_pool-&gt;pipeline(std::to_string(follower_id), false));</span>
+<span class="lineNum">     190 </span><span class="lineNoCov">          0 :           pipe_map.insert(make_pair(conn, new_pipe));</span>
+<span class="lineNum">     191 </span><span class="lineNoCov">          0 :           auto *_pipe = new_pipe.get();</span>
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 :           _pipe-&gt;zadd(std::to_string(follower_id), post_id_str, timestamp,</span>
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :                   UpdateType::NOT_EXIST);</span>
+<span class="lineNum">     194 </span>            :         }else{//Found, use exist pipeline
+<span class="lineNum">     195 </span><span class="lineNoCov">          0 :           std::pair&lt;std::shared_ptr&lt;ConnectionPool&gt;, std::shared_ptr&lt;Pipeline&gt;&gt; found = *pipe;</span>
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :           auto *_pipe = found.second.get();</span>
+<span class="lineNum">     197 </span><span class="lineNoCov">          0 :           _pipe-&gt;zadd(std::to_string(follower_id), post_id_str, timestamp,</span>
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :                   UpdateType::NOT_EXIST);</span>
+<span class="lineNum">     199 </span>            :         }
+<span class="lineNum">     200 </span>            :       }
+<span class="lineNum">     201 </span>            :       // LOG(info) &lt;&lt;&quot;followers_id_set items:&quot; &lt;&lt; followers_id_set.size()&lt;&lt;&quot;; pipeline items:&quot; &lt;&lt; pipe_map.size();
+<span class="lineNum">     202 </span>            :       try {
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 :         for(auto const &amp;it : pipe_map) {</span>
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :           auto _pipe = it.second.get();</span>
+<span class="lineNum">     205 </span><span class="lineNoCov">          0 :           _pipe-&gt;exec();</span>
+<span class="lineNum">     206 </span>            :         }
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :         LOG(info) &lt;&lt; &quot;Successfully wrote to redis home timeline [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post_id &lt;&lt; &quot;, followers_count=&quot; &lt;&lt; followers_id_set.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     208 </span><span class="lineNoCov">          0 :       } catch (const Error &amp;err) {</span>
+<span class="lineNum">     209 </span><span class="lineNoCov">          0 :         LOG(error) &lt;&lt; err.what();</span>
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :         throw err;</span>
+<span class="lineNum">     211 </span>            :       }
+<span class="lineNum">     212 </span>            :     }
+<span class="lineNum">     213 </span>            :   }
+<span class="lineNum">     214 </span><span class="lineCov">        200 :   redis_span-&gt;Finish();</span>
+<span class="lineNum">     215 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;Home timeline write completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, post_id=&quot; &lt;&lt; post_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     216 </span><span class="lineCov">        200 : }</span>
+<a name="217"><span class="lineNum">     217 </span>            : </a>
+<span class="lineNum">     218 </span>            : 
+<span class="lineNum">     219 </span><span class="lineCov">       1000 : void HomeTimelineHandler::ReadHomeTimeline(</span>
+<span class="lineNum">     220 </span>            :     std::vector&lt;Post&gt; &amp;_return, int64_t req_id, int64_t user_id, int start_idx,
+<span class="lineNum">     221 </span>            :     int stop_idx, const std::map&lt;std::string, std::string&gt; &amp;carrier) {
+<span class="lineNum">     222 </span><span class="lineCov">       2000 :   LOG(info) &lt;&lt; &quot;Start reading home timeline [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, user_id=&quot; &lt;&lt; user_id &lt;&lt; &quot;, start=&quot; &lt;&lt; start_idx &lt;&lt; &quot;, stop=&quot; &lt;&lt; stop_idx &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     223 </span>            :   // Initialize a span
+<span class="lineNum">     224 </span><span class="lineCov">       1200 :   TextMapReader reader(carrier);</span>
+<span class="lineNum">     225 </span><span class="lineCov">       1200 :   std::map&lt;std::string, std::string&gt; writer_text_map;</span>
+<span class="lineNum">     226 </span><span class="lineCov">       1200 :   TextMapWriter writer(writer_text_map);</span>
+<span class="lineNum">     227 </span><span class="lineCov">       1200 :   auto parent_span = opentracing::Tracer::Global()-&gt;Extract(reader);</span>
+<span class="lineNum">     228 </span><span class="lineCov">       2000 :   auto span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     229 </span><span class="lineCov">       3200 :       &quot;read_home_timeline_server&quot;, {opentracing::ChildOf(parent_span-&gt;get())});</span>
+<span class="lineNum">     230 </span><span class="lineCov">       1000 :   opentracing::Tracer::Global()-&gt;Inject(span-&gt;context(), writer);</span>
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span><span class="lineCov">       1000 :   if (stop_idx &lt;= start_idx || start_idx &lt; 0) {</span>
+<span class="lineNum">     233 </span><span class="lineCov">        800 :     return;</span>
+<span class="lineNum">     234 </span>            :   }
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span><span class="lineCov">        400 :   auto redis_span = opentracing::Tracer::Global()-&gt;StartSpan(</span>
+<span class="lineNum">     237 </span>            :       &quot;read_home_timeline_redis_find_client&quot;,
+<span class="lineNum">     238 </span><span class="lineCov">        800 :       {opentracing::ChildOf(&amp;span-&gt;context())});</span>
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span><span class="lineCov">        400 :   std::vector&lt;std::string&gt; post_ids_str;</span>
+<span class="lineNum">     241 </span>            :   try {
+<span class="lineNum">     242 </span><span class="lineCov">        200 :     if (_redis_client_pool) {</span>
+<span class="lineNum">     243 </span><span class="lineCov">        600 :       _redis_client_pool-&gt;zrevrange(std::to_string(user_id), start_idx,</span>
+<span class="lineNum">     244 </span><span class="lineCov">        200 :                                     stop_idx - 1,</span>
+<span class="lineNum">     245 </span><span class="lineCov">        200 :                                     std::back_inserter(post_ids_str));</span>
+<span class="lineNum">     246 </span>            :     }
+<span class="lineNum">     247 </span><span class="lineNoCov">          0 :     else if (IsRedisReplicationEnabled()) {</span>
+<span class="lineNum">     248 </span><span class="lineNoCov">          0 :         _redis_replica_pool-&gt;zrevrange(std::to_string(user_id), start_idx,</span>
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 :                                        stop_idx - 1,</span>
+<span class="lineNum">     250 </span><span class="lineNoCov">          0 :                                        std::back_inserter(post_ids_str));</span>
+<span class="lineNum">     251 </span>            :     }
+<span class="lineNum">     252 </span>            :     
+<span class="lineNum">     253 </span>            :     else {
+<span class="lineNum">     254 </span><span class="lineNoCov">          0 :       _redis_cluster_client_pool-&gt;zrevrange(std::to_string(user_id), start_idx,</span>
+<span class="lineNum">     255 </span><span class="lineNoCov">          0 :                                             stop_idx - 1,</span>
+<span class="lineNum">     256 </span><span class="lineNoCov">          0 :                                             std::back_inserter(post_ids_str));</span>
+<span class="lineNum">     257 </span>            :     }
+<span class="lineNum">     258 </span><span class="lineNoCov">          0 :   } catch (const Error &amp;err) {</span>
+<span class="lineNum">     259 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; err.what();</span>
+<span class="lineNum">     260 </span><span class="lineNoCov">          0 :     throw err;</span>
+<span class="lineNum">     261 </span>            :   }
+<span class="lineNum">     262 </span><span class="lineCov">        200 :   redis_span-&gt;Finish();</span>
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span><span class="lineCov">        400 :   std::vector&lt;int64_t&gt; post_ids;</span>
+<span class="lineNum">     265 </span><span class="lineCov">        200 :   for (auto &amp;post_id_str : post_ids_str) {</span>
+<span class="lineNum">     266 </span><span class="lineNoCov">          0 :     post_ids.emplace_back(std::stoul(post_id_str));</span>
+<span class="lineNum">     267 </span>            :   }
+<span class="lineNum">     268 </span>            : 
+<span class="lineNum">     269 </span><span class="lineCov">        200 :   auto post_client_wrapper = _post_client_pool-&gt;Pop();</span>
+<span class="lineNum">     270 </span><span class="lineCov">        200 :   if (!post_client_wrapper) {</span>
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 :     ServiceException se;</span>
+<span class="lineNum">     272 </span><span class="lineNoCov">          0 :     se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;</span>
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 :     se.message = &quot;Failed to connect to post-storage-service&quot;;</span>
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :     throw se;</span>
+<span class="lineNum">     275 </span>            :   }
+<span class="lineNum">     276 </span><span class="lineCov">        200 :   auto post_client = post_client_wrapper-&gt;GetClient();</span>
+<span class="lineNum">     277 </span>            :   try {
+<span class="lineNum">     278 </span><span class="lineCov">        200 :     post_client-&gt;ReadPosts(_return, req_id, post_ids, writer_text_map);</span>
+<span class="lineNum">     279 </span><span class="lineNoCov">          0 :   } catch (...) {</span>
+<span class="lineNum">     280 </span><span class="lineNoCov">          0 :     _post_client_pool-&gt;Remove(post_client_wrapper);</span>
+<span class="lineNum">     281 </span><span class="lineNoCov">          0 :     LOG(error) &lt;&lt; &quot;Failed to read posts from post-storage-service&quot;;</span>
+<span class="lineNum">     282 </span><span class="lineNoCov">          0 :     throw;</span>
+<span class="lineNum">     283 </span>            :   }
+<span class="lineNum">     284 </span><span class="lineCov">        200 :   _post_client_pool-&gt;Keepalive(post_client_wrapper);</span>
+<span class="lineNum">     285 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;Successfully got posts from post-storage-service [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, user_id=&quot; &lt;&lt; user_id &lt;&lt; &quot;, post_count=&quot; &lt;&lt; _return.size() &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span><span class="lineCov">        200 :   span-&gt;Finish();</span>
+<span class="lineNum">     288 </span><span class="lineCov">        400 :   LOG(info) &lt;&lt; &quot;Home timeline read completed [req_id=&quot; &lt;&lt; req_id &lt;&lt; &quot;, user_id=&quot; &lt;&lt; user_id &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">     289 </span>            : }
+<span class="lineNum">     290 </span>            : 
+<span class="lineNum">     291 </span>            : }  // namespace social_network
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span>            : #endif  // SOCIAL_NETWORK_MICROSERVICES_SRC_HOMETIMELINESERVICE_HOMETIMELINEHANDLER_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

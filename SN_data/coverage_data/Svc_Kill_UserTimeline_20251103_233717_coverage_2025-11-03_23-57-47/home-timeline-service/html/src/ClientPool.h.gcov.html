@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - src/ClientPool.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - ClientPool.h<span style="font-size: 80%;"> (source / <a href="ClientPool.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">46</td>
+            <td class="headerCovTableEntry">65</td>
+            <td class="headerCovTableEntryLo">70.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-11-03 23:59:34</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">71.4 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H</a>
+<span class="lineNum">       2 </span>            : #define SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;vector&gt;
+<span class="lineNum">       5 </span>            : #include &lt;mutex&gt;
+<span class="lineNum">       6 </span>            : #include &lt;condition_variable&gt;
+<span class="lineNum">       7 </span>            : #include &lt;deque&gt;
+<span class="lineNum">       8 </span>            : #include &lt;chrono&gt;
+<span class="lineNum">       9 </span>            : #include &lt;string&gt;
+<span class="lineNum">      10 </span>            : #include &lt;nlohmann/json.hpp&gt;
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #include &quot;logger.h&quot;
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : namespace social_network {
+<span class="lineNum">      15 </span>            : using json = nlohmann::json;
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">      18 </span>            : class ClientPool {
+<span class="lineNum">      19 </span>            :  public:
+<span class="lineNum">      20 </span>            :   ClientPool(const std::string &amp;client_type, const std::string &amp;addr,
+<span class="lineNum">      21 </span>            :       int port, int min_size, int max_size, int timeout_ms, int keepalive_ms,
+<span class="lineNum">      22 </span>            :       const json &amp;config_json);
+<span class="lineNum">      23 </span>            :   ~ClientPool();
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            :   ClientPool(const ClientPool&amp;) = delete;
+<span class="lineNum">      26 </span>            :   ClientPool&amp; operator=(const ClientPool&amp;) = delete;
+<span class="lineNum">      27 </span>            :   ClientPool(ClientPool&amp;&amp;) = default;
+<span class="lineNum">      28 </span>            :   ClientPool&amp; operator=(ClientPool&amp;&amp;) = default;
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            :   TClient * Pop();
+<span class="lineNum">      31 </span>            :   void Push(TClient *);
+<span class="lineNum">      32 </span>            :   void Keepalive(TClient *);
+<span class="lineNum">      33 </span>            :   void Remove(TClient *);
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            :  private:
+<span class="lineNum">      36 </span>            :   std::deque&lt;TClient *&gt; _pool;
+<span class="lineNum">      37 </span>            :   std::string _addr;
+<span class="lineNum">      38 </span>            :   std::string _client_type;
+<span class="lineNum">      39 </span>            :   int _port;
+<span class="lineNum">      40 </span>            :   int _min_pool_size{};
+<span class="lineNum">      41 </span>            :   int _max_pool_size{};
+<span class="lineNum">      42 </span>            :   int _curr_pool_size{};
+<span class="lineNum">      43 </span>            :   int _timeout_ms;
+<span class="lineNum">      44 </span>            :   int _keepalive_ms;
+<span class="lineNum">      45 </span>            :   std::mutex _mtx;
+<span class="lineNum">      46 </span>            :   std::condition_variable _cv;
+<span class="lineNum">      47 </span>            :   const json *_config_json;
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            : };
+<a name="50"><span class="lineNum">      50 </span>            : </a>
+<span class="lineNum">      51 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">      52 </span><span class="lineCov">          2 : ClientPool&lt;TClient&gt;::ClientPool(const std::string &amp;client_type,</span>
+<span class="lineNum">      53 </span>            :     const std::string &amp;addr, int port, int min_pool_size,
+<span class="lineNum">      54 </span>            :     int max_pool_size, int timeout_ms, int keepalive_ms,
+<span class="lineNum">      55 </span><span class="lineCov">          2 :     const json &amp;config_json) {</span>
+<span class="lineNum">      56 </span><span class="lineCov">          2 :   _addr = addr;</span>
+<span class="lineNum">      57 </span><span class="lineCov">          2 :   _port = port;</span>
+<span class="lineNum">      58 </span><span class="lineCov">          2 :   _min_pool_size = min_pool_size;</span>
+<span class="lineNum">      59 </span><span class="lineCov">          2 :   _max_pool_size = max_pool_size;</span>
+<span class="lineNum">      60 </span><span class="lineCov">          2 :   _timeout_ms = timeout_ms;</span>
+<span class="lineNum">      61 </span><span class="lineCov">          2 :   _client_type = client_type;</span>
+<span class="lineNum">      62 </span><span class="lineCov">          2 :   _keepalive_ms = keepalive_ms;</span>
+<span class="lineNum">      63 </span><span class="lineCov">          2 :   _config_json = &amp;config_json;</span>
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span><span class="lineCov">          2 :   for (int i = 0; i &lt; min_pool_size; ++i) {</span>
+<span class="lineNum">      66 </span><span class="lineNoCov">          0 :     TClient *client = new TClient(addr, port, keepalive_ms, config_json);</span>
+<span class="lineNum">      67 </span><span class="lineNoCov">          0 :     _pool.emplace_back(client);</span>
+<span class="lineNum">      68 </span>            :   }
+<span class="lineNum">      69 </span><span class="lineCov">          2 :   _curr_pool_size = min_pool_size;</span>
+<span class="lineNum">      70 </span><span class="lineCov">          2 : }</span>
+<a name="71"><span class="lineNum">      71 </span>            : </a>
+<span class="lineNum">      72 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">      73 </span><span class="lineNoCov">          0 : ClientPool&lt;TClient&gt;::~ClientPool() {</span>
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 :   while (!_pool.empty()) {</span>
+<span class="lineNum">      75 </span><span class="lineNoCov">          0 :     delete _pool.front();</span>
+<span class="lineNum">      76 </span><span class="lineNoCov">          0 :     _pool.pop_front();</span>
+<span class="lineNum">      77 </span>            :   }
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 : }</span>
+<a name="79"><span class="lineNum">      79 </span>            : </a>
+<span class="lineNum">      80 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">      81 </span><span class="lineCov">        400 : TClient * ClientPool&lt;TClient&gt;::Pop() {</span>
+<span class="lineNum">      82 </span><span class="lineCov">        400 :   TClient * client = nullptr;</span>
+<span class="lineNum">      83 </span>            :   {
+<span class="lineNum">      84 </span><span class="lineCov">        800 :     std::unique_lock&lt;std::mutex&gt; cv_lock(_mtx);</span>
+<span class="lineNum">      85 </span><span class="lineCov">        400 :     while (_pool.size() == 0 &amp;&amp; _curr_pool_size == _max_pool_size) {</span>
+<span class="lineNum">      86 </span>            :       // Create a new a client if current pool size is less than
+<span class="lineNum">      87 </span>            :       // the max pool size.
+<span class="lineNum">      88 </span><span class="lineNoCov">          0 :       auto wait_time = std::chrono::system_clock::now() +</span>
+<a name="89"><span class="lineNum">      89 </span><span class="lineNoCov">          0 :           std::chrono::milliseconds(_timeout_ms);</span></a>
+<span class="lineNum">      90 </span>            :       bool wait_success = _cv.wait_until(cv_lock, wait_time,
+<span class="lineNum">      91 </span><span class="lineNoCov">          0 :             [this] { return _pool.size() &gt; 0 || _curr_pool_size &lt; _max_pool_size; });</span>
+<span class="lineNum">      92 </span><span class="lineNoCov">          0 :       if (!wait_success) {</span>
+<span class="lineNum">      93 </span><span class="lineNoCov">          0 :         LOG(warning) &lt;&lt; &quot;ClientPool pop timeout&quot;;</span>
+<span class="lineNum">      94 </span><span class="lineNoCov">          0 :         LOG(info) &lt;&lt; _pool.size() &lt;&lt; &quot; &quot; &lt;&lt; _curr_pool_size;</span>
+<span class="lineNum">      95 </span><span class="lineNoCov">          0 :         cv_lock.unlock();</span>
+<span class="lineNum">      96 </span><span class="lineNoCov">          0 :         return nullptr;</span>
+<span class="lineNum">      97 </span>            :       }
+<span class="lineNum">      98 </span>            :     }
+<span class="lineNum">      99 </span><span class="lineCov">        400 :     if (_pool.size() &gt; 0) {</span>
+<span class="lineNum">     100 </span><span class="lineCov">        266 :       client = _pool.front();</span>
+<span class="lineNum">     101 </span><span class="lineCov">        266 :       _pool.pop_front();</span>
+<span class="lineNum">     102 </span>            :     } else {
+<span class="lineNum">     103 </span><span class="lineCov">        134 :       client = new TClient(_addr, _port, _keepalive_ms, *_config_json);</span>
+<span class="lineNum">     104 </span><span class="lineCov">        134 :       _curr_pool_size++;</span>
+<span class="lineNum">     105 </span>            :     }
+<span class="lineNum">     106 </span><span class="lineCov">        400 :   cv_lock.unlock();</span>
+<span class="lineNum">     107 </span>            :   } // cv_lock(_mtx)
+<span class="lineNum">     108 </span>            : 
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span><span class="lineCov">        400 :   if (client) {</span>
+<span class="lineNum">     111 </span>            :     try {
+<span class="lineNum">     112 </span><span class="lineCov">        400 :       client-&gt;Connect();</span>
+<span class="lineNum">     113 </span><span class="lineNoCov">          0 :     } catch (...) {</span>
+<span class="lineNum">     114 </span><span class="lineNoCov">          0 :       LOG(error) &lt;&lt; &quot;Failed to connect &quot; + _client_type;</span>
+<span class="lineNum">     115 </span><span class="lineNoCov">          0 :       Remove(client);</span>
+<span class="lineNum">     116 </span><span class="lineNoCov">          0 :       throw;</span>
+<span class="lineNum">     117 </span>            :     }
+<span class="lineNum">     118 </span>            :   }
+<span class="lineNum">     119 </span><span class="lineCov">        400 :   return client;</span>
+<span class="lineNum">     120 </span>            : }
+<a name="121"><span class="lineNum">     121 </span>            : </a>
+<span class="lineNum">     122 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">     123 </span><span class="lineCov">        268 : void ClientPool&lt;TClient&gt;::Push(TClient *client) {</span>
+<span class="lineNum">     124 </span><span class="lineCov">        536 :   std::unique_lock&lt;std::mutex&gt; cv_lock(_mtx);</span>
+<span class="lineNum">     125 </span><span class="lineCov">        268 :   _pool.push_back(client);</span>
+<span class="lineNum">     126 </span><span class="lineCov">        268 :   cv_lock.unlock();</span>
+<span class="lineNum">     127 </span><span class="lineCov">        268 :   _cv.notify_one();</span>
+<span class="lineNum">     128 </span><span class="lineCov">        268 : }</span>
+<a name="129"><span class="lineNum">     129 </span>            : </a>
+<span class="lineNum">     130 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">     131 </span><span class="lineCov">        132 : void ClientPool&lt;TClient&gt;::Remove(TClient *client) {</span>
+<span class="lineNum">     132 </span>            :   // No need to delete it from _pool because the *client has been poped out
+<span class="lineNum">     133 </span><span class="lineCov">        132 :   delete client;</span>
+<span class="lineNum">     134 </span><span class="lineCov">        264 :   std::unique_lock&lt;std::mutex&gt; cv_lock(_mtx);</span>
+<span class="lineNum">     135 </span><span class="lineCov">        132 :   _curr_pool_size--;</span>
+<span class="lineNum">     136 </span><span class="lineCov">        132 :   cv_lock.unlock();</span>
+<span class="lineNum">     137 </span><span class="lineCov">        132 :   _cv.notify_one();</span>
+<span class="lineNum">     138 </span><span class="lineCov">        132 : }</span>
+<a name="139"><span class="lineNum">     139 </span>            : </a>
+<span class="lineNum">     140 </span>            : template&lt;class TClient&gt;
+<span class="lineNum">     141 </span><span class="lineCov">        400 : void ClientPool&lt;TClient&gt;::Keepalive(TClient *client) {</span>
+<span class="lineNum">     142 </span><span class="lineCov">        800 :   long curr_timestamp = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(</span>
+<span class="lineNum">     143 </span><span class="lineCov">       1200 :           std::chrono::system_clock::now().time_since_epoch()).count();</span>
+<span class="lineNum">     144 </span><span class="lineCov">        400 :   if (curr_timestamp - client-&gt;_connect_timestamp &gt; client-&gt;_keepalive_ms) {</span>
+<span class="lineNum">     145 </span><span class="lineCov">        132 :     Remove(client);</span>
+<span class="lineNum">     146 </span>            :   } else {
+<span class="lineNum">     147 </span><span class="lineCov">        268 :     Push(client);</span>
+<span class="lineNum">     148 </span>            :   }
+<span class="lineNum">     149 </span><span class="lineCov">        400 : }</span>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            : } // namespace social_network
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            : 
+<span class="lineNum">     154 </span>            : #endif //SOCIAL_NETWORK_MICROSERVICES_CLIENTPOOL_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
