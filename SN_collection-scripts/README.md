@@ -113,26 +113,5 @@
   - Coverage reports ensure instrumentation toggled; absence flagged with warnings.
   - Example KPI thresholds: CPU contention should drive `system_cpu_usage.csv` above 90%, Redis cache-limit anomalies should reduce `redis_memory_used.csv` plateaus.
 
-### 9. Known Limitations
-- Requires privileged access for ChaosBlade, tcpdump, and Docker log extraction.
-- Prometheus/Jaeger endpoints assumed to run locally; remote clusters need port-forwarding adjustments.
-- wrk2 workload uses hard-coded endpoints and assumes plaintext HTTP.
-- Metric collection can be heavy (multiple hundred MB CSVs for 24h windows).
-- Coverage pipeline relies on JaCoCo instrumentation already baked into SocialNetwork images.
-
-### 10. Future Work
-- Parameterize endpoints and authentication (bearer tokens) for secured deployments.
-- Add Kubernetes manifests mirroring the Docker workflow.
-- Provide automated statistical summaries (plots, anomaly scores) under `statistics/`.
-- Integrate additional anomalies (packet duplication, DB throttling) and extend to multi-region experiments.
-
-### 11. Contact & Contribution
-- Maintainers: `sn-multimodal-maintainers@research-placeholder.org`.
-- Issues & PRs: open tickets in the hosting GitHub repository; include experiment logs and environment details.
-- Contribution guidelines:
-  1. Fork, branch from `main`, keep changes scoped.
-  2. Run `shellcheck`/`pylint` on modified scripts.
-  3. Document new collectors or anomalies in this README + `FILE_MANIFEST.md`.
-- License: inherits from the root AnoMod project (MIT).
 
 
