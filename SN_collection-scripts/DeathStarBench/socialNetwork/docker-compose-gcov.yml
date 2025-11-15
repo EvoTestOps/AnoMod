@@ -1,0 +1,426 @@
+version: "3.9"
+services:
+  social-graph-service:
+    image: socialnetwork-gcov
+    hostname: social-graph-service
+    ports:
+      - 10000:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - social-graph-mongodb
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/SocialGraphService"]
+
+  home-timeline-service:
+    image: socialnetwork-gcov
+    hostname: home-timeline-service
+    ports:
+      - 10001:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - home-timeline-redis
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/HomeTimelineService"]
+
+  compose-post-service:
+    image: socialnetwork-gcov
+    hostname: compose-post-service
+    ports:
+      - 10003:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - compose-post-redis
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/ComposePostService"]
+
+  post-storage-service:
+    image: socialnetwork-gcov
+    hostname: post-storage-service
+    ports:
+      - 10002:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - post-storage-mongodb
+      - post-storage-memcached
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/PostStorageService"]
+
+  user-timeline-service:
+    image: socialnetwork-gcov
+    hostname: user-timeline-service
+    ports:
+      - 10004:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - user-timeline-mongodb
+      - user-timeline-redis
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/UserTimelineService"]
+
+  url-shorten-service:
+    image: socialnetwork-gcov
+    hostname: url-shorten-service
+    ports:
+      - 10005:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - url-shorten-mongodb
+      - url-shorten-memcached
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/UrlShortenService"]
+
+  user-service:
+    image: socialnetwork-gcov
+    hostname: user-service
+    ports:
+      - 10006:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - user-mongodb
+      - user-memcached
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/UserService"]
+
+  media-service:
+    image: socialnetwork-gcov
+    hostname: media-service
+    ports:
+      - 10007:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - media-mongodb
+      - media-memcached
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/MediaService"]
+
+  text-service:
+    image: socialnetwork-gcov
+    hostname: text-service
+    ports:
+      - 10008:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/TextService"]
+
+  unique-id-service:
+    image: socialnetwork-gcov
+    hostname: unique-id-service
+    ports:
+      - 10009:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/UniqueIdService"]
+
+  user-mention-service:
+    image: socialnetwork-gcov
+    hostname: user-mention-service
+    ports:
+      - 10010:9090
+    volumes:
+      - ./config:/social-network-microservices/config:ro
+      - ./coverage-reports:/coverage-reports
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+      - user-memcached
+    restart: always
+    environment:
+      - COVERALLS_DIRECTORY=/coverage-reports
+      - GCOV_PREFIX=/social-network-microservices/build
+      - GCOV_PREFIX_STRIP=2
+    entrypoint: ["/usr/local/bin/UserMentionService"]
+
+  # 数据库服务（与原始docker-compose.yml相同）
+  social-graph-mongodb:
+    image: mongo:4.4.6
+    hostname: social-graph-mongodb
+    networks:
+      - socialnetwork
+    restart: always
+
+  social-graph-redis:
+    image: redis
+    hostname: social-graph-redis
+    networks:
+      - socialnetwork
+    restart: always
+
+  home-timeline-redis:
+    image: redis
+    hostname: home-timeline-redis
+    networks:
+      - socialnetwork
+    restart: always
+
+  compose-post-redis:
+    image: redis
+    hostname: compose-post-redis
+    networks:
+      - socialnetwork
+    restart: always
+
+  post-storage-memcached:
+    image: memcached
+    hostname: post-storage-memcached
+    networks:
+      - socialnetwork
+    restart: always
+
+  post-storage-mongodb:
+    image: mongo:4.4.6
+    hostname: post-storage-mongodb
+    networks:
+      - socialnetwork
+    restart: always
+
+  user-timeline-redis:
+    image: redis
+    hostname: user-timeline-redis
+    networks:
+      - socialnetwork
+    restart: always
+
+  user-timeline-mongodb:
+    image: mongo:4.4.6
+    hostname: user-timeline-mongodb
+    networks:
+      - socialnetwork
+    restart: always
+
+  url-shorten-memcached:
+    image: memcached
+    hostname: url-shorten-memcached
+    networks:
+      - socialnetwork
+    restart: always
+
+  url-shorten-mongodb:
+    image: mongo:4.4.6
+    hostname: url-shorten-mongodb
+    networks:
+      - socialnetwork
+    restart: always
+
+  user-memcached:
+    image: memcached
+    hostname: user-memcached
+    networks:
+      - socialnetwork
+    restart: always
+
+  user-mongodb:
+    image: mongo:4.4.6
+    hostname: user-mongodb
+    networks:
+      - socialnetwork
+    restart: always
+
+  media-memcached:
+    image: memcached
+    hostname: media-memcached
+    networks:
+      - socialnetwork
+    restart: always
+
+  media-mongodb:
+    image: mongo:4.4.6
+    hostname: media-mongodb
+    networks:
+      - socialnetwork
+    restart: always
+
+  jaeger-agent:
+    image: jaegertracing/all-in-one:1.28
+    hostname: jaeger-agent
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 9411:9411
+    networks:
+      - socialnetwork
+    restart: always
+
+  nginx-thrift:
+    image: yg397/openresty-thrift:xenial
+    hostname: nginx-thrift
+    ports:
+      - 8080:8080
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+    restart: always
+    volumes:
+      - ./nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - ./nginx-web-server/pages:/usr/local/openresty/nginx/pages
+      - ./nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - ./gen-lua:/gen-lua
+      - ./docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
+
+  media-frontend:
+    image: yg397/media-frontend:xenial
+    hostname: media-frontend
+    ports:
+      - 8081:8080
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+    restart: always
+    volumes:
+      - ./media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - ./media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+
+  # 添加 Prometheus 服务
+  prometheus:
+    image: prom/prometheus:latest
+    hostname: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - socialnetwork
+    depends_on:
+      - jaeger-agent
+    restart: always
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  # 添加 Cadvisor 容器监控
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    hostname: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8082:8080"
+    networks:
+      - socialnetwork
+    restart: always
+
+  # 添加 Node-exporter 主机监控
+  node-exporter:
+    image: prom/node-exporter:latest
+    hostname: node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+    networks:
+      - socialnetwork
+    restart: always
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+
+networks:
+  socialnetwork:
+    driver: bridge
