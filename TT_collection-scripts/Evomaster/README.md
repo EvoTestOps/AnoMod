@@ -86,6 +86,3 @@ If you wish to regenerate the suite with EvoMaster:
      --maxTime 600
    ```
 4. Export `TT_AUTH_TOKEN` before launching EvoMaster so the generated tests embed authenticated calls.
-
-Version the new suite inside `runs/` and remember to capture the EvoMaster command line in your experiment log so reviewers can regenerate it.
-
