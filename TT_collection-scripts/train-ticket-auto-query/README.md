@@ -73,5 +73,4 @@ cd ../T-Dataset
 - `TEST_ITERATIONS` controls how many times the script runs inside a single experiment.
 - Headers (`Authorization`, `Cookie`) are taken from the environment variables documented above, ensuring perfect alignment with EvoMaster traces when both drivers are combined.
 
-Keep this README with the dataset so reviewers can replay the exact query mix without reverse-engineering the scripts.
 
