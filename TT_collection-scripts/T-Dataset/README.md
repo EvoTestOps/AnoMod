@@ -126,10 +126,3 @@ python3 coverage_tools/coverage_summary.py \
 
 The script emits `summary.txt` (line coverage %) plus JaCoCo XML/HTML artifacts.
 
-## Recommended Reproduction Notes
-
-- Record the git commit hashes of both `TT_collection-scripts` and the Train-Ticket source when you run collectors.
-- Store the full invocation (command line, environment variables) in `experiment_manifest.json` next to the exported data folders.
-- Mention the Prometheus and SkyWalking URLs used and whether `inject_jacoco_k8s.py` was applied to deployment manifests.
-- When submitting updates to the artifact, include the README files from each subdirectory so reviewers can reproduce the workflow with minimal assumptions.
-
